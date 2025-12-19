@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -35,6 +36,7 @@ android {
     }
 
     buildFeatures {
+        viewBinding = true
         buildConfig = true
     }
 }
@@ -42,6 +44,29 @@ android {
 dependencies {
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    //DI - Koin
+    implementation(libs.koin.android)
+
+    //Glide
+    implementation (libs.glide)
+    annotationProcessor (libs.glide.compiler)
+
+    //Gson
+    implementation(libs.gson)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // UI layer libraries
     implementation(libs.ui.material)
