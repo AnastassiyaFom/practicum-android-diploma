@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("kotlin-parcelize")
     alias(libs.plugins.ksp)
 }
 
@@ -45,28 +46,40 @@ dependencies {
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
 
-    //Room
+    // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    //Coroutines
+    // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    //DI - Koin
+    // DI - Koin
     implementation(libs.koin.android)
 
-    //Glide
-    implementation (libs.glide)
-    annotationProcessor (libs.glide.compiler)
+    // Glide
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
 
-    //Gson
+    // Gson
     implementation(libs.gson)
 
-    //Retrofit
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
+    // ViewModel + LiveData
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.runtime)
+
+    // Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Fragment
+    implementation(libs.androidx.fragment.ktx)
 
     // UI layer libraries
     implementation(libs.ui.material)
