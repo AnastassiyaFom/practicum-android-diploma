@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class FilterFragment : Fragment() {
     override fun onCreateView(
@@ -14,5 +15,13 @@ class FilterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_filter, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<View>(R.id.btn_back).setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }
