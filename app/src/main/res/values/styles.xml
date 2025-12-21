@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomBottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/BottomNavText</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavText</item>
+    </style>
+
+    <style name="BottomNavText" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+</resources>
