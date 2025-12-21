@@ -1,4 +1,5 @@
 package ru.practicum.android.diploma.ui.placeofwork
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
