@@ -7,19 +7,22 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="ru.practicum.android.diploma.ui.search.SearchFragment"
+        android:name="ru.practicum.android.diploma.search.ui.SearchFragment"
         android:label="Поиск вакансий"
         tools:layout="@layout/fragment_search">
 
         <action
             android:id="@+id/action_searchFragment_to_filterFragment"
             app:destination="@id/filterFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_vacancyFragment"
+            app:destination="@id/vacancyFragment" />
 
     </fragment>
 
     <fragment
         android:id="@+id/filterFragment"
-        android:name="ru.practicum.android.diploma.ui.filter.FilterFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.views.FilterFragment"
         android:label="Настройки фильтрации"
         tools:layout="@layout/fragment_filter">
 
@@ -37,19 +40,17 @@
 
     <fragment
         android:id="@+id/vacancyFragment"
-        android:name="ru.practicum.android.diploma.ui.vacancy.VacancyFragment"
+        android:name="ru.practicum.android.diploma.vacancy.ui.VacancyFragment"
         android:label="Вакансия"
         tools:layout="@layout/fragment_vacancy">
 
-        <action
-            android:id="@+id/action_vacancyFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+
 
     </fragment>
 
     <fragment
         android:id="@+id/placeOfWorkFragment"
-        android:name="ru.practicum.android.diploma.ui.placeofwork.PlaceOfWorkFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.views.PlaceOfWorkFragment"
         android:label="Выбор места работы"
         tools:layout="@layout/fragment_place_of_work">
 
@@ -69,7 +70,7 @@
 
     <fragment
         android:id="@+id/countryFragment"
-        android:name="ru.practicum.android.diploma.ui.country.CountryFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.views.CountryFragment"
         android:label="Выбор страны"
         tools:layout="@layout/fragment_country">
 
@@ -82,7 +83,7 @@
 
     <fragment
         android:id="@+id/regionFragment"
-        android:name="ru.practicum.android.diploma.ui.region.RegionFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.views.RegionFragment"
         android:label="Выбор региона"
         tools:layout="@layout/fragment_region" >
 
@@ -94,7 +95,7 @@
 
     <fragment
         android:id="@+id/industryFragment"
-        android:name="ru.practicum.android.diploma.ui.industry.IndustryFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.views.IndustryFragment"
         android:label="Выбор отрасли"
         tools:layout="@layout/fragment_industry" >
 
@@ -107,13 +108,13 @@
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="ru.practicum.android.diploma.ui.favorites.FavoritesFragment"
+        android:name="ru.practicum.android.diploma.favorites.ui.FavoritesFragment"
         android:label="Избранное"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/teamFragment"
-        android:name="ru.practicum.android.diploma.ui.team.TeamFragment"
+        android:name="ru.practicum.android.diploma.team.ui.TeamFragment"
         android:label="Команда"
         tools:layout="@layout/fragment_team" />
 
