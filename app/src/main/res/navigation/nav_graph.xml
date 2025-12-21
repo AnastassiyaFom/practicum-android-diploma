@@ -23,9 +23,13 @@
         android:label="Настройки фильтрации"
         tools:layout="@layout/fragment_filter">
 
-    <action
-        android:id="@+id/action_filterFragment_to_placeOfWorkFragment"
-        app:destination="@id/placeOfWorkFragment" />
+        <action
+            android:id="@+id/action_filterFragment_to_placeOfWorkFragment"
+            app:destination="@id/placeOfWorkFragment" />
+
+        <action
+            android:id="@+id/action_filterFragment_to_industryFragment"
+            app:destination="@id/industryFragment" />
 
     </fragment>
 
@@ -35,30 +39,71 @@
         android:id="@+id/vacancyFragment"
         android:name="ru.practicum.android.diploma.ui.vacancy.VacancyFragment"
         android:label="Вакансия"
-        tools:layout="@layout/fragment_vacancy"/>
+        tools:layout="@layout/fragment_vacancy">
+
+        <action
+            android:id="@+id/action_vacancyFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/placeOfWorkFragment"
         android:name="ru.practicum.android.diploma.ui.placeofwork.PlaceOfWorkFragment"
         android:label="Выбор места работы"
-        tools:layout="@layout/fragment_place_of_work"/>
+        tools:layout="@layout/fragment_place_of_work">
+
+        <action
+            android:id="@+id/action_placeOfWorkFragment_to_countryFragment"
+            app:destination="@id/countryFragment" />
+
+        <action
+            android:id="@+id/action_placeOfWorkFragment_to_regionFragment"
+            app:destination="@id/regionFragment" />
+
+        <action
+            android:id="@+id/action_placeOfWorkFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/countryFragment"
         android:name="ru.practicum.android.diploma.ui.country.CountryFragment"
         android:label="Выбор страны"
-        tools:layout="@layout/fragment_country" />
+        tools:layout="@layout/fragment_country">
+
+        <action
+            android:id="@+id/action_countryFragment_to_placeOfWorkFragment"
+            app:destination="@id/placeOfWorkFragment" />
+
+    </fragment>
+
+
     <fragment
         android:id="@+id/regionFragment"
         android:name="ru.practicum.android.diploma.ui.region.RegionFragment"
         android:label="Выбор региона"
-        tools:layout="@layout/fragment_region" />
+        tools:layout="@layout/fragment_region" >
+
+        <action
+            android:id="@+id/action_regionFragment_to_placeOfWorkFragment"
+            app:destination="@id/placeOfWorkFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/industryFragment"
         android:name="ru.practicum.android.diploma.ui.industry.IndustryFragment"
         android:label="Выбор отрасли"
-        tools:layout="@layout/fragment_industry" />
+        tools:layout="@layout/fragment_industry" >
+
+        <action
+            android:id="@+id/action_industryFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/favoritesFragment"

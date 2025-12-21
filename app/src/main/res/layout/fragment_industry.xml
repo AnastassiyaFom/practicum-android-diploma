@@ -21,7 +21,7 @@
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Выбор отрасли"
+        android:text="@string/title_industry"
         android:textSize="22sp"
         app:layout_constraintStart_toEndOf="@id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"
