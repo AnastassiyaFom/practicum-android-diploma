@@ -9,4 +9,5 @@
     <string name="title_favorites">Избранное</string>
     <string name="title_team">Команда</string>
     <string name="title_vacancy">Вакансия</string>
+    <string name="title_main">Главная</string>
 </resources>
