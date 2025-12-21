@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.industry
+package ru.practicum.android.diploma.favorites.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.R
 
-class IndustryFragment : Fragment() {
+class FavoritesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_region, container, false)
+        return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
 }
+
