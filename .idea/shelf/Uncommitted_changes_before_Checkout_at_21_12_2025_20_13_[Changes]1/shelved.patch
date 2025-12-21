@@ -1,0 +1,189 @@
+Index: app/src/main/res/menu/bottom_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/bottom_menu.xml b/app/src/main/res/menu/bottom_menu.xml
+new file mode 100644
+--- /dev/null	(date 1766336729094)
++++ b/app/src/main/res/menu/bottom_menu.xml	(date 1766336729094)
+@@ -0,0 +1,5 @@
++<menu xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:id="@+id/searchFragment" android:title="@string/title_main" android:icon="@drawable/ic_main" />
++    <item android:id="@+id/favoritesFragment" android:title="@string/title_favorites" android:icon="@drawable/ic_favorites" />
++    <item android:id="@+id/teamFragment" android:title="@string/title_team" android:icon="@drawable/ic_team" />
++</menu>
+Index: app/src/main/res/layout/activity_root.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".RootActivity\">\r\n\r\n    <androidx.fragment.app.FragmentContainerView\r\n        android:id=\"@+id/nav_host_fragment\"\r\n        android:name=\"androidx.navigation.fragment.NavHostFragment\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"0dp\"\r\n        app:defaultNavHost=\"true\"\r\n        app:navGraph=\"@navigation/nav_graph\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_root.xml b/app/src/main/res/layout/activity_root.xml
+--- a/app/src/main/res/layout/activity_root.xml	(revision 4a21300e3570ef2e3e62012b06410cf2bff7b014)
++++ b/app/src/main/res/layout/activity_root.xml	(date 1766336729094)
+@@ -12,9 +12,24 @@
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         app:defaultNavHost="true"
+-        app:navGraph="@navigation/nav_graph"
++        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
++        app:navGraph="@navigation/nav_graph" />
++
++    <com.google.android.material.bottomnavigation.BottomNavigationView
++        android:id="@+id/bottom_navigation"
++        style="@style/CustomBottomNavStyle"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:background="@drawable/bottom_nav_border"
++        android:paddingTop="8dp"
++        android:paddingBottom="8dp"
++        app:itemActiveIndicatorStyle="@null"
++        app:itemIconTint="@color/bottom_nav_icon_tint"
++        app:itemTextColor="@color/bottom_nav_icon_tint"
+         app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent" />
++        app:menu="@menu/bottom_menu" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+Index: app/src/main/res/color/bottom_nav_icon_tint.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/color/bottom_nav_icon_tint.xml b/app/src/main/res/color/bottom_nav_icon_tint.xml
+new file mode 100644
+--- /dev/null	(date 1766336729092)
++++ b/app/src/main/res/color/bottom_nav_icon_tint.xml	(date 1766336729092)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:color="#3772E7" android:state_checked="true"/>
++    <item android:color="#AEAFB4"/>
++</selector>
+Index: app/src/main/res/drawable/ic_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_main.xml b/app/src/main/res/drawable/ic_main.xml
+new file mode 100644
+--- /dev/null	(date 1766336729093)
++++ b/app/src/main/res/drawable/ic_main.xml	(date 1766336729093)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M4,2C2.895,2 2,2.895 2,4V9C2,10.105 2.895,11 4,11H9C10.105,11 11,10.105 11,9V4C11,2.895 10.105,2 9,2H4ZM4,13C2.895,13 2,13.895 2,15V20C2,21.105 2.895,22 4,22H9C10.105,22 11,21.105 11,20V15C11,13.895 10.105,13 9,13H4ZM13,15C13,13.895 13.895,13 15,13H20C21.105,13 22,13.895 22,15V20C22,21.105 21.105,22 20,22H15C13.895,22 13,21.105 13,20V15ZM15,2C13.895,2 13,2.895 13,4V9C13,10.105 13.895,11 15,11H20C21.105,11 22,10.105 22,9V4C22,2.895 21.105,2 20,2H15Z"
++      android:fillColor="#3772E7"
++      android:fillType="evenOdd"/>
++</vector>
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/styles.xml b/app/src/main/res/values/styles.xml
+new file mode 100644
+--- /dev/null	(date 1766336729095)
++++ b/app/src/main/res/values/styles.xml	(date 1766336729095)
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++
++    <style name="CustomBottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
++        <item name="itemTextAppearanceActive">@style/BottomNavText</item>
++        <item name="itemTextAppearanceInactive">@style/BottomNavText</item>
++    </style>
++
++    <style name="BottomNavText" parent="TextAppearance.AppCompat.Caption">
++        <item name="android:lineSpacingExtra">0dp</item>
++    </style>
++
++</resources>
+Index: app/src/main/res/drawable/ic_team.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_team.xml b/app/src/main/res/drawable/ic_team.xml
+new file mode 100644
+--- /dev/null	(date 1766336729093)
++++ b/app/src/main/res/drawable/ic_team.xml	(date 1766336729093)
+@@ -0,0 +1,12 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M12,22C17.523,22 22,17.523 22,12C22,6.477 17.523,2 12,2C6.477,2 2,6.477 2,12C2,17.523 6.477,22 12,22ZM17.11,9.5C17.11,10.328 16.438,11 15.61,11C14.782,11 14.11,10.328 14.11,9.5C14.11,8.672 14.782,8 15.61,8C16.438,8 17.11,8.672 17.11,9.5ZM8.61,11C9.438,11 10.11,10.328 10.11,9.5C10.11,8.672 9.438,8 8.61,8C7.782,8 7.11,8.672 7.11,9.5C7.11,10.328 7.782,11 8.61,11ZM17.22,14C16.42,16.04 14.44,17.5 12.11,17.5C9.78,17.5 7.8,16.04 7,14H17.22Z"
++      android:strokeAlpha="0.75"
++      android:fillColor="#AEAFB4"
++      android:fillType="evenOdd"
++      android:fillAlpha="0.75"/>
++</vector>
+Index: app/src/main/res/drawable/ic_favorites.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_favorites.xml b/app/src/main/res/drawable/ic_favorites.xml
+new file mode 100644
+--- /dev/null	(date 1766336729093)
++++ b/app/src/main/res/drawable/ic_favorites.xml	(date 1766336729093)
+@@ -0,0 +1,12 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M12,22L10.405,20.561C4.74,15.471 1,12.114 1,7.995C1,4.638 3.662,2 7.05,2C8.964,2 10.801,2.883 12,4.278C13.199,2.883 15.036,2 16.95,2C20.338,2 23,4.638 23,7.995C23,12.114 19.26,15.471 13.595,20.572L12,22Z"
++      android:strokeAlpha="0.75"
++      android:fillColor="#AEAFB4"
++      android:fillType="evenOdd"
++      android:fillAlpha="0.75"/>
++</vector>
+Index: app/src/main/res/drawable/bottom_nav_border.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/bottom_nav_border.xml b/app/src/main/res/drawable/bottom_nav_border.xml
+new file mode 100644
+--- /dev/null	(date 1766336729093)
++++ b/app/src/main/res/drawable/bottom_nav_border.xml	(date 1766336729093)
+@@ -0,0 +1,8 @@
++<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:bottom="-2dp" android:left="-2dp" android:right="-2dp">
++        <shape>
++            <solid android:color="@android:color/transparent" />
++            <stroke android:width="1dp" android:color="@color/white"/>
++        </shape>
++    </item>
++</layer-list>
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Practicum-Android-Diploma</string>\r\n    <string name=\"title_search\">Поиск вакансий</string>\r\n    <string name=\"title_filter\">Настройки фильтрации</string>\r\n    <string name=\"title_place_of_work\">Выбор места работы</string>\r\n    <string name=\"title_country\">Выбор страны</string>\r\n    <string name=\"title_region\">Выбор региона</string>\r\n    <string name=\"title_industry\">Выбор отрасли</string>\r\n    <string name=\"title_favorites\">Избранное</string>\r\n    <string name=\"title_team\">Команда</string>\r\n    <string name=\"title_vacancy\">Вакансия</string>\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 4a21300e3570ef2e3e62012b06410cf2bff7b014)
++++ b/app/src/main/res/values/strings.xml	(date 1766336729095)
+@@ -9,4 +9,5 @@
+     <string name="title_favorites">Избранное</string>
+     <string name="title_team">Команда</string>
+     <string name="title_vacancy">Вакансия</string>
++    <string name="title_main">Главная</string>
+ </resources>
