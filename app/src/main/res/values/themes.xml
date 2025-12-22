@@ -19,6 +19,6 @@
         <!-- Toast background color. -->
         <item name="toastBackgroundColor">@color/red</item>
         <!-- Toast background color. -->
-        <item name="toastTextColor">@color/white_universal</item>
+        <item name="toastAndBottonTextColor">@color/white_universal</item>
     </style>
 </resources>
