@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="editTextBackground" format="color|reference"/>
-    <attr name="editTextHintColor" format="color|reference" />
-    <attr name="background" format="color|reference"/>
-    <attr name="bottomNavEnabled" format="color|reference"/>
-    <attr name="toastBackgroundColor" format="color|reference"/>
-    <attr name="toastAndBottonTextColor" format="color|reference"/>
+    <attr name="customEditTextBackground" format="color|reference"/>
+    <attr name="customEditTextHintColor" format="color|reference" />
+    <attr name="customBackground" format="color|reference"/>
+    <attr name="BottomNavEnabled" format="color|reference"/>
+    <attr name="ToastBackgroundColor" format="color|reference"/>
+    <attr name="toastAndButtonTextColor" format="color|reference"/>
 </resources>

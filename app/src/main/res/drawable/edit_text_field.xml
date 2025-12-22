@@ -3,5 +3,5 @@
     android:shape="rectangle">
     <size android:width="328dp" android:height="56dp"/>
     <corners android:radius="12dp"/>
-    <solid android:color="?editTextBackground"/>
+    <solid android:color="?attr/customEditTextBackground"/>
 </shape>
