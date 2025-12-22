@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +7,16 @@ plugins {
     id("kotlin-parcelize")
     alias(libs.plugins.ksp)
 }
+
+val localToken: String? = runCatching {
+    val props = Properties()
+    props.load(rootProject.file("developProperties").inputStream())
+    props.getProperty("apiAccessToken")
+}.getOrNull()
+
+val ciToken: String? = System.getenv("API_ACCESS_TOKEN")
+
+val apiAccessToken: String = localToken ?: ciToken ?: ""
 
 android {
     namespace = "ru.practicum.android.diploma"
@@ -19,7 +31,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField(type = "String", name = "API_ACCESS_TOKEN", value = "\"${developProperties.apiAccessToken}\"")
+        buildConfigField(type = "String", name = "API_ACCESS_TOKEN", value = "\"$apiAccessToken\"")
     }
 
     buildTypes {
