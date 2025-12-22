@@ -7,13 +7,18 @@
         <item name="colorPrimaryVariant">@color/black_universal</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/gray</item>
+        <item name="colorSecondaryVariant">@color/light_gray</item>
         <!-- EditText background color. -->
         <item name="android:backgroundTint">@color/black</item>
         <!-- EditText background color. -->
-        <item name="android:editTextBackground">@color/light_gray</item>
+        <item name="android:editTextBackground">@color/gray</item>
         <!-- EditText hint color. -->
         <item name="editTextHintColor">@color/white</item>
         <!-- Enabled bottomNavigationView color. -->
         <item name="bottomNavEnabled">@color/blue</item>
+        <!-- Toast background color. -->
+        <item name="toastBackgroundColor">@color/red</item>
+        <!-- Toast background color. -->
+        <item name="toastTextColor">@color/white_universal</item>
     </style>
 </resources>

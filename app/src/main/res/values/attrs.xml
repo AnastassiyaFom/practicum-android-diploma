@@ -4,4 +4,6 @@
     <attr name="editTextHintColor" format="color|reference" />
     <attr name="background" format="color|reference" />
     <attr name="bottomNavEnabled" format="color|reference" />
+    <attr name="toastBackgroundColor" format="color|reference" />
+    <attr name="toastTextColor" format="color|reference" />
 </resources>
