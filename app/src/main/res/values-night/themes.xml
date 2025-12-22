@@ -13,12 +13,12 @@
         <!-- EditText background color. -->
         <item name="android:editTextBackground">@color/gray</item>
         <!-- EditText hint color. -->
-        <item name="editTextHintColor">@color/white</item>
+        <item name="customEditTextHintColor">@color/white</item>
         <!-- Enabled bottomNavigationView color. -->
-        <item name="bottomNavEnabled">@color/blue</item>
+        <item name="BottomNavEnabled">@color/blue</item>
         <!-- Toast background color. -->
-        <item name="toastBackgroundColor">@color/red</item>
+        <item name="ToastBackgroundColor">@color/red</item>
         <!-- Toast background color. -->
-        <item name="toastAndBottonTextColor">@color/white_universal</item>
+        <item name="toastAndButtonTextColor">@color/white_universal</item>
     </style>
 </resources>
