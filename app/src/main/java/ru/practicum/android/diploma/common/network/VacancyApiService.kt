@@ -8,15 +8,15 @@ import ru.practicum.android.diploma.common.model.VacancyDetail
 import ru.practicum.android.diploma.common.model.VacancyResponse
 
 interface VacancyApiService {
-    @GET("areas")
+    @GET("/areas")
     suspend fun getAreas(): List<FilterArea>
 
-    @GET("industries")
+    @GET("/industries")
     suspend fun getIndustries(): List<FilterIndustry>
 
-    @GET("vacancies")
+    @GET("/vacancies")
     suspend fun getVacancies(params: VacancySearchParams): VacancyResponse
 
-    @GET("vacancies/{id}")
+    @GET("/vacancies/{id}")
     suspend fun getVacancyDetails(@Path("id") id: String): VacancyDetail
 }
