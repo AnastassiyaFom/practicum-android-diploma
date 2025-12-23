@@ -2,6 +2,23 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.PracticumAndroidDiploma" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/black_universal</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/gray</item>
+        <item name="colorSecondaryVariant">@color/light_gray</item>
+        <!-- EditText background color. -->
+        <item name="android:backgroundTint">@color/black</item>
+        <!-- EditText background color. -->
+        <item name="android:editTextBackground">@color/gray</item>
+        <!-- EditText hint color. -->
+        <item name="customEditTextHintColor">@color/white</item>
+        <!-- Enabled bottomNavigationView color. -->
+        <item name="BottomNavEnabled">@color/blue</item>
+        <!-- Toast background color. -->
+        <item name="ToastBackgroundColor">@color/red</item>
+        <!-- Toast background color. -->
+        <item name="toastAndButtonTextColor">@color/white_universal</item>
     </style>
 </resources>
