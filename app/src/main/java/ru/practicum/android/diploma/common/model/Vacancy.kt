@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.common.model
 
-data class VacancyDetail(
+data class Vacancy(
     val id: String,
     val name: String,
     val description: String?,
@@ -24,4 +24,3 @@ data class Schedule(val id: String, val name: String)
 data class Employment(val id: String, val name: String)
 data class Contacts(val id: String, val name: String?, val email: String?, val phone: List<String>?)
 data class Employer(val id: String, val name: String, val logo: String?)
-data class VacancyResponse(val found: Int, val pages: Int, val page: Int, val vacancies: List<VacancyDetail>)
