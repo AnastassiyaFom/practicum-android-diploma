@@ -6,11 +6,6 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-val apiAccessToken: String =
-    developProperties.apiAccessToken
-        ?: System.getenv("API_ACCESS_TOKEN")
-        ?: ""
-
 android {
     namespace = "ru.practicum.android.diploma"
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -23,7 +18,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField(type = "String", name = "API_ACCESS_TOKEN", value = "\"$apiAccessToken\"")
+        buildConfigField(type = "String", name = "API_ACCESS_TOKEN", value = "\"${developProperties.apiAccessToken}\"")
     }
 
     buildTypes {

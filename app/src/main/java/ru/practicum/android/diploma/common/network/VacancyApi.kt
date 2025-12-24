@@ -4,10 +4,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import ru.practicum.android.diploma.common.model.FilterArea
 import ru.practicum.android.diploma.common.model.FilterIndustry
-import ru.practicum.android.diploma.common.model.VacancyDetail
-import ru.practicum.android.diploma.common.model.VacancyResponse
+import ru.practicum.android.diploma.common.model.Vacancy
+import ru.practicum.android.diploma.data.dto.VacancyResponse
 
-interface VacancyApiService {
+interface VacancyApi {
     @GET("/areas")
     suspend fun getAreas(): List<FilterArea>
 
@@ -18,5 +18,5 @@ interface VacancyApiService {
     suspend fun getVacancies(params: VacancySearchParams): VacancyResponse
 
     @GET("/vacancies/{id}")
-    suspend fun getVacancyDetails(@Path("id") id: String): VacancyDetail
+    suspend fun getVacancyDetails(@Path("id") id: String): Vacancy
 }
