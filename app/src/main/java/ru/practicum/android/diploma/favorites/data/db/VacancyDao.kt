@@ -1,10 +1,9 @@
-package ru.practicum.android.diploma.data.dao
+package ru.practicum.android.diploma.favorites.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ru.practicum.android.diploma.data.entity.VacancyEntity
 
 @Dao
 interface VacancyDao {

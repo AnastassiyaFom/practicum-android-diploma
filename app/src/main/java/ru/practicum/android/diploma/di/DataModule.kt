@@ -11,9 +11,8 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.common.NetworkClient
 import ru.practicum.android.diploma.common.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.common.network.VacancyApi
-import ru.practicum.android.diploma.data.AppDatabase
-import ru.practicum.android.diploma.data.dao.FavoriteVacancyDao
-import ru.practicum.android.diploma.data.dao.VacancyDao
+import ru.practicum.android.diploma.favorites.data.db.AppDatabase
+import ru.practicum.android.diploma.favorites.data.db.VacancyDao
 import java.util.concurrent.TimeUnit
 
 private const val CONNECT_TIMEOUT_SECONDS = 30L
@@ -56,6 +55,6 @@ val dataModule = module {
     }
 
     factory { Gson() }
-    single<FavoriteVacancyDao> { get<AppDatabase>().favoriteVacancyDao() }
+
     single<VacancyDao> { get<AppDatabase>().vacancyDao() }
 }
