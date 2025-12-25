@@ -32,9 +32,6 @@ data class Vacancy(
     val employerName: String,
     val logoUrl: String?
 ) : Parcelable {
-    fun isVacancyEmpty(): Boolean {
-        return id.isEmpty() && name.isEmpty() && description.isEmpty()
-    }
 
     // Для создания пустого объекта
     constructor() : this(
