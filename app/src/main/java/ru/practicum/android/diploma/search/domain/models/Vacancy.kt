@@ -29,7 +29,7 @@ data class Vacancy(
     val email: String?,
     val phone: List<String>?,
     // Работодатель
-    val employerName: String,
+    val employerName: String?,
     val logoUrl: String?
 ) : Parcelable {
 

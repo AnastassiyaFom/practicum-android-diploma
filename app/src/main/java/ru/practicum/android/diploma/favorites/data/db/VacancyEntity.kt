@@ -5,12 +5,17 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "vacancies")
 data class VacancyEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey
+    val id: String,
     val name: String,
-    val description: String?,
+    val description: String,
     val experience: String?,
     val schedule: String?,
     val employment: String?,
+    val areaName: String?,
+    val industryName: String?,
+    val skills: String?,
+    val url: String?,
     // Поля зарплаты
     val salaryFrom: Int?,
     val salaryTo: Int?,
@@ -23,9 +28,9 @@ data class VacancyEntity(
     // Контакты
     val contactName: String?,
     val email: String?,
-    val phone: String?, // здесь List<String>?
-    val employerName: String,
+    val phone: String?,
+    // Работодатель
+    val employerName: String?,
     val logoUrl: String?,
-    val areaName: String,
-    val industryName: String
+
 )
