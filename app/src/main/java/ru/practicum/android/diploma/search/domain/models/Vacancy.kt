@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Vacancy(
     val id: String,
     val name: String,
-    val description: String?,
+    val description: String,
     val experience: String?,
     val schedule: String?,
     val employment: String?,
@@ -31,4 +31,34 @@ data class Vacancy(
     // Работодатель
     val employerName: String,
     val logoUrl: String?
-) : Parcelable
+) : Parcelable {
+    fun isVacancyEmpty(): Boolean {
+        return id.isEmpty() && name.isEmpty() && description.isEmpty()
+    }
+
+    // Для создания пустого объекта
+    constructor() : this(
+        id = "",
+        name = "",
+        description = "",
+        experience = "",
+        schedule = "",
+        employment = "",
+        areaName = "",
+        industryName = "",
+        skills = emptyList(),
+        url = "",
+        salaryFrom = 0,
+        salaryTo = 0,
+        currency = "",
+        city = "",
+        street = "",
+        building = "",
+        fullAddress = "",
+        contactName = "",
+        email = "",
+        phone = emptyList(),
+        employerName = "",
+        logoUrl = "",
+    )
+}
