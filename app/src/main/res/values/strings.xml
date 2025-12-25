@@ -10,4 +10,9 @@
     <string name="title_team">Команда</string>
     <string name="title_vacancy">Вакансия</string>
     <string name="title_main">Главная</string>
+    <string name="team_section_title">Над приложением\nработали</string>
+    <string name="team_member_lebedev">Сергей Лебедев</string>
+    <string name="team_member_fomenkova">Анастасия Фоменкова</string>
+    <string name="team_member_koposova">Елизавета Копосова</string>
+    <string name="team_member_kovalevich">Виталий Ковалевич</string>
 </resources>
