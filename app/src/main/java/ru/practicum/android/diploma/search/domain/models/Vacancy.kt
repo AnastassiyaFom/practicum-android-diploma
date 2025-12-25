@@ -59,7 +59,7 @@ data class Vacancy(
     }
 
     fun isNotEmpty(): Boolean {
-        return (!isEmpty())
+        return !isEmpty()
     }
 
     // Для создания пустого объекта
@@ -88,6 +88,3 @@ data class Vacancy(
         logoUrl = "",
     )
 }
-
-
-
