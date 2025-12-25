@@ -37,7 +37,7 @@ class VacancyDbConverter {
     }
 
     fun map(vacancy: VacancyEntity?): Vacancy {
-        if (vacancy==null) return Vacancy()
+        if (vacancy == null) return Vacancy()
         val phones: List<String> = vacancy.phone?.split(",") ?: emptyList()
         val skills: List<String> = vacancy.skills?.split(",") ?: emptyList()
         return Vacancy(
