@@ -33,35 +33,35 @@ data class Vacancy(
     val logoUrl: String?
 ) : Parcelable {
     fun isEmpty(): Boolean {
-        return (
-                id.isNullOrEmpty() &&
-                name.isNullOrEmpty() &&
-                description.isNullOrEmpty() &&
-                experience.isNullOrEmpty() &&
-                schedule.isNullOrEmpty() &&
-                employment.isNullOrEmpty() &&
-                areaName.isNullOrEmpty() &&
-                industryName.isNullOrEmpty() &&
-                skills.isNullOrEmpty() &&
-                url.isNullOrEmpty() &&
-                (salaryFrom == null || salaryFrom <= 0) &&
-                (salaryTo == null || salaryTo <= 0) &&
-                currency.isNullOrEmpty() &&
-                city.isNullOrEmpty() &&
-                street.isNullOrEmpty() &&
-                building.isNullOrEmpty() &&
-                fullAddress.isNullOrEmpty() &&
-                contactName.isNullOrEmpty() &&
-                email.isNullOrEmpty() &&
-                phone.isNullOrEmpty() &&
-                employerName.isNullOrEmpty() &&
-                logoUrl.isNullOrEmpty()
-            )
+        val isEmpty = id.isNullOrEmpty() &&
+            name.isNullOrEmpty() &&
+            description.isNullOrEmpty() &&
+            experience.isNullOrEmpty() &&
+            schedule.isNullOrEmpty() &&
+            employment.isNullOrEmpty() &&
+            areaName.isNullOrEmpty() &&
+            industryName.isNullOrEmpty() &&
+            skills.isNullOrEmpty() &&
+            url.isNullOrEmpty() &&
+            (salaryFrom == null || salaryFrom <= 0) &&
+            (salaryTo == null || salaryTo <= 0) &&
+            currency.isNullOrEmpty() &&
+            city.isNullOrEmpty() &&
+            street.isNullOrEmpty() &&
+            building.isNullOrEmpty() &&
+            fullAddress.isNullOrEmpty() &&
+            contactName.isNullOrEmpty() &&
+            email.isNullOrEmpty() &&
+            phone.isNullOrEmpty() &&
+            employerName.isNullOrEmpty() &&
+            logoUrl.isNullOrEmpty()
+        return isEmpty
     }
 
     fun isNotEmpty(): Boolean {
         return (!isEmpty())
     }
+
     // Для создания пустого объекта
     constructor() : this(
         id = "",
