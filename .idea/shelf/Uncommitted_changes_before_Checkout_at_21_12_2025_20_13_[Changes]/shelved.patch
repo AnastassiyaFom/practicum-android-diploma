@@ -1,0 +1,53 @@
+Index: app/src/main/java/ru/practicum/android/diploma/RootActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma\r\n\r\nimport android.os.Bundle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport ru.practicum.android.diploma.BuildConfig\r\n\r\nclass RootActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_root)\r\n\r\n        // Пример использования access token для HeadHunter API\r\n        networkRequestExample(accessToken = BuildConfig.API_ACCESS_TOKEN)\r\n    }\r\n\r\n    private fun networkRequestExample(accessToken: String) {\r\n        // ...\r\n    }\r\n\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/RootActivity.kt b/app/src/main/java/ru/practicum/android/diploma/RootActivity.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/RootActivity.kt	(revision 4a21300e3570ef2e3e62012b06410cf2bff7b014)
++++ b/app/src/main/java/ru/practicum/android/diploma/RootActivity.kt	(date 1766336729091)
+@@ -1,14 +1,44 @@
+ package ru.practicum.android.diploma
+ 
+ import android.os.Bundle
++import android.view.View
+ import androidx.appcompat.app.AppCompatActivity
++import androidx.navigation.fragment.NavHostFragment
++import androidx.navigation.ui.setupWithNavController
++import com.google.android.material.bottomnavigation.BottomNavigationView
+ import ru.practicum.android.diploma.BuildConfig
+ 
+ class RootActivity : AppCompatActivity() {
++
++    private val bottomNavDestinations = setOf(
++        R.id.searchFragment,
++        R.id.favoritesFragment,
++        R.id.teamFragment
++    )
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_root)
+ 
++        val navHostFragment = supportFragmentManager
++            .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
++            ?: error("NavHostFragment not found")
++
++        val navController = navHostFragment.navController
++
++        val bottomNavigationView =
++            findViewById<BottomNavigationView>(R.id.bottom_navigation)
++
++        bottomNavigationView.setupWithNavController(navController)
++
++        navController.addOnDestinationChangedListener { _, destination, _ ->
++            bottomNavigationView.visibility =
++                if (destination.id in bottomNavDestinations) {
++                    View.VISIBLE
++                } else {
++                    View.GONE
++                }
++        }
++
+         // Пример использования access token для HeadHunter API
+         networkRequestExample(accessToken = BuildConfig.API_ACCESS_TOKEN)
+     }

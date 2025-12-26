@@ -1,0 +1,5 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/searchFragment" android:title="@string/title_main" android:icon="@drawable/ic_main" />
+    <item android:id="@+id/favoritesFragment" android:title="@string/title_favorites" android:icon="@drawable/ic_favorites" />
+    <item android:id="@+id/teamFragment" android:title="@string/title_team" android:icon="@drawable/ic_team" />
+</menu>
