@@ -16,7 +16,6 @@ class VacancyViewHolder(private val binding: VacancyItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: Vacancy) {
-
         binding.vacancyNameAndArea.text = model.vacancyTitle
         binding.employerName.text = model.employerName
         binding.salary.text = model.salaryTitle
@@ -24,7 +23,7 @@ class VacancyViewHolder(private val binding: VacancyItemBinding) :
             .load(model.logoUrl?.toUri())
             .placeholder(R.drawable.logo_placeholder)
             .centerCrop()
-            .transform(RoundedCorners(dpToPixel(12f)))
+            .transform(RoundedCorners(dpToPixel(CORNER_RADIUS)))
             .into(binding.logo)
     }
 
@@ -35,6 +34,7 @@ class VacancyViewHolder(private val binding: VacancyItemBinding) :
     }
 
     companion object {
+        val CORNER_RADIUS = 12f
         fun from(parent: ViewGroup): VacancyViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = VacancyItemBinding.inflate(inflater, parent, false)
