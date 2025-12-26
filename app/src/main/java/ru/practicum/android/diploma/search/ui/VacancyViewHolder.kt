@@ -34,7 +34,7 @@ class VacancyViewHolder(private val binding: VacancyItemBinding) :
     }
 
     companion object {
-        val CORNER_RADIUS = 12f
+        const val CORNER_RADIUS = 12f
         fun from(parent: ViewGroup): VacancyViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = VacancyItemBinding.inflate(inflater, parent, false)

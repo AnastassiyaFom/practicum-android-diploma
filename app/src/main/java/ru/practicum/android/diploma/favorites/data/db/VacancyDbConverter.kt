@@ -45,7 +45,7 @@ class VacancyDbConverter {
         return Vacancy(
             id = vacancy.id,
             name = vacancy.name,
-            description = vacancy.description?:"",
+            description = vacancy.description ?: "",
             vacancyTitle = vacancy.vacancyTitle,
             experience = vacancy.experience,
             schedule = vacancy.schedule,
