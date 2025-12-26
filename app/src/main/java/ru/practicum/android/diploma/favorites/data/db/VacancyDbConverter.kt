@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.favorites.data.db
 
+import ru.practicum.android.diploma.search.data.dto.Salary
 import ru.practicum.android.diploma.search.domain.models.Vacancy
+import ru.practicum.android.diploma.util.VacancyDtoMapper
 
 class VacancyDbConverter {
     fun map(vacancy: Vacancy): VacancyEntity {
@@ -43,6 +45,7 @@ class VacancyDbConverter {
         return Vacancy(
             id = vacancy.id,
             name = vacancy.name,
+            vacancyTitle = VacancyDtoMapper.formatVacancyTitle(vacancy.name, vacancy.areaName),
             description = vacancy.description,
             experience = vacancy.experience,
             schedule = vacancy.schedule,
@@ -55,6 +58,7 @@ class VacancyDbConverter {
             salaryFrom = vacancy.salaryFrom,
             salaryTo = vacancy.salaryTo,
             currency = vacancy.currency,
+            salaryTitle = VacancyDtoMapper.formatSalary(Salary(vacancy.salaryFrom, vacancy.salaryTo, vacancy.currency)),
             // Поля адреса
             city = vacancy.city,
             street = vacancy.street,

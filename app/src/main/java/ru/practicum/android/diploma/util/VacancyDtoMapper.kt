@@ -39,7 +39,7 @@ object VacancyDtoMapper {
         return dtoList.map { map(it) }
     }
 
-    private fun formatVacancyTitle(vacancyName: String, city: String?): String {
+    fun formatVacancyTitle(vacancyName: String, city: String?): String {
         return buildString {
             append(vacancyName)
             city?.let {
@@ -51,7 +51,7 @@ object VacancyDtoMapper {
         }
     }
 
-    private fun formatSalary(salary: Salary?): String {
+    fun formatSalary(salary: Salary?): String {
         return if (salary != null) {
             buildString {
                 val formattedFrom = salary.from?.let { formatNumber(it) }
