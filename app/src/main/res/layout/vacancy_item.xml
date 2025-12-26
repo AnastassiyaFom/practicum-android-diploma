@@ -18,7 +18,6 @@
     <TextView
         android:id="@+id/vacancy_name_and_area"
         style="@style/TextAppearance.Medium22"
-
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/logo"
@@ -26,7 +25,7 @@
         tools:text="Android-разработчик, Москва" />
 
     <TextView
-        android:id="@+id/employerName"
+        android:id="@+id/employer_name"
         style="@style/TextAppearance.Regular16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

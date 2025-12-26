@@ -8,6 +8,7 @@ data class Vacancy(
     val id: String,
     val name: String,
     val description: String,
+    val vacancyTitle: String,
     val experience: String?,
     val schedule: String?,
     val employment: String?,
@@ -19,6 +20,7 @@ data class Vacancy(
     val salaryFrom: Int?,
     val salaryTo: Int?,
     val currency: String?,
+    val salaryTitle: String,
     // Поля адреса
     val city: String?,
     val street: String?,
@@ -29,7 +31,7 @@ data class Vacancy(
     val email: String?,
     val phone: List<String>?,
     // Работодатель
-    val employerName: String,
+    val employerName: String?,
     val logoUrl: String?
 ) : Parcelable {
 
@@ -38,6 +40,7 @@ data class Vacancy(
         id = "",
         name = "",
         description = "",
+        vacancyTitle="",
         experience = "",
         schedule = "",
         employment = "",
@@ -48,6 +51,7 @@ data class Vacancy(
         salaryFrom = 0,
         salaryTo = 0,
         currency = "",
+        salaryTitle="",
         city = "",
         street = "",
         building = "",
