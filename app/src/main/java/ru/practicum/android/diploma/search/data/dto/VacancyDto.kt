@@ -1,6 +1,9 @@
-package ru.practicum.android.diploma.common.model
+package ru.practicum.android.diploma.search.data.dto
 
-data class Vacancy(
+import ru.practicum.android.diploma.common.model.FilterArea
+import ru.practicum.android.diploma.common.model.FilterIndustry
+
+data class VacancyDto(
     val id: String,
     val name: String,
     val description: String?,
