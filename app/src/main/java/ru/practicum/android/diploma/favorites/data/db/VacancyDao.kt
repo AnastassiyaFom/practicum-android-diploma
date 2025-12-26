@@ -13,6 +13,9 @@ interface VacancyDao {
     @Query("SELECT * FROM vacancies WHERE id = :id LIMIT 1")
     suspend fun getVacancyById(id: String): VacancyEntity?
 
+    @Query("SELECT * FROM vacancies")
+    suspend fun getAllVacancies(): List<VacancyEntity?>
+
     @Query("DELETE FROM vacancies WHERE id = :id")
     suspend fun deleteVacancyById(id: String)
 }
