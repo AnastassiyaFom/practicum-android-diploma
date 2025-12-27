@@ -12,14 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 
-
-
 class VacancyFragment : Fragment() {
 
     companion object {
         private const val VACANCY_SHARE_URL = "https://example.com/vacancy"
     }
 
+    private var isFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,33 +31,40 @@ class VacancyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnBack = view.findViewById<ImageButton>(R.id.btn_back)
-        val btnShare = view.findViewById<ImageButton>(R.id.btn_share)
-        val btnFavorite = view.findViewById<ImageButton>(R.id.btn_favorite)
-        val tvPhone = view.findViewById<TextView>(R.id.tvPhone)
-        val tvEmail = view.findViewById<TextView>(R.id.tvEmail)
+        setupBack(view)
+        setupShare(view)
+        setupFavorite(view)
+        setupPhone(view)
+        setupEmail(view)
+    }
 
-        btnBack.setOnClickListener {
+    private fun setupBack(view: View) {
+        view.findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
             findNavController().navigateUp()
         }
+    }
 
-        btnShare.setOnClickListener {
+    private fun setupShare(view: View) {
+        view.findViewById<ImageButton>(R.id.btn_share).setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, VACANCY_SHARE_URL)
             }
             startActivity(Intent.createChooser(intent, null))
         }
+    }
 
-        var isFavorite = false
-        btnFavorite.setOnClickListener {
+    private fun setupFavorite(view: View) {
+        view.findViewById<ImageButton>(R.id.btn_favorite).setOnClickListener { button ->
             isFavorite = !isFavorite
-            btnFavorite.setImageResource(
+            (button as ImageButton).setImageResource(
                 if (isFavorite) R.drawable.favorites_on else R.drawable.ic_favorites_off
             )
         }
+    }
 
-
+    private fun setupPhone(view: View) {
+        val tvPhone = view.findViewById<TextView>(R.id.tvPhone)
         tvPhone.setOnClickListener {
             val phone = tvPhone.text?.toString().orEmpty().trim()
             if (phone.isNotEmpty()) {
@@ -68,8 +74,10 @@ class VacancyFragment : Fragment() {
                 startActivity(Intent.createChooser(intent, null))
             }
         }
+    }
 
-
+    private fun setupEmail(view: View) {
+        val tvEmail = view.findViewById<TextView>(R.id.tvEmail)
         tvEmail.setOnClickListener {
             val email = tvEmail.text?.toString().orEmpty().trim()
             if (email.isNotEmpty()) {
