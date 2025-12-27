@@ -15,4 +15,10 @@
     <string name="team_member_fomenkova">Анастасия Фоменкова</string>
     <string name="team_member_koposova">Елизавета Копосова</string>
     <string name="team_member_kovalevich">Виталий Ковалевич</string>
+    <string name="open_search_filters">Открыть фильтры поиска</string>
+    <string name="enter_query">Введите запрос</string>
+    <string name="search_results_are_empty">Ничего не найдено</string>
+    <string name="no_internet">Нет интернета</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="load_list_error">Не удалось получить список вакансий</string>
 </resources>

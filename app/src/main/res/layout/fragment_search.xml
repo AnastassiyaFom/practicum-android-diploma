@@ -1,30 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:paddingHorizontal="16dp">
 
     <TextView
         android:id="@+id/tv_title"
+        style="@style/TextAppearance.Medium22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
         android:text="@string/title_search"
         android:textSize="22sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_filter"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@android:color/transparent"
-        android:padding="8dp"
+        android:contentDescription="@string/open_search_filters"
         android:src="@drawable/ic_filter"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_title"
-        app:layout_constraintBottom_toBottomOf="@id/tv_title"/>
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
 
+    <EditText
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="27dp"
+        android:autofillHints="search | jobTitle"
+        android:background="@drawable/edit_text_field"
+        android:backgroundTint="@null"
+        android:drawableEnd="@drawable/ic_search"
+        android:hint="@string/enter_query"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:lines="1"
+        android:paddingHorizontal="@dimen/padding_16"
+        android:textColor="@color/black"
+        android:textColorHint="?attr/customEditTextHintColor"
+        android:textCursorDrawable="@drawable/cursor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <ImageView
+        android:id="@+id/search_results_are_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/search_results_are_empty"
+        android:src="@drawable/ill_search_results_are_empty"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_input" />
+
+    <TextView
+        android:id="@+id/no_internet"
+        style="@style/Tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/no_internet"
+        android:visibility="gone"
+        app:drawableTopCompat="@drawable/ill_no_internet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_input" />
+
+    <TextView
+        android:id="@+id/server_error"
+        style="@style/Tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/server_error"
+        android:visibility="gone"
+        app:drawableTopCompat="@drawable/ill_server_error"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_input" />
+
+    <TextView
+        android:id="@+id/load_list_error"
+        style="@style/Tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/load_list_error"
+        android:visibility="gone"
+        app:drawableTopCompat="@drawable/ill_list_load_error"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_input" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_input" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_results"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="198dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
