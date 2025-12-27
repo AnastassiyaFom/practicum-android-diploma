@@ -30,7 +30,7 @@ data class VacancyEntity(
     val email: String?,
     val phone: String?,
     // Работодатель
-    val employerName: String?,
+    val employerName: String,
     val logoUrl: String?,
 
 )
