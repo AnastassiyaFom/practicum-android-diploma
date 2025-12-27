@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 
+
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -24,6 +25,11 @@ class SearchFragment : Fragment() {
         binding.btnFilter.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment_to_filterFragment)
         }
+
+        binding.root.setOnClickListener {
+            findNavController().navigate(R.id.vacancyFragment)
+        }
+
     }
 
     override fun onDestroy() {
