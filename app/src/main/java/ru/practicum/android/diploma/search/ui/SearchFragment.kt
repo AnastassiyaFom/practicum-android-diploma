@@ -36,7 +36,6 @@ class SearchFragment : Fragment() {
         }
 
         drawableEnd.setOnClickListener {
-
             if (!searchInput.text.isNullOrEmpty()) {
                 searchInput.text?.clear()
             }
