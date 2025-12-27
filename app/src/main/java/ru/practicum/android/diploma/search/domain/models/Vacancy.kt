@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Vacancy(
     val id: String,
     val name: String,
+    val vacancyTitle: String,
     val description: String,
     val vacancyTitle: String,
     val experience: String?,
@@ -31,7 +32,7 @@ data class Vacancy(
     val email: String?,
     val phone: List<String>?,
     // Работодатель
-    val employerName: String?,
+    val employerName: String,
     val logoUrl: String?
 ) : Parcelable {
 
@@ -39,6 +40,7 @@ data class Vacancy(
     constructor() : this(
         id = "",
         name = "",
+        vacancyTitle = "",
         description = "",
         vacancyTitle = "",
         experience = "",
