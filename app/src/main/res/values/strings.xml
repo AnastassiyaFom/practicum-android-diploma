@@ -15,4 +15,8 @@
     <string name="team_member_fomenkova">Анастасия Фоменкова</string>
     <string name="team_member_koposova">Елизавета Копосова</string>
     <string name="team_member_kovalevich">Виталий Ковалевич</string>
+    <string name="experience_title">Требуемый опыт</string>
+    <string name="vacancy_description_title">Описание вакансии</string>
+    <string name="skills_title">Ключевые навыки</string>
+    <string name="contacts_title">Контакты</string>
 </resources>
