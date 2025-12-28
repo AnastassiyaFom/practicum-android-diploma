@@ -89,7 +89,6 @@ class SearchViewModel(
         }
     }
 
-
     private fun processResult(
         vacancies: List<Vacancy>?,
         errorCode: Int?
