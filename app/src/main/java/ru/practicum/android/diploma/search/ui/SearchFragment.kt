@@ -55,6 +55,7 @@ class SearchFragment : Fragment() {
                 SearchState.Idle -> {
                     binding.progressBar.visibility = View.GONE
                     binding.searchResults.visibility = View.GONE
+                    binding.vacancyCounter.visibility = View.GONE
                     showPlaceholder(
                         R.drawable.ill_search_results_are_empty,
                         ""
@@ -68,9 +69,18 @@ class SearchFragment : Fragment() {
                 }
 
                 is SearchState.Content -> {
+                    val count = state.vacancies.size
+
                     binding.progressBar.visibility = View.GONE
                     binding.placeholder.visibility = View.GONE
                     binding.searchResults.visibility = View.VISIBLE
+                    binding.vacancyCounter.text =
+                        resources.getQuantityString(
+                            R.plurals.vacancies_found,
+                            count,
+                            count
+                        )
+                    binding.vacancyCounter.visibility = View.VISIBLE
 
                     adapter.vacancies = state.vacancies
                     adapter.notifyDataSetChanged()
@@ -79,6 +89,8 @@ class SearchFragment : Fragment() {
                 SearchState.Empty -> {
                     binding.progressBar.visibility = View.GONE
                     binding.searchResults.visibility = View.GONE
+                    binding.vacancyCounter.text = getString(R.string.no_vacancy)
+                    binding.vacancyCounter.visibility = View.VISIBLE
                     showPlaceholder(
                         R.drawable.ill_unable_to_get_list,
                         getString(R.string.load_list_error)
@@ -88,6 +100,7 @@ class SearchFragment : Fragment() {
                 is SearchState.Error -> {
                     binding.progressBar.visibility = View.GONE
                     binding.searchResults.visibility = View.GONE
+                    binding.vacancyCounter.visibility = View.GONE
 
                     val (image, text) = when (state.error) {
                         SearchError.NO_INTERNET ->
@@ -157,6 +170,7 @@ class SearchFragment : Fragment() {
 
     private fun hidePlaceholder() {
         binding.placeholder.visibility = View.GONE
+        binding.vacancyCounter.visibility = View.GONE
     }
 
     override fun onDestroyView() {
