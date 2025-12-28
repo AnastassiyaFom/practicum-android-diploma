@@ -10,8 +10,7 @@ import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacanciesRepos
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 
 class FavoritesVacanciesRepositoryImpl(
-    private val favoritesVacanciesTable: VacancyDao,
-    //private val vacancyDbConvertor: VacancyDbConverter,
+    private val favoritesVacanciesTable: VacancyDao
 ) : FavoritesVacanciesRepository {
     override fun addVacancyToFavorites(vacancy: Vacancy) {
         runBlocking {

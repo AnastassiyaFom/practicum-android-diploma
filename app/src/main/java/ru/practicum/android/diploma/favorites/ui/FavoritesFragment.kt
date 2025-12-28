@@ -17,7 +17,6 @@ import ru.practicum.android.diploma.search.ui.OnItemClickListener
 import ru.practicum.android.diploma.search.ui.VacanciesAdapter
 import ru.practicum.android.diploma.util.debounce
 
-
 class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
@@ -51,13 +50,11 @@ class FavoritesFragment : Fragment() {
 
     private fun showContent(vacancies: List<Vacancy>) {
         binding.errors.visibility = View.GONE
-        onVacancyClickDebounce = debounce<Vacancy>(CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false)
-        { vacancy ->
-            toVacancyDetail(vacancy)
+        onVacancyClickDebounce = debounce<Vacancy>(CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false) {
+            vacancy -> toVacancyDetail(vacancy.id)
         }
         binding.vacanciesList.adapter = VacanciesAdapter(vacancies, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
-                //Для предотвращения двойных нажатий на элемент
                 onVacancyClickDebounce(vacancies[position])
             }
         })
@@ -90,15 +87,15 @@ class FavoritesFragment : Fragment() {
         _binding = null
     }
 
-    private fun toVacancyDetail(item: Vacancy) {
+    private fun toVacancyDetail(itemId: String) {
         findNavController().navigate(
             ru.practicum.android.diploma.R.id.action_favoritesFragment_to_vacancyFragment,
-            bundleOf(ARGS_VACANCY to item)
+            bundleOf(ARGS_VACANCY_ID to itemId)
         )
     }
 
     companion object {
-        const val ARGS_VACANCY = "vacancy"
+        const val ARGS_VACANCY_ID = "id"
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 }
