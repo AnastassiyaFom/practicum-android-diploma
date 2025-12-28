@@ -27,9 +27,8 @@ class SearchFragment : Fragment() {
 
     private fun setupSearchInput() {
         binding.searchInput.addTextChangedListener { text ->
-            val isEmpty = text.isNullOrEmpty()
             binding.drawableEnd.setImageResource(
-                if (isEmpty) R.drawable.ic_search else R.drawable.ic_clear
+                if (text.isNullOrEmpty()) R.drawable.ic_search else R.drawable.ic_clear
             )
         }
 
