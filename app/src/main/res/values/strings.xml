@@ -26,4 +26,6 @@
     <string name="vacancy_description_title">Описание вакансии</string>
     <string name="skills_title">Ключевые навыки</string>
     <string name="contacts_title">Контакты</string>
+    <string name="error_unable_to_retr_vac_list">Не удалось получить список вакансий</string>
+    <string name="error_empty_vacancy_list">Cписок вакансий пуст</string>
 </resources>
