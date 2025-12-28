@@ -22,4 +22,8 @@
     <string name="server_error">Ошибка сервера</string>
     <string name="load_list_error">Не удалось получить список вакансий</string>
     <string name="no_vacancy">Таких вакансий нет</string>
+    <string name="experience_title">Требуемый опыт</string>
+    <string name="vacancy_description_title">Описание вакансии</string>
+    <string name="skills_title">Ключевые навыки</string>
+    <string name="contacts_title">Контакты</string>
 </resources>
