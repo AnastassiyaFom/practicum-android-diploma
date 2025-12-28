@@ -17,41 +17,12 @@ class FavoritesViewModel(
 ) : ViewModel() {
     private val stateLiveData = MutableLiveData<FavoritesState>()
     fun observeState(): LiveData<FavoritesState> = stateLiveData
+
     init {
-        //getData()
-        val vacancy: List<Vacancy> = listOf(Vacancy(
-            id = "1",
-            name = "Test 1",
-            description = "vacancy.description ?: ",
-            vacancyTitle = "vacancy.vacancyTitle",
-            experience = "",
-            schedule = "",
-            employment = "",
-            areaName = "",
-            industryName = "",
-            skills = listOf(""),
-            url = "",
-            // Поля зарплаты
-            salaryFrom = 1,
-            salaryTo =0,
-            currency = "",
-            salaryTitle = "Ю-ху",
-            // Поля адреса
-            city = "",
-            street = "",
-            building = "",
-            fullAddress = "",
-            // Контакты
-            contactName = "",
-            email = "",
-            phone = listOf(""),
-            // Работодатель
-            employerName = "",
-            logoUrl = ""
-        ))
-        processResult(vacancy)
+        getData()
     }
-    fun getData(){
+
+    fun getData() {
         viewModelScope.launch {
             favoritesVacanciesInteractor
                 .getAllVacanciesFromFavorites()
@@ -60,15 +31,13 @@ class FavoritesViewModel(
                 }
         }
     }
+
     private fun processResult(vacancies: List<Vacancy?>) {
-        if   (vacancies == null){
+        if (vacancies == null) {
             renderState(FavoritesState.Error)
-        }
-        else if (vacancies.isEmpty()){
+        } else if (vacancies.isEmpty()) {
             renderState(FavoritesState.Empty)
-        }
-        else
-        {
+        } else {
             renderState(FavoritesState.Content(vacancies as List<Vacancy>))
         }
     }
@@ -88,7 +57,8 @@ class FavoritesViewModel(
     public fun getUnableToGetListText(): String {
         return context.getString(R.string.error_unable_to_retr_vac_list)
     }
-    private fun renderState(state:FavoritesState) {
+
+    private fun renderState(state: FavoritesState) {
         stateLiveData.postValue(state)
     }
 

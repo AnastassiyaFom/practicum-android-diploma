@@ -40,18 +40,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/favorites_title" />
-    <TextView
-        android:id="@+id/empty"
-        style="@style/Tittle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="16dp"
-        android:gravity="center_horizontal"
-        android:text="@string/error_empty_vacancy_list"
-        android:visibility="gone"
-        app:drawableTopCompat="@drawable/il_list_is_empty"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favorites_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

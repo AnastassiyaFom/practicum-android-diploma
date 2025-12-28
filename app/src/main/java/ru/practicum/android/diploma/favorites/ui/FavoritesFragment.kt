@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.favorites.ui
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,11 +40,12 @@ class FavoritesFragment : Fragment() {
             render(it)
         }
     }
+
     private fun render(state: FavoritesState) {
-        when (state){
-            is FavoritesState.Empty->showEmpty()
-            is FavoritesState.Error->showError()
-            is FavoritesState.Content->showContent(state.vacancies)
+        when (state) {
+            is FavoritesState.Empty -> showEmpty()
+            is FavoritesState.Error -> showError()
+            is FavoritesState.Content -> showContent(state.vacancies)
         }
     }
 
@@ -53,7 +55,7 @@ class FavoritesFragment : Fragment() {
         { vacancy ->
             toVacancyDetail(vacancy)
         }
-        binding.vacanciesList.adapter = VacanciesAdapter(vacancies, object: OnItemClickListener {
+        binding.vacanciesList.adapter = VacanciesAdapter(vacancies, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 //Для предотвращения двойных нажатий на элемент
                 onVacancyClickDebounce(vacancies[position])
@@ -63,31 +65,29 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun showError() {
-        binding.vacanciesList.visibility=View.GONE
+        binding.vacanciesList.visibility = View.GONE
         binding.errors.apply {
             visibility = View.VISIBLE
-            setCompoundDrawables(null, viewModel.getUnableToGetListDrawable(), null, null)
-            text = viewModel.getUnableToGetListText()
+            setCompoundDrawablesWithIntrinsicBounds(null, viewModel.getUnableToGetListDrawable(), null, null)
+            setText(viewModel.getUnableToGetListText())
+            gravity = Gravity.CENTER
         }
     }
 
     private fun showEmpty() {
-        binding.vacanciesList.visibility=View.GONE
-       /* binding.errors.apply {
+        binding.vacanciesList.visibility = View.GONE
+        binding.errors.apply {
             visibility = View.VISIBLE
-            setCompoundDrawables(null, viewModel.getEmptyVacancyListDrawable(), null, null)
-            text = viewModel.getEmptyVacancyListText()
-            gravity = View.TEXT_ALIGNMENT_CENTER
+            setCompoundDrawablesWithIntrinsicBounds(null, viewModel.getEmptyVacancyListDrawable(), null, null)
+            setText(viewModel.getEmptyVacancyListText())
+            gravity = Gravity.CENTER
         }
-        */
-        binding.errors.visibility=View.GONE
-        binding.empty.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-         binding.vacanciesList.adapter = null
-        _binding=null
+        binding.vacanciesList.adapter = null
+        _binding = null
     }
 
     private fun toVacancyDetail(item: Vacancy) {
@@ -96,10 +96,9 @@ class FavoritesFragment : Fragment() {
             bundleOf(ARGS_VACANCY to item)
         )
     }
+
     companion object {
         const val ARGS_VACANCY = "vacancy"
         private const val CLICK_DEBOUNCE_DELAY = 1000L
-        fun newInstance() =FavoritesFragment().apply {
-        }
     }
 }
