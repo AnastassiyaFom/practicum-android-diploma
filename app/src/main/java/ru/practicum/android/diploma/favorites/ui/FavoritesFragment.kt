@@ -26,7 +26,6 @@ class FavoritesFragment : Fragment() {
             toVacancyDetail(vacancy.id)
         }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
