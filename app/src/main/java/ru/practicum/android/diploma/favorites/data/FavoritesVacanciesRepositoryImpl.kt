@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.search.domain.models.Vacancy
 
 class FavoritesVacanciesRepositoryImpl(
     private val favoritesVacanciesTable: VacancyDao,
-    private val vacancyDbConvertor: VacancyDbConverter,
+    //private val vacancyDbConvertor: VacancyDbConverter,
 ) : FavoritesVacanciesRepository {
     override fun addVacancyToFavorites(vacancy: Vacancy) {
         runBlocking {
@@ -40,15 +40,15 @@ class FavoritesVacanciesRepositoryImpl(
     }
 
     private fun convertFromEntityToVacancy(vacancy: VacancyEntity): Vacancy {
-        return vacancyDbConvertor.map(vacancy)
+        return VacancyDbConverter.map(vacancy)
     }
 
     private fun convertFromEntityToVacancy(vacancy: List<VacancyEntity?>): List<Vacancy> {
-        return vacancy.map { vacancyItem -> vacancyDbConvertor.map(vacancyItem) }
+        return vacancy.map { vacancyItem -> VacancyDbConverter.map(vacancyItem) }
     }
 
     private fun convertFromVacancyToEntity(vacancy: Vacancy): VacancyEntity {
-        return vacancyDbConvertor.map(vacancy)
+        return VacancyDbConverter.map(vacancy)
     }
 
 }
