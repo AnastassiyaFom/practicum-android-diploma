@@ -1,0 +1,8 @@
+package ru.practicum.android.diploma.search.ui
+
+sealed interface SearchEvent {
+
+    data class OpenVacancy(
+        val vacancyId: String
+    ) : SearchEvent
+}
