@@ -13,7 +13,6 @@ import ru.practicum.android.diploma.common.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.common.network.VacancyApi
 import ru.practicum.android.diploma.favorites.data.db.AppDatabase
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
-import ru.practicum.android.diploma.favorites.data.db.VacancyDbConverter
 import ru.practicum.android.diploma.search.data.SearchVacanciesRepositoryImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesRepository
 import java.util.concurrent.TimeUnit

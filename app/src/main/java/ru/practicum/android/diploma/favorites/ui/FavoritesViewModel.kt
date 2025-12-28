@@ -42,19 +42,19 @@ class FavoritesViewModel(
         }
     }
 
-    public fun getEmptyVacancyListDrawable(): Drawable? {
+    fun getEmptyVacancyListDrawable(): Drawable? {
         return context.getDrawable(R.drawable.il_list_is_empty)
     }
 
-    public fun getUnableToGetListDrawable(): Drawable? {
+    fun getUnableToGetListDrawable(): Drawable? {
         return context.getDrawable(R.drawable.ill_unable_to_get_list)
     }
 
-    public fun getEmptyVacancyListText(): String {
+    fun getEmptyVacancyListText(): String {
         return context.getString(R.string.error_empty_vacancy_list)
     }
 
-    public fun getUnableToGetListText(): String {
+    fun getUnableToGetListText(): String {
         return context.getString(R.string.error_unable_to_retr_vac_list)
     }
 
