@@ -15,4 +15,6 @@
     <string name="team_member_fomenkova">Анастасия Фоменкова</string>
     <string name="team_member_koposova">Елизавета Копосова</string>
     <string name="team_member_kovalevich">Виталий Ковалевич</string>
+    <string name="error_unable_to_retr_vac_list">Не удалось получить список вакансий</string>
+    <string name="error_list_is_empty">Список пуст</string>
 </resources>
