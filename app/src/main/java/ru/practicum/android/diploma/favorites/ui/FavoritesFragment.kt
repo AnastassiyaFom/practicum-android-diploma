@@ -94,6 +94,6 @@ class FavoritesFragment : Fragment() {
 
     companion object {
         const val ARGS_VACANCY_ID = "id"
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val CLICK_DEBOUNCE_DELAY = 500L
     }
 }
