@@ -18,7 +18,7 @@ class SearchViewModel(
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
-        private const val MIN_QUERY_LENGTH = 2
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
     private val _state = MutableLiveData<SearchState>(SearchState.Idle)
@@ -32,36 +32,37 @@ class SearchViewModel(
 
     private var debounceJob: Job? = null
     private var requestJob: Job? = null
+    private var clickJob: Job? = null
 
     private var searchRequestJob: Job? = null
     private var lastQuery: String = ""
 
     fun onQueryChanged(text: String) {
         _query.value = text
-
-        if (text.length < MIN_QUERY_LENGTH) return
         if (text == lastQuery) return
-
         lastQuery = text
         debounceSearch(text)
     }
 
     fun clearQuery() {
         debounceJob?.cancel()
-        requestJob?.cancel()
+        searchRequestJob?.cancel()
         lastQuery = ""
         _query.value = ""
         _state.value = SearchState.Idle
     }
 
     fun onVacancyClicked(vacancy: Vacancy) {
-        _events.value = SearchEvent.OpenVacancy(vacancy.id)
+        if (clickJob?.isActive == true) return
+
+        clickJob = viewModelScope.launch {
+            _events.value = SearchEvent.OpenVacancy(vacancy.id)
+            delay(CLICK_DEBOUNCE_DELAY)
+        }
     }
 
     fun onFiltersChanged() {
-        if (lastQuery.length >= MIN_QUERY_LENGTH) {
-            performSearch(lastQuery)
-        }
+        performSearch(lastQuery)
     }
 
     private fun debounceSearch(query: String) {

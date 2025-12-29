@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,11 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
+
+    companion object {
+        private const val ARGS_VACANCY_ID = "id"
+    }
+
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -92,13 +98,13 @@ class SearchFragment : Fragment() {
 
     private fun observeEvents() {
         viewModel.events.observe(viewLifecycleOwner) { event ->
-            if (event is SearchEvent.OpenVacancy) {
-                findNavController().navigate(
-                    R.id.action_searchFragment_to_vacancyFragment,
-                    Bundle().apply {
-                        putString("vacancyId", event.vacancyId)
-                    }
-                )
+            when (event) {
+                is SearchEvent.OpenVacancy -> {
+                    findNavController().navigate(
+                        R.id.action_searchFragment_to_vacancyFragment,
+                        bundleOf(ARGS_VACANCY_ID to event.vacancyId)
+                    )
+                }
             }
         }
     }
