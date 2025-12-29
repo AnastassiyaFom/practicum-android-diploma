@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.favorites.ui
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -61,21 +62,19 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun showError() {
-        binding.vacanciesList.visibility = View.GONE
-        binding.errors.apply {
-            visibility = View.VISIBLE
-            setCompoundDrawablesWithIntrinsicBounds(null, viewModel.getUnableToGetListDrawable(), null, null)
-            setText(viewModel.getUnableToGetListText())
-            gravity = Gravity.CENTER
-        }
+        showPlaceholder(viewModel.getUnableToGetListDrawable(), viewModel.getUnableToGetListText())
     }
 
     private fun showEmpty() {
+        showPlaceholder(viewModel.getEmptyVacancyListDrawable(), viewModel.getEmptyVacancyListText())
+    }
+
+    private fun showPlaceholder(drawable: Drawable?, text: String) {
         binding.vacanciesList.visibility = View.GONE
         binding.errors.apply {
             visibility = View.VISIBLE
-            setCompoundDrawablesWithIntrinsicBounds(null, viewModel.getEmptyVacancyListDrawable(), null, null)
-            setText(viewModel.getEmptyVacancyListText())
+            setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            setText(text)
             gravity = Gravity.CENTER
         }
     }
