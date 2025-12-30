@@ -20,7 +20,6 @@ class SearchFragment : Fragment() {
         private const val ARGS_VACANCY_ID = "id"
     }
 
-
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
