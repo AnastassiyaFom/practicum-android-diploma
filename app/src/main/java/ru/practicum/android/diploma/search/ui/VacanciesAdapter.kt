@@ -9,7 +9,7 @@ interface OnItemClickListener {
 }
 
 class VacanciesAdapter(
-    private val vacancies: List<Vacancy>,
+    var vacancies: List<Vacancy>,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<VacancyViewHolder>() {
 
@@ -24,5 +24,5 @@ class VacanciesAdapter(
         }
     }
 
-    override fun getItemCount() = vacancies.size
+    override fun getItemCount(): Int = vacancies.size
 }
