@@ -61,5 +61,7 @@ val dataModule = module {
     }
 
     factory { Gson() }
+
     single<VacancyDao> { get<AppDatabase>().vacancyDao() }
+
 }

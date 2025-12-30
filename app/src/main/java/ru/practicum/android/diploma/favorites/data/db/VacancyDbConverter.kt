@@ -4,7 +4,7 @@ import ru.practicum.android.diploma.search.data.dto.Salary
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.util.VacancyDtoMapper
 
-class VacancyDbConverter {
+object VacancyDbConverter {
     fun map(vacancy: Vacancy): VacancyEntity {
         val phonesString = vacancy.phone?.joinToString(separator = ",")
         val skillsString = vacancy.skills?.joinToString(separator = ",")

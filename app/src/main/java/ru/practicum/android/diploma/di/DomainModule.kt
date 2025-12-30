@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.favorites.domain.impl.FavoritesVacanciesInte
 val domainModule = module {
 
     factory<FavoritesVacanciesRepository> {
-        FavoritesVacanciesRepositoryImpl(get(), get())
+        FavoritesVacanciesRepositoryImpl(get())
     }
 
     factory<FavoritesVacanciesInteractor> {
