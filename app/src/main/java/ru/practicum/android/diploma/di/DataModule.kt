@@ -66,7 +66,7 @@ val dataModule = module {
 
     single<VacancyDao> { get<AppDatabase>().vacancyDao() }
 
-    factory<ExternalNavigator>{
+    factory<ExternalNavigator> {
         ExternalNavigatorImpl(get())
     }
 

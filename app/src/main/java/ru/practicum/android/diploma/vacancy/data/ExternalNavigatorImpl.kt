@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.vacancy.domain.ExternalNavigator
 
 class ExternalNavigatorImpl(private val context: Context) : ExternalNavigator {
     override fun share(vacancyUrl: String) {
-
         val shareAppIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
