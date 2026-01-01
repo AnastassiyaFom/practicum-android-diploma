@@ -22,10 +22,6 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FavoritesViewModel by inject()
-    private var onVacancyClickDebounce: (Vacancy) -> Unit =
-        debounce<Vacancy>(CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false) { vacancy ->
-            toVacancyDetail(vacancy.id)
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +48,10 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun showContent(vacancies: List<Vacancy>) {
+        val onVacancyClickDebounce: (Vacancy) -> Unit =
+            debounce<Vacancy>(CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false) { vacancy ->
+                toVacancyDetail(vacancy.id)
+            }
         binding.errors.visibility = View.GONE
         binding.vacanciesList.adapter = VacanciesAdapter(vacancies, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
