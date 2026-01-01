@@ -15,6 +15,8 @@ import ru.practicum.android.diploma.favorites.data.db.AppDatabase
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
 import ru.practicum.android.diploma.search.data.SearchVacanciesRepositoryImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesRepository
+import ru.practicum.android.diploma.vacancy.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.vacancy.domain.ExternalNavigator
 import java.util.concurrent.TimeUnit
 
 private const val CONNECT_TIMEOUT_SECONDS = 30L
@@ -63,5 +65,9 @@ val dataModule = module {
     factory { Gson() }
 
     single<VacancyDao> { get<AppDatabase>().vacancyDao() }
+
+    factory<ExternalNavigator> {
+        ExternalNavigatorImpl(get())
+    }
 
 }
