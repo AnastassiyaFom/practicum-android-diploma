@@ -8,16 +8,14 @@ import ru.practicum.android.diploma.search.data.dto.Salary
 interface FilterParametersInteractor {
     fun getAllFilters(): FilterParameters
     fun saveAllFilters(filters: FilterParameters)
-    fun getArea():FilterArea
-    fun getIndustry():FilterIndustry
-    fun getPlaceOfWork(): String
+    fun getSalary(): Int
+    fun saveSalary(salary: Int)
+    fun getWithoutSalaryAllowedFlag(): Boolean
+    fun saveWithoutSalaryAllowedFlag(flag: Boolean)
+    fun getIndustry(): String
+    fun saveIndustry(industry: String)
     fun getCountry(): String
-    fun getRegion(): String
-    fun getSalary(): Salary
-    fun saveArea(area: FilterArea)
-    fun saveIndustry(industry: FilterIndustry)
-    fun savePlaceOfWork(place: String)
     fun saveCountry(country: String)
+    fun getRegion(): String
     fun saveRegion(region: String)
-    fun saveSalary(salary: Salary)
 }
