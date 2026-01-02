@@ -11,8 +11,8 @@ import ru.practicum.android.diploma.util.NetworkCodes
 import ru.practicum.android.diploma.util.VacancyDtoMapper
 
 class SearchVacanciesRepositoryImpl(private val networkClient: NetworkClient) : SearchVacanciesRepository {
-    override fun searchVacancies(expression: String): Flow<Resource<List<Vacancy>>> = flow {
-        val response = networkClient.doRequest(VacancyRequest(expression))
+    override fun searchVacancies(expression: String, page: Int): Flow<Resource<List<Vacancy>>> = flow {
+        val response = networkClient.doRequest(VacancyRequest(expression, page))
         when (response.resultCode) {
             NetworkCodes.NO_NETWORK_CODE -> {
                 emit(Resource.Error(NetworkCodes.NO_NETWORK_CODE))
@@ -21,7 +21,7 @@ class SearchVacanciesRepositoryImpl(private val networkClient: NetworkClient) : 
             NetworkCodes.SUCCESS_CODE -> {
                 val vacanciesResponse = response as VacancyResponse
                 val data = VacancyDtoMapper.mapList(vacanciesResponse.items)
-                emit(Resource.Success(data))
+                emit(Resource.Success(data, vacanciesResponse.found, vacanciesResponse.pages))
             }
 
             NetworkCodes.NOT_FOUND_CODE -> {

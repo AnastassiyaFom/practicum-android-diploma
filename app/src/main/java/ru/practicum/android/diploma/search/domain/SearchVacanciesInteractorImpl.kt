@@ -7,15 +7,24 @@ import ru.practicum.android.diploma.search.domain.models.Vacancy
 
 class SearchVacanciesInteractorImpl(private val vacanciesRepository: SearchVacanciesRepository) :
     SearchVacanciesInteractor {
-    override fun searchVacancies(expression: String): Flow<Pair<List<Vacancy>?, Int?>> {
-        return vacanciesRepository.searchVacancies(expression).map { result ->
+    override fun searchVacancies(
+        expression: String,
+        page: Int
+    ): Flow<Pair<Pair<List<Vacancy>?, Int?>, Pair<Int?, Int?>>> {
+        return vacanciesRepository.searchVacancies(expression, page).map { result ->
             when (result) {
                 is Resource.Success -> {
-                    Pair(result.data, null)
+                    Pair(
+                        Pair(result.data, null),
+                        Pair(result.totalFound, result.totalPages)
+                    )
                 }
 
                 is Resource.Error -> {
-                    Pair(null, result.code)
+                    Pair(
+                        Pair(null, result.code), // vacancies и errorCode
+                        Pair(null, null) // totalFound и totalPages
+                    )
                 }
             }
         }
