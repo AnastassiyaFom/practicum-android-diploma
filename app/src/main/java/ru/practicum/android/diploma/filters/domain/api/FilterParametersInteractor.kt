@@ -1,9 +1,7 @@
 package ru.practicum.android.diploma.filters.domain.api
 
-import ru.practicum.android.diploma.common.model.FilterArea
-import ru.practicum.android.diploma.common.model.FilterIndustry
 import ru.practicum.android.diploma.filters.data.FilterParameters
-import ru.practicum.android.diploma.search.data.dto.Salary
+import ru.practicum.android.diploma.filters.data.PlaceOfWork
 
 interface FilterParametersInteractor {
     fun getAllFilters(): FilterParameters
@@ -14,8 +12,6 @@ interface FilterParametersInteractor {
     fun saveWithoutSalaryAllowedFlag(flag: Boolean)
     fun getIndustry(): String
     fun saveIndustry(industry: String)
-    fun getCountry(): String
-    fun saveCountry(country: String)
-    fun getRegion(): String
-    fun saveRegion(region: String)
+    fun getPlaceOfWork(): PlaceOfWork
+    fun savePlaceOfWork(placeOfWork: PlaceOfWork)
 }
