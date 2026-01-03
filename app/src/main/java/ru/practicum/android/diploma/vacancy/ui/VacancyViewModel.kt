@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.util.NetworkCodes
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsInteractor
+import ru.practicum.android.diploma.vacancy.domain.models.VacancyDetails
 
 class VacancyViewModel(
     private val interactor: VacancyDetailsInteractor
@@ -29,17 +30,20 @@ class VacancyViewModel(
         }
     }
 
-    private fun processResult(details: Any?, errorCode: Int?) {
+    private fun processResult(details: VacancyDetails?, errorCode: Int?) {
         when {
             errorCode == NetworkCodes.NOT_FOUND_CODE -> {
                 _state.value = VacancyState.NotFound
             }
+
             errorCode != null -> {
                 _state.value = VacancyState.Error(mapError(errorCode))
             }
+
             details != null -> {
-                _state.value = VacancyState.Content(details as ru.practicum.android.diploma.vacancy.domain.models.VacancyDetails)
+                _state.value = VacancyState.Content(details)
             }
+
             else -> {
                 _state.value = VacancyState.Error(VacancyError.LOAD_ERROR)
             }

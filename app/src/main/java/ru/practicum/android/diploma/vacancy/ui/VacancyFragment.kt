@@ -22,6 +22,7 @@ class VacancyFragment : Fragment() {
     companion object {
         private const val ARG_VACANCY_ID = "vacancyId"
     }
+
     private val viewModel: VacancyViewModel by viewModel()
 
     private var vacancyId: String? = null
@@ -142,11 +143,22 @@ class VacancyFragment : Fragment() {
     }
 
     private fun bindDetails(view: View, details: VacancyDetails) {
+        bindHeader(view, details)
+        bindCompany(view, details)
+        bindWorkInfo(view, details)
+        bindDescription(view, details)
+        bindSkills(view, details)
+        bindContacts(view, details)
+    }
+
+    private fun bindHeader(view: View, details: VacancyDetails) {
         view.findViewById<TextView>(R.id.tvVacancyTitle).text = details.name
-
         view.findViewById<TextView>(R.id.tvSalary).text = formatSalary(details)
+    }
 
+    private fun bindCompany(view: View, details: VacancyDetails) {
         view.findViewById<TextView>(R.id.tvCompanyName).text = details.employerName
+        view.findViewById<TextView>(R.id.tvCompanyCity).text = formatAddress(details)
 
         val logoView = view.findViewById<ImageView>(R.id.ivCompanyLogo)
         val logoUrl = details.employerLogoUrl.orEmpty().trim()
@@ -160,20 +172,25 @@ class VacancyFragment : Fragment() {
         } else {
             logoView.setImageResource(R.drawable.logo)
         }
+    }
 
-        view.findViewById<TextView>(R.id.tvCompanyCity).text = formatAddress(details)
-
+    private fun bindWorkInfo(view: View, details: VacancyDetails) {
         view.findViewById<TextView>(R.id.tvExperienceValue).text = details.experience.orEmpty()
 
         val emp = listOf(details.employment, details.schedule)
             .filter { !it.isNullOrBlank() }
             .joinToString(", ")
-        view.findViewById<TextView>(R.id.tvEmploymentValue).text = emp
 
+        view.findViewById<TextView>(R.id.tvEmploymentValue).text = emp
+    }
+
+    private fun bindDescription(view: View, details: VacancyDetails) {
         val html = details.descriptionHtml.orEmpty()
         view.findViewById<TextView>(R.id.tvDescriptionValue).text =
             HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
+    }
 
+    private fun bindSkills(view: View, details: VacancyDetails) {
         val skillsTitle = view.findViewById<TextView>(R.id.tvSkillsTitle)
         val skillsValue = view.findViewById<TextView>(R.id.tvSkillsValue)
 
@@ -186,7 +203,9 @@ class VacancyFragment : Fragment() {
             skillsValue.visibility = View.VISIBLE
             skillsValue.text = skills.joinToString("\n") { "•   $it" }
         }
+    }
 
+    private fun bindContacts(view: View, details: VacancyDetails) {
         val contactsTitle = view.findViewById<TextView>(R.id.tvContactsTitle)
         val phoneView = view.findViewById<TextView>(R.id.tvPhone)
         val phoneCommentView = view.findViewById<TextView>(R.id.tvPhoneComment)
@@ -198,39 +217,41 @@ class VacancyFragment : Fragment() {
 
         val hasPhone = phone.isNotEmpty()
         val hasEmail = email.isNotEmpty()
-        val hasPhoneComment = phoneComment.isNotEmpty()
+        val hasAnyContacts = hasPhone || hasEmail
 
-        if (!hasPhone && !hasEmail) {
+        if (!hasAnyContacts) {
             contactsTitle.visibility = View.GONE
             phoneView.visibility = View.GONE
             phoneCommentView.visibility = View.GONE
             emailView.visibility = View.GONE
-        } else {
-            contactsTitle.visibility = View.VISIBLE
+            return
+        }
 
-            if (hasPhone) {
-                phoneView.visibility = View.VISIBLE
-                phoneView.text = phone
+        contactsTitle.visibility = View.VISIBLE
 
-                if (hasPhoneComment) {
-                    phoneCommentView.visibility = View.VISIBLE
-                    phoneCommentView.text = phoneComment
-                } else {
-                    phoneCommentView.visibility = View.GONE
-                }
+        if (hasPhone) {
+            phoneView.visibility = View.VISIBLE
+            phoneView.text = phone
+
+            if (phoneComment.isNotEmpty()) {
+                phoneCommentView.visibility = View.VISIBLE
+                phoneCommentView.text = phoneComment
             } else {
-                phoneView.visibility = View.GONE
                 phoneCommentView.visibility = View.GONE
             }
+        } else {
+            phoneView.visibility = View.GONE
+            phoneCommentView.visibility = View.GONE
+        }
 
-            if (hasEmail) {
-                emailView.visibility = View.VISIBLE
-                emailView.text = email
-            } else {
-                emailView.visibility = View.GONE
-            }
+        if (hasEmail) {
+            emailView.visibility = View.VISIBLE
+            emailView.text = email
+        } else {
+            emailView.visibility = View.GONE
         }
     }
+
 
     private fun formatAddress(details: VacancyDetails): String {
         val address = details.address.orEmpty().trim()
@@ -267,11 +288,11 @@ class VacancyFragment : Fragment() {
         view.findViewById<ImageButton>(R.id.btn_share).setOnClickListener {
             val url = vacancyUrl.orEmpty().trim()
             if (url.isNotEmpty()) {
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, url)
-            }
-            startActivity(Intent.createChooser(intent, null))
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, url)
+                }
+                startActivity(Intent.createChooser(intent, null))
             }
         }
     }
