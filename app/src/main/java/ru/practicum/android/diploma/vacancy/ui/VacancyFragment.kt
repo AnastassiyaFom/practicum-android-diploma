@@ -28,7 +28,6 @@ class VacancyFragment : Fragment() {
     private var vacancyId: String? = null
     private var vacancyUrl: String? = null
 
-
     private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -252,7 +251,6 @@ class VacancyFragment : Fragment() {
         }
     }
 
-
     private fun formatAddress(details: VacancyDetails): String {
         val address = details.address.orEmpty().trim()
         if (address.isNotEmpty()) return address
@@ -332,7 +330,3 @@ class VacancyFragment : Fragment() {
         }
     }
 }
-
-
-
-
