@@ -17,7 +17,7 @@ import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 class SearchFragment : Fragment() {
 
     companion object {
-        private const val ARGS_VACANCY_ID = "id"
+        private const val ARGS_VACANCY_ID = "vacancyId"
     }
 
     private var _binding: FragmentSearchBinding? = null
@@ -103,7 +103,9 @@ class SearchFragment : Fragment() {
                         R.id.action_searchFragment_to_vacancyFragment,
                         bundleOf(ARGS_VACANCY_ID to event.vacancyId)
                     )
+                    viewModel.consumeEvent()
                 }
+                null -> Unit
             }
         }
     }
