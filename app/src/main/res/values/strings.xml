@@ -28,4 +28,6 @@
     <string name="contacts_title">Контакты</string>
     <string name="error_unable_to_retr_vac_list">Не удалось получить список вакансий</string>
     <string name="error_empty_vacancy_list">Cписок вакансий пуст</string>
+    <string name="check_internet_connection">Проверьте подключение к интернету</string>
+    <string name="error_occurred">Произошла ошибка</string>
 </resources>

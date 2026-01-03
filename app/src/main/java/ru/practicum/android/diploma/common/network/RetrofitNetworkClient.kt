@@ -17,8 +17,9 @@ class RetrofitNetworkClient(private val context: Context, private val vacancyApi
         return when (dto) {
             is VacancyRequest -> {
                 try {
-                    val response = vacancyApiService.searchVacancies(dto.expression)
-                    response.apply { resultCode = NetworkCodes.SUCCESS_CODE }
+                    val response = vacancyApiService.searchVacancies(dto.expression, dto.page)
+                    response.resultCode = NetworkCodes.SUCCESS_CODE
+                    response
                 } catch (e: HttpException) {
                     Log.w(TAG, "HTTP error: ${e.code()}, message: ${e.message()}")
                     Response().apply { resultCode = e.code() }

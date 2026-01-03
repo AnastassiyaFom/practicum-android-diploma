@@ -5,7 +5,8 @@ import ru.practicum.android.diploma.search.domain.models.Vacancy
 sealed interface SearchState {
     object Idle : SearchState
     object Loading : SearchState
-    data class Content(val vacancies: List<Vacancy>) : SearchState
+    object LoadingNextPage : SearchState
+    data class Content(val vacancies: List<Vacancy>, val totalFound: Int) : SearchState
     object Empty : SearchState
     data class Error(val error: SearchError) : SearchState
 }
