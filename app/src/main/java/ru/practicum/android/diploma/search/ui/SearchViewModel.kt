@@ -19,7 +19,7 @@ class SearchViewModel(
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 1000L
-        private const val DEFAULT_PAGE = 0
+        private const val DEFAULT_PAGE = 1
     }
 
     private val _state = MutableLiveData<SearchState>(SearchState.Idle)
@@ -108,12 +108,13 @@ class SearchViewModel(
 
         searchRequestJob?.cancel()
         searchRequestJob = viewModelScope.launch {
-            interactor.searchVacancies(lastQuery, currentPage).collect { resultPair ->
-                val (vacanciesAndError, totalInfo) = resultPair
-                val (vacancies, errorCode) = vacanciesAndError
-                val (totalFound, totalPages) = totalInfo
-
-                processResult(vacancies, totalFound, totalPages, errorCode)
+            interactor.searchVacancies(lastQuery, currentPage).collect { result ->
+                processResult(
+                    vacancies = result.vacancies,
+                    totalFound = result.totalFound,
+                    totalPages = result.totalPages,
+                    errorCode = if (result.errorCode == 200) null else result.errorCode
+                )
             }
         }
     }
