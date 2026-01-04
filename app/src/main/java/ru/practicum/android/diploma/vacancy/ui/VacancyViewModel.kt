@@ -68,5 +68,4 @@ class VacancyViewModel(
             NetworkCodes.SERVER_ERROR_CODE -> VacancyError.SERVER_ERROR
             else -> VacancyError.LOAD_ERROR
         }
-
-    }
+}

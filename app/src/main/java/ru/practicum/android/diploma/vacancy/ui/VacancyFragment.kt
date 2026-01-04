@@ -291,4 +291,3 @@ class VacancyFragment : Fragment() {
         _binding = null
     }
 }
-
