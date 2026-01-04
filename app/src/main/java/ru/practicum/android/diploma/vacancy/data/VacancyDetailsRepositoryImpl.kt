@@ -28,7 +28,7 @@ class VacancyDetailsRepositoryImpl(
             NetworkCodes.NO_NETWORK_CODE -> {
                 val cached = vacancyDao.getVacancyById(id)
                 if (cached != null) {
-                    emit(Resource.Success(mapFromEntity(cached)))
+                    emit(Resource.Success(mapFromEntity(cached), 1, 1))
                 } else {
                     emit(Resource.Error(NetworkCodes.NO_NETWORK_CODE))
                 }
@@ -40,7 +40,7 @@ class VacancyDetailsRepositoryImpl(
 
                 vacancyDao.insertVacancy(mapToEntity(vacancy))
 
-                emit(Resource.Success(vacancy))
+                emit(Resource.Success(vacancy, 1, 1))
             }
 
             NetworkCodes.NOT_FOUND_CODE -> {
