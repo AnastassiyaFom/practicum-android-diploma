@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.util.NetworkCodes
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsInteractor
-import ru.practicum.android.diploma.vacancy.domain.models.VacancyDetails
 
 class VacancyViewModel(
     private val interactor: VacancyDetailsInteractor
@@ -24,13 +24,13 @@ class VacancyViewModel(
 
         requestJob?.cancel()
         requestJob = viewModelScope.launch {
-            interactor.getVacancyDetails(vacancyId).collect { (details, errorCode) ->
-                processResult(details, errorCode)
+            interactor.getVacancyDetails(vacancyId).collect { (vacancy, errorCode) ->
+                processResult(vacancy, errorCode)
             }
         }
     }
 
-    private fun processResult(details: VacancyDetails?, errorCode: Int?) {
+    private fun processResult(vacancy: Vacancy?, errorCode: Int?) {
         when {
             errorCode == NetworkCodes.NOT_FOUND_CODE -> {
                 _state.value = VacancyState.NotFound
@@ -40,8 +40,21 @@ class VacancyViewModel(
                 _state.value = VacancyState.Error(mapError(errorCode))
             }
 
-            details != null -> {
-                _state.value = VacancyState.Content(details)
+            vacancy != null -> {
+                val skillsText = vacancy.skills
+                    ?.filter { it.isNotBlank() }
+                    ?.joinToString("\n") { "•   $it" }
+
+                val primaryPhone = vacancy.phone
+                    ?.firstOrNull()
+                    ?.trim()
+                    ?.takeIf { it.isNotEmpty() }
+
+                _state.value = VacancyState.Content(
+                    vacancy = vacancy,
+                    skillsText = skillsText,
+                    primaryPhone = primaryPhone
+                )
             }
 
             else -> {

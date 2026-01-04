@@ -7,20 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.practicum.android.diploma.vacancy.domain.models.VacancyDetails
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
+import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
+import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.R
 
 class VacancyFragment : Fragment() {
 
     companion object {
-        private const val ARG_VACANCY_ID = "vacancyId"
+        const val ARG_VACANCY_ID = "vacancyId"
     }
 
     private val viewModel: VacancyViewModel by viewModel()
@@ -29,6 +28,9 @@ class VacancyFragment : Fragment() {
     private var vacancyUrl: String? = null
 
     private var isFavorite = false
+
+    private var _binding: FragmentVacancyBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,47 +42,46 @@ class VacancyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_vacancy, container, false)
-
+        _binding = FragmentVacancyBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupBack(view)
-        setupShare(view)
-        setupFavorite(view)
-        setupPhone(view)
-        setupEmail(view)
-        observeState(view)
+
+        setupBack()
+        setupShare()
+        setupFavorite()
+        setupPhone()
+        setupEmail()
+        observeState()
 
         val id = vacancyId
         if (id != null) {
             viewModel.load(id)
         } else {
             showPlaceholder(
-                view = view,
-                drawableRes = R.drawable.server_error_vacancy,
+                drawableRes = R.drawable.il_server_error_vacancy,
                 message = getString(R.string.server_error)
             )
         }
     }
 
-    private fun observeState(view: View) {
+    private fun observeState() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is VacancyState.Loading -> showLoading(view)
+                is VacancyState.Loading -> showLoading()
 
                 is VacancyState.Content -> {
-                    vacancyUrl = state.details.url
-                    bindDetails(view, state.details)
-                    showContent(view)
+                    vacancyUrl = state.vacancy.url
+                    bindDetails(state.vacancy, state.skillsText, state.primaryPhone)
+                    showContent()
                 }
 
                 is VacancyState.NotFound -> {
                     showPlaceholder(
-                        view = view,
-                        drawableRes = R.drawable.vacancy_details_not_found,
+                        drawableRes = R.drawable.ill_vacancy_details_not_found,
                         message = getString(R.string.vacancy_not_found)
                     )
                 }
@@ -89,8 +90,7 @@ class VacancyFragment : Fragment() {
                     when (state.error) {
                         VacancyError.NO_INTERNET -> {
                             showPlaceholder(
-                                view = view,
-                                drawableRes = R.drawable.no_internet_vacancy,
+                                drawableRes = R.drawable.ill_no_internet,
                                 message = getString(R.string.no_internet)
                             )
                         }
@@ -98,192 +98,153 @@ class VacancyFragment : Fragment() {
                         VacancyError.SERVER_ERROR,
                         VacancyError.LOAD_ERROR -> {
                             showPlaceholder(
-                                view = view,
-                                drawableRes = R.drawable.server_error_vacancy,
+                                drawableRes = R.drawable.il_server_error_vacancy,
                                 message = getString(R.string.server_error)
                             )
                         }
                     }
                 }
-
             }
         }
     }
 
-    private fun showLoading(view: View) {
-        view.findViewById<View>(R.id.detailsScroll).visibility = View.GONE
-        view.findViewById<View>(R.id.placeholderVacancy).visibility = View.GONE
-        view.findViewById<View>(R.id.progressBarVacancy).visibility = View.VISIBLE
+    private fun showLoading() {
+        binding.detailsScroll.visibility = View.GONE
+        binding.placeholderVacancy.visibility = View.GONE
+        binding.progressBarVacancy.visibility = View.VISIBLE
     }
 
-    private fun showContent(view: View) {
-        view.findViewById<View>(R.id.progressBarVacancy).visibility = View.GONE
-        view.findViewById<View>(R.id.placeholderVacancy).visibility = View.GONE
-        view.findViewById<View>(R.id.detailsScroll).visibility = View.VISIBLE
+    private fun showContent() {
+        binding.progressBarVacancy.visibility = View.GONE
+        binding.placeholderVacancy.visibility = View.GONE
+        binding.detailsScroll.visibility = View.VISIBLE
     }
 
-    private fun showPlaceholder(
-        view: View,
-        drawableRes: Int,
-        message: String
+    private fun showPlaceholder(drawableRes: Int, message: String) {
+        binding.detailsScroll.visibility = View.GONE
+        binding.progressBarVacancy.visibility = View.GONE
+
+        binding.ivPlaceholderVacancy.setImageResource(drawableRes)
+        binding.tvPlaceholderVacancy.text = message
+        binding.placeholderVacancy.translationY = 0f
+        binding.placeholderVacancy.visibility = View.VISIBLE
+    }
+
+
+    private fun bindDetails(
+        vacancy: Vacancy,
+        skillsText: String?,
+        primaryPhone: String?
     ) {
-        view.findViewById<View>(R.id.detailsScroll).visibility = View.GONE
-        view.findViewById<View>(R.id.progressBarVacancy).visibility = View.GONE
-
-        val container = view.findViewById<View>(R.id.placeholderVacancy)
-        val image = view.findViewById<ImageView>(R.id.ivPlaceholderVacancy)
-        val text = view.findViewById<TextView>(R.id.tvPlaceholderVacancy)
-
-        image.setImageResource(drawableRes)
-        text.text = message
-
-        container.translationY = 0f
-        container.visibility = View.VISIBLE
+        bindHeader(vacancy)
+        bindCompany(vacancy)
+        bindWorkInfo(vacancy)
+        bindDescription(vacancy)
+        bindSkills(skillsText)
+        bindContacts(vacancy, primaryPhone)
     }
 
-    private fun bindDetails(view: View, details: VacancyDetails) {
-        bindHeader(view, details)
-        bindCompany(view, details)
-        bindWorkInfo(view, details)
-        bindDescription(view, details)
-        bindSkills(view, details)
-        bindContacts(view, details)
+    private fun bindHeader(vacancy: Vacancy) {
+        binding.tvVacancyTitle.text = vacancy.name
+        binding.tvSalary.text = vacancy.salaryTitle
     }
 
-    private fun bindHeader(view: View, details: VacancyDetails) {
-        view.findViewById<TextView>(R.id.tvVacancyTitle).text = details.name
-        view.findViewById<TextView>(R.id.tvSalary).text = formatSalary(details)
-    }
+    private fun bindCompany(vacancy: Vacancy) {
+        binding.tvCompanyName.text = vacancy.employerName
+        binding.tvCompanyCity.text = vacancy.fullAddress
+            ?.takeIf { it.isNotBlank() }
+            ?: vacancy.areaName.orEmpty()
 
-    private fun bindCompany(view: View, details: VacancyDetails) {
-        view.findViewById<TextView>(R.id.tvCompanyName).text = details.employerName
-        view.findViewById<TextView>(R.id.tvCompanyCity).text = formatAddress(details)
-
-        val logoView = view.findViewById<ImageView>(R.id.ivCompanyLogo)
-        val logoUrl = details.employerLogoUrl.orEmpty().trim()
+        val logoUrl = vacancy.logoUrl.orEmpty().trim()
 
         if (logoUrl.isNotEmpty()) {
-            Glide.with(view)
+            Glide.with(this)
                 .load(logoUrl)
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
-                .into(logoView)
+                .into(binding.ivCompanyLogo)
         } else {
-            logoView.setImageResource(R.drawable.logo)
+            binding.ivCompanyLogo.setImageResource(R.drawable.logo)
         }
     }
 
-    private fun bindWorkInfo(view: View, details: VacancyDetails) {
-        view.findViewById<TextView>(R.id.tvExperienceValue).text = details.experience.orEmpty()
+    private fun bindWorkInfo(vacancy: Vacancy) {
+        binding.tvExperienceValue.text = vacancy.experience.orEmpty()
 
-        val emp = listOf(details.employment, details.schedule)
+        val emp = listOf(vacancy.employment, vacancy.schedule)
             .filter { !it.isNullOrBlank() }
             .joinToString(", ")
 
-        view.findViewById<TextView>(R.id.tvEmploymentValue).text = emp
+        binding.tvEmploymentValue.text = emp
     }
 
-    private fun bindDescription(view: View, details: VacancyDetails) {
-        val html = details.descriptionHtml.orEmpty()
-        view.findViewById<TextView>(R.id.tvDescriptionValue).text =
+    private fun bindDescription(vacancy: Vacancy) {
+        val html = vacancy.description
+        binding.tvDescriptionValue.text =
             HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 
-    private fun bindSkills(view: View, details: VacancyDetails) {
-        val skillsTitle = view.findViewById<TextView>(R.id.tvSkillsTitle)
-        val skillsValue = view.findViewById<TextView>(R.id.tvSkillsValue)
-
-        val skills = details.skills
-        if (skills.isNullOrEmpty()) {
-            skillsTitle.visibility = View.GONE
-            skillsValue.visibility = View.GONE
+    private fun bindSkills(skillsText: String?) {
+        if (skillsText.isNullOrBlank()) {
+            binding.tvSkillsTitle.visibility = View.GONE
+            binding.tvSkillsValue.visibility = View.GONE
         } else {
-            skillsTitle.visibility = View.VISIBLE
-            skillsValue.visibility = View.VISIBLE
-            skillsValue.text = skills.joinToString("\n") { "•   $it" }
+            binding.tvSkillsTitle.visibility = View.VISIBLE
+            binding.tvSkillsValue.visibility = View.VISIBLE
+            binding.tvSkillsValue.text = skillsText
         }
     }
 
-    private fun bindContacts(view: View, details: VacancyDetails) {
-        val contactsTitle = view.findViewById<TextView>(R.id.tvContactsTitle)
-        val phoneView = view.findViewById<TextView>(R.id.tvPhone)
-        val phoneCommentView = view.findViewById<TextView>(R.id.tvPhoneComment)
-        val emailView = view.findViewById<TextView>(R.id.tvEmail)
+    private fun bindContacts(vacancy: Vacancy, primaryPhone: String?) {
+        val email = vacancy.email.orEmpty().trim()
+        val phoneComment = vacancy.contactName.orEmpty().trim()
 
-        val phone = details.phones?.firstOrNull().orEmpty().trim()
-        val email = details.email.orEmpty().trim()
-        val phoneComment = details.contactName.orEmpty().trim()
-
-        val hasPhone = phone.isNotEmpty()
+        val hasPhone = !primaryPhone.isNullOrBlank()
         val hasEmail = email.isNotEmpty()
         val hasAnyContacts = hasPhone || hasEmail
 
         if (!hasAnyContacts) {
-            contactsTitle.visibility = View.GONE
-            phoneView.visibility = View.GONE
-            phoneCommentView.visibility = View.GONE
-            emailView.visibility = View.GONE
+            binding.tvContactsTitle.visibility = View.GONE
+            binding.tvPhone.visibility = View.GONE
+            binding.tvPhoneComment.visibility = View.GONE
+            binding.tvEmail.visibility = View.GONE
             return
         }
 
-        contactsTitle.visibility = View.VISIBLE
+        binding.tvContactsTitle.visibility = View.VISIBLE
 
         if (hasPhone) {
-            phoneView.visibility = View.VISIBLE
-            phoneView.text = phone
+            binding.tvPhone.visibility = View.VISIBLE
+            binding.tvPhone.text = primaryPhone
 
             if (phoneComment.isNotEmpty()) {
-                phoneCommentView.visibility = View.VISIBLE
-                phoneCommentView.text = phoneComment
+                binding.tvPhoneComment.visibility = View.VISIBLE
+                binding.tvPhoneComment.text = phoneComment
             } else {
-                phoneCommentView.visibility = View.GONE
+                binding.tvPhoneComment.visibility = View.GONE
             }
         } else {
-            phoneView.visibility = View.GONE
-            phoneCommentView.visibility = View.GONE
+            binding.tvPhone.visibility = View.GONE
+            binding.tvPhoneComment.visibility = View.GONE
         }
 
         if (hasEmail) {
-            emailView.visibility = View.VISIBLE
-            emailView.text = email
+            binding.tvEmail.visibility = View.VISIBLE
+            binding.tvEmail.text = email
         } else {
-            emailView.visibility = View.GONE
+            binding.tvEmail.visibility = View.GONE
         }
     }
 
-    private fun formatAddress(details: VacancyDetails): String {
-        val address = details.address.orEmpty().trim()
-        if (address.isNotEmpty()) return address
-        return details.areaName.orEmpty()
-    }
 
-    private fun formatSalary(details: VacancyDetails): String {
-        val from = details.salaryFrom
-        val to = details.salaryTo
-        val currency = details.currency.orEmpty().trim()
-
-        val base = when {
-            from != null && to != null -> "от $from до $to"
-            from != null -> "от $from"
-            to != null -> "до $to"
-            else -> getString(R.string.salary_not_specified)
-        }
-
-        return if (currency.isNotEmpty() && base != getString(R.string.salary_not_specified)) {
-            "$base $currency"
-        } else {
-            base
-        }
-    }
-
-    private fun setupBack(view: View) {
-        view.findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
+    private fun setupBack() {
+        binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
     }
 
-    private fun setupShare(view: View) {
-        view.findViewById<ImageButton>(R.id.btn_share).setOnClickListener {
+    private fun setupShare() {
+        binding.btnShare.setOnClickListener {
             val url = vacancyUrl.orEmpty().trim()
             if (url.isNotEmpty()) {
                 val intent = Intent(Intent.ACTION_SEND).apply {
@@ -295,8 +256,8 @@ class VacancyFragment : Fragment() {
         }
     }
 
-    private fun setupFavorite(view: View) {
-        view.findViewById<ImageButton>(R.id.btn_favorite).setOnClickListener { button ->
+    private fun setupFavorite() {
+        binding.btnFavorite.setOnClickListener { button ->
             isFavorite = !isFavorite
             (button as ImageButton).setImageResource(
                 if (isFavorite) R.drawable.favorites_on else R.drawable.ic_favorites_off
@@ -304,10 +265,9 @@ class VacancyFragment : Fragment() {
         }
     }
 
-    private fun setupPhone(view: View) {
-        val tvPhone = view.findViewById<TextView>(R.id.tvPhone)
-        tvPhone.setOnClickListener {
-            val phone = tvPhone.text?.toString().orEmpty().trim()
+    private fun setupPhone() {
+        binding.tvPhone.setOnClickListener {
+            val phone = binding.tvPhone.text?.toString().orEmpty().trim()
             if (phone.isNotEmpty()) {
                 val intent = Intent(Intent.ACTION_DIAL).apply {
                     data = Uri.parse("tel:$phone")
@@ -317,10 +277,9 @@ class VacancyFragment : Fragment() {
         }
     }
 
-    private fun setupEmail(view: View) {
-        val tvEmail = view.findViewById<TextView>(R.id.tvEmail)
-        tvEmail.setOnClickListener {
-            val email = tvEmail.text?.toString().orEmpty().trim()
+    private fun setupEmail() {
+        binding.tvEmail.setOnClickListener {
+            val email = binding.tvEmail.text?.toString().orEmpty().trim()
             if (email.isNotEmpty()) {
                 val intent = Intent(Intent.ACTION_SENDTO).apply {
                     data = Uri.parse("mailto:$email")
@@ -329,4 +288,10 @@ class VacancyFragment : Fragment() {
             }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
+

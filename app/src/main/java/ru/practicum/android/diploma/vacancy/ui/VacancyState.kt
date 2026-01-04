@@ -1,10 +1,10 @@
 package ru.practicum.android.diploma.vacancy.ui
 
-import ru.practicum.android.diploma.vacancy.domain.models.VacancyDetails
+import ru.practicum.android.diploma.search.domain.models.Vacancy
 
 sealed interface VacancyState {
     object Loading : VacancyState
-    data class Content(val details: VacancyDetails) : VacancyState
+    data class Content(val vacancy: Vacancy, val skillsText: String?, val primaryPhone: String?) : VacancyState
     data class Error(val error: VacancyError) : VacancyState
     object NotFound : VacancyState
 }

@@ -11,14 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
-    companion object {
-        private const val ARGS_VACANCY_ID = "vacancyId"
-    }
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -101,7 +99,7 @@ class SearchFragment : Fragment() {
                 is SearchEvent.OpenVacancy -> {
                     findNavController().navigate(
                         R.id.action_searchFragment_to_vacancyFragment,
-                        bundleOf(ARGS_VACANCY_ID to event.vacancyId)
+                        bundleOf(VacancyFragment.ARG_VACANCY_ID to event.vacancyId)
                     )
                     viewModel.consumeEvent()
                 }
