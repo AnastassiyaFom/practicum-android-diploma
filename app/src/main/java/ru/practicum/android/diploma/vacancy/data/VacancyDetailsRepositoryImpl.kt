@@ -1,9 +1,7 @@
 package ru.practicum.android.diploma.vacancy.data
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.NetworkClient
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
 import ru.practicum.android.diploma.favorites.data.db.VacancyEntity
@@ -21,16 +19,16 @@ class VacancyDetailsRepositoryImpl(
     private val vacancyDao: VacancyDao,
 ) : VacancyDetailsRepository {
 
-    override fun getVacancyDetails(id: String): Flow<Resource<Vacancy>> = flow {
+    override suspend fun getVacancyDetails(id: String): Resource<Vacancy> = withContext(Dispatchers.IO) {
         val response: Response = networkClient.doRequest(VacancyDetailsRequest(id))
 
         when (response.resultCode) {
             NetworkCodes.NO_NETWORK_CODE -> {
                 val cached = vacancyDao.getVacancyById(id)
                 if (cached != null) {
-                    emit(Resource.Success(mapFromEntity(cached), 1, 1))
+                    Resource.Success(mapFromEntity(cached), 1, 1)
                 } else {
-                    emit(Resource.Error(NetworkCodes.NO_NETWORK_CODE))
+                    Resource.Error(NetworkCodes.NO_NETWORK_CODE)
                 }
             }
 
@@ -40,23 +38,23 @@ class VacancyDetailsRepositoryImpl(
 
                 vacancyDao.insertVacancy(mapToEntity(vacancy))
 
-                emit(Resource.Success(vacancy, 1, 1))
+                Resource.Success(vacancy, 1, 1)
             }
 
             NetworkCodes.NOT_FOUND_CODE -> {
                 vacancyDao.deleteVacancyById(id)
-                emit(Resource.Error(NetworkCodes.NOT_FOUND_CODE))
+                Resource.Error(NetworkCodes.NOT_FOUND_CODE)
             }
 
             NetworkCodes.SERVER_ERROR_CODE -> {
-                emit(Resource.Error(NetworkCodes.SERVER_ERROR_CODE))
+                Resource.Error(NetworkCodes.SERVER_ERROR_CODE)
             }
 
             else -> {
-                emit(Resource.Error(response.resultCode))
+                Resource.Error(response.resultCode)
             }
         }
-    }.flowOn(Dispatchers.IO)
+    }
 
     private fun mapFromEntity(entity: VacancyEntity): Vacancy {
         val skillsList = entity.skills

@@ -24,9 +24,8 @@ class VacancyViewModel(
 
         requestJob?.cancel()
         requestJob = viewModelScope.launch {
-            interactor.getVacancyDetails(vacancyId).collect { (vacancy, errorCode) ->
-                processResult(vacancy, errorCode)
-            }
+            val (vacancy, errorCode) = interactor.getVacancyDetails(vacancyId)
+            processResult(vacancy, errorCode)
         }
     }
 
@@ -69,4 +68,5 @@ class VacancyViewModel(
             NetworkCodes.SERVER_ERROR_CODE -> VacancyError.SERVER_ERROR
             else -> VacancyError.LOAD_ERROR
         }
-}
+
+    }
