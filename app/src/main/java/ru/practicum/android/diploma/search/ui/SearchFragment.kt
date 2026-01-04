@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 import ru.practicum.android.diploma.R
@@ -55,6 +58,19 @@ class SearchFragment : Fragment() {
     private fun setupRecycler() {
         binding.searchResults.layoutManager = LinearLayoutManager(requireContext())
         binding.searchResults.adapter = adapter
+        binding.searchResults.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (dy > 0) {
+                    val pos = (binding.searchResults.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    val itemsCount = adapter.itemCount
+                    if (pos >= itemsCount - 1) {
+                        viewModel.performSearch()
+                    }
+                }
+            }
+        })
     }
 
     private fun setupSearchInput() {
@@ -86,6 +102,7 @@ class SearchFragment : Fragment() {
             when (state) {
                 SearchState.Idle -> renderIdle()
                 SearchState.Loading -> renderLoading()
+                SearchState.LoadingNextPage -> renderLoadingNextPage()
                 is SearchState.Content -> renderContent(state)
                 SearchState.Empty -> renderEmpty()
                 is SearchState.Error -> renderError(state)
@@ -104,6 +121,13 @@ class SearchFragment : Fragment() {
                     viewModel.consumeEvent()
                 }
                 null -> Unit
+                is SearchEvent.ShowToast -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(event.messageResId),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -122,7 +146,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun renderIdle() {
-        binding.progressBar.visibility = View.GONE
+        binding.progressBarPagination.visibility = View.GONE
+        binding.progressBarCenter.visibility = View.GONE
         binding.searchResults.visibility = View.GONE
         binding.vacancyCounter.visibility = View.GONE
         showPlaceholder(
@@ -132,15 +157,17 @@ class SearchFragment : Fragment() {
     }
 
     private fun renderLoading() {
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBarPagination.visibility = View.GONE
         binding.searchResults.visibility = View.GONE
+        binding.progressBarCenter.visibility = View.VISIBLE
         hidePlaceholder()
     }
 
     private fun renderContent(state: SearchState.Content) {
-        val count = state.vacancies.size
+        binding.progressBarCenter.isVisible = false
+        binding.progressBarPagination.isVisible = false
+        val count = state.totalFound
 
-        binding.progressBar.visibility = View.GONE
         binding.placeholder.visibility = View.GONE
         binding.searchResults.visibility = View.VISIBLE
 
@@ -156,7 +183,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun renderEmpty() {
-        binding.progressBar.visibility = View.GONE
+        binding.progressBarCenter.isVisible = false
+        binding.progressBarPagination.isVisible = false
         binding.searchResults.visibility = View.GONE
         binding.vacancyCounter.text = getString(R.string.no_vacancy)
         binding.vacancyCounter.visibility = View.VISIBLE
@@ -168,7 +196,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun renderError(state: SearchState.Error) {
-        binding.progressBar.visibility = View.GONE
+        binding.progressBarCenter.isVisible = false
+        binding.progressBarPagination.isVisible = false
         binding.searchResults.visibility = View.GONE
         binding.vacancyCounter.visibility = View.GONE
 
@@ -198,6 +227,11 @@ class SearchFragment : Fragment() {
     private fun hidePlaceholder() {
         binding.placeholder.visibility = View.GONE
         binding.vacancyCounter.visibility = View.GONE
+    }
+
+    private fun renderLoadingNextPage() {
+        binding.progressBarCenter.isVisible = false
+        binding.progressBarPagination.isVisible = true
     }
 
     override fun onDestroyView() {
