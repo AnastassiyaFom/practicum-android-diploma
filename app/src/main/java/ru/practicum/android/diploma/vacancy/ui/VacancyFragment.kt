@@ -130,7 +130,6 @@ class VacancyFragment : Fragment() {
         binding.placeholderVacancy.visibility = View.VISIBLE
     }
 
-
     private fun bindDetails(
         vacancy: Vacancy,
         skillsText: String?,
@@ -235,7 +234,6 @@ class VacancyFragment : Fragment() {
             binding.tvEmail.visibility = View.GONE
         }
     }
-
 
     private fun setupBack() {
         binding.btnBack.setOnClickListener {

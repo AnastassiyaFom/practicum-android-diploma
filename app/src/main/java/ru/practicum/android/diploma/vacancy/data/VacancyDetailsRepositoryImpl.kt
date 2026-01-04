@@ -38,7 +38,6 @@ class VacancyDetailsRepositoryImpl(
                 val detailsResponse = response as VacancyDetailsResponse
                 val vacancy = VacancyDtoMapper.map(detailsResponse.vacancy)
 
-
                 vacancyDao.insertVacancy(mapToEntity(vacancy))
 
                 emit(Resource.Success(vacancy))
