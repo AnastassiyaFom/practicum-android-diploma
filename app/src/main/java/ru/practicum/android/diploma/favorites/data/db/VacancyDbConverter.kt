@@ -1,8 +1,6 @@
 package ru.practicum.android.diploma.favorites.data.db
 
-import ru.practicum.android.diploma.search.data.dto.Salary
 import ru.practicum.android.diploma.search.domain.models.Vacancy
-import ru.practicum.android.diploma.util.VacancyDtoMapper
 
 object VacancyDbConverter {
     fun map(vacancy: Vacancy): VacancyEntity {
