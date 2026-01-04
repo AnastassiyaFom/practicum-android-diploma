@@ -15,6 +15,8 @@ import ru.practicum.android.diploma.favorites.data.db.AppDatabase
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
 import ru.practicum.android.diploma.search.data.SearchVacanciesRepositoryImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesRepository
+import ru.practicum.android.diploma.vacancy.data.VacancyDetailsRepositoryImpl
+import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsRepository
 import ru.practicum.android.diploma.vacancy.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.vacancy.domain.ExternalNavigator
 import java.util.concurrent.TimeUnit
@@ -60,6 +62,10 @@ val dataModule = module {
 
     single<SearchVacanciesRepository> {
         SearchVacanciesRepositoryImpl(get())
+    }
+
+    single<VacancyDetailsRepository> {
+        VacancyDetailsRepositoryImpl(get(), get())
     }
 
     factory { Gson() }

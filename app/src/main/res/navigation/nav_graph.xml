@@ -44,6 +44,9 @@
         android:label="Вакансия"
         tools:layout="@layout/fragment_vacancy">
 
+        <argument
+            android:name="vacancyId"
+            app:argType="string" />
 
 
     </fragment>

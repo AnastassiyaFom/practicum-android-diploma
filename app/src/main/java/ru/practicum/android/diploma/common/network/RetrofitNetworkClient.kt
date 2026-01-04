@@ -6,6 +6,8 @@ import retrofit2.HttpException
 import ru.practicum.android.diploma.common.NetworkClient
 import ru.practicum.android.diploma.search.data.dto.Response
 import ru.practicum.android.diploma.search.data.dto.VacancyRequest
+import ru.practicum.android.diploma.vacancy.data.dto.VacancyDetailsRequest
+import ru.practicum.android.diploma.vacancy.data.dto.VacancyDetailsResponse
 import ru.practicum.android.diploma.util.NetworkCodes
 import ru.practicum.android.diploma.util.isNetworkAvailable
 
@@ -20,6 +22,15 @@ class RetrofitNetworkClient(private val context: Context, private val vacancyApi
                     val response = vacancyApiService.searchVacancies(dto.expression, dto.page)
                     response.resultCode = NetworkCodes.SUCCESS_CODE
                     response
+                } catch (e: HttpException) {
+                    Log.w(TAG, "HTTP error: ${e.code()}, message: ${e.message()}")
+                    Response().apply { resultCode = e.code() }
+                }
+            }
+            is VacancyDetailsRequest -> {
+                try {
+                    val vacancy = vacancyApiService.getVacancyDetails(dto.id)
+                    VacancyDetailsResponse(vacancy).apply { resultCode = NetworkCodes.SUCCESS_CODE }
                 } catch (e: HttpException) {
                     Log.w(TAG, "HTTP error: ${e.code()}, message: ${e.message()}")
                     Response().apply { resultCode = e.code() }

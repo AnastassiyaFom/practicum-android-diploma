@@ -25,8 +25,12 @@ class SearchViewModel(
     private val _state = MutableLiveData<SearchState>(SearchState.Idle)
     val state: LiveData<SearchState> = _state
 
-    private val _events = MutableLiveData<SearchEvent>()
-    val events: LiveData<SearchEvent> = _events
+    private val _events = MutableLiveData<SearchEvent?>()
+    val events: LiveData<SearchEvent?> = _events
+
+    fun consumeEvent() {
+        _events.value = null
+    }
 
     private val _query = MutableLiveData("")
     val query: LiveData<String> = _query
