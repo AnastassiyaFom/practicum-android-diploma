@@ -88,11 +88,12 @@ class FavoritesFragment : Fragment() {
     private fun toVacancyDetail(itemId: String) {
         findNavController().navigate(
             ru.practicum.android.diploma.R.id.action_favoritesFragment_to_vacancyFragment,
-            bundleOf("vacancyId" to itemId)
+            bundleOf(ARG_VACANCY_ID to itemId)
         )
     }
 
     companion object {
+        const val ARG_VACANCY_ID = "vacancyId"
         private const val CLICK_DEBOUNCE_DELAY = 500L
     }
 }
