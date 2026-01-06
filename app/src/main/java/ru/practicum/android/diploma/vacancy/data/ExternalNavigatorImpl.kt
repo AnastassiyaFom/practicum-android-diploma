@@ -1,16 +1,13 @@
 package ru.practicum.android.diploma.vacancy.data
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.core.app.ActivityCompat
 import ru.practicum.android.diploma.vacancy.domain.ExternalNavigator
 
 class ExternalNavigatorImpl(private val context: Context) : ExternalNavigator {
+
     override fun share(vacancyUrl: String) {
         val shareAppIntent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -31,30 +28,12 @@ class ExternalNavigatorImpl(private val context: Context) : ExternalNavigator {
         context.startActivity(textToEmailIntent)
     }
 
-    override fun makeCall(phoneNumber: String, activity: Activity) {
+    override fun makeCall(phoneNumber: String) {
         val callIntent = Intent().apply {
-            action = Intent.ACTION_CALL
+            action = Intent.ACTION_DIAL
             data = Uri.parse("tel:$phoneNumber")
+            addFlags(FLAG_ACTIVITY_NEW_TASK)
         }
-        // Проверяем, есть ли у приложения разрешение на совершение звонков
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.CALL_PHONE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // Если разрешения нет, запрашиваем его
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.CALL_PHONE),
-                REQUEST_CALL_PERMISSION
-            )
-        } else {
-            context.startActivity(callIntent)
-        }
-    }
-
-    // Эту константу надо будет перенести в VacancyFragment!!!!!!!!
-    companion object {
-        private const val REQUEST_CALL_PERMISSION = 101
+        context.startActivity(callIntent)
     }
 }

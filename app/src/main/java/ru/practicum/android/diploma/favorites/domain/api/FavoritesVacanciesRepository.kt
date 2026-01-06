@@ -12,4 +12,6 @@ interface FavoritesVacanciesRepository {
     fun getVacancyById(vacancyId: String): Vacancy?
 
     fun getAllVacanciesFromFavorites(): Flow<List<Vacancy?>>
+
+    suspend fun getFavoriteVacanciesId(): List<String>
 }

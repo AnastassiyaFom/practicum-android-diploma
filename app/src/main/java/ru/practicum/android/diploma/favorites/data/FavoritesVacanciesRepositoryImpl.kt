@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.favorites.data
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
 import ru.practicum.android.diploma.favorites.data.db.VacancyDbConverter
@@ -33,9 +33,13 @@ class FavoritesVacanciesRepositoryImpl(
         return convertFromEntityToVacancy(vacancy!!)
     }
 
-    override fun getAllVacanciesFromFavorites(): Flow<List<Vacancy>> = flow {
-        val vacancies = favoritesVacanciesTable.getAllVacancies()
-        emit(convertFromEntityToVacancy(vacancies))
+    override fun getAllVacanciesFromFavorites(): Flow<List<Vacancy>> {
+        return favoritesVacanciesTable.getAllVacancies()
+            .map { vacancyEntity -> convertFromEntityToVacancy(vacancyEntity) }
+    }
+
+    override suspend fun getFavoriteVacanciesId(): List<String> {
+        return favoritesVacanciesTable.getFavoriteVacanciesId()
     }
 
     private fun convertFromEntityToVacancy(vacancy: VacancyEntity): Vacancy {
