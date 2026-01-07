@@ -29,7 +29,7 @@ data class Vacancy(
     // Контакты
     val contactName: String?,
     val email: String?,
-    val phone: List<String>?,
+    val phones: List<String>?,
     // Работодатель
     val employerName: String,
     val logoUrl: String?
@@ -58,7 +58,7 @@ data class Vacancy(
         fullAddress = "",
         contactName = "",
         email = "",
-        phone = emptyList(),
+        phones = emptyList(),
         employerName = "",
         logoUrl = "",
     )

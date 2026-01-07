@@ -43,7 +43,7 @@ class FavoritesViewModel(
     }
 
     fun getEmptyVacancyListDrawable(): Drawable? {
-        return context.getDrawable(R.drawable.il_list_is_empty)
+        return context.getDrawable(R.drawable.il_empty_vacancy_list)
     }
 
     fun getUnableToGetListDrawable(): Drawable? {
