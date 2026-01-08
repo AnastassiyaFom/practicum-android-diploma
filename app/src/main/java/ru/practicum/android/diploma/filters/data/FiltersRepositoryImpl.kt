@@ -7,10 +7,6 @@ class FiltersRepositoryImpl(private val storage: StorageClient<FilterParameters>
         return Unit
     }
 
-    override fun removeFilter(filter: FilterParameters) {
-        return Unit
-    }
-
     override fun getFilters(): FilterParameters? {
         return null
     }

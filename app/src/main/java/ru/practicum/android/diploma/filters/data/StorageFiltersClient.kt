@@ -16,10 +16,6 @@ class StorageFiltersClient<T>(context: Context, private val type: Type) : Storag
         prefs.edit { putString(FILTERS_DATA_KEY, gson.toJson(filter, type)) }
     }
 
-    override fun removeFilter(filter: T) {
-        return Unit
-    }
-
     override fun getFilters(): T? {
         val json = prefs.getString(FILTERS_DATA_KEY, null)
         return if (!json.isNullOrEmpty()) {
