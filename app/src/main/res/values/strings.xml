@@ -27,12 +27,9 @@
     <string name="skills_title">Ключевые навыки</string>
     <string name="contacts_title">Контакты</string>
     <string name="error_unable_to_retr_vac_list">Не удалось получить список вакансий</string>
-    <string name="error_empty_vacancy_list">Cписок вакансий пуст</string>
-    <string name="place_of_work">Место работы</string>
-    <string name="industry">Отрасль</string>
-    <string name="salary_expected">Ожидаемая зарплата</string>
-    <string name="enter_amount">Введите сумму</string>
-    <string name="do_not_show_without_salary">Не показывать без зарплаты</string>
-    <string name="reset">Сбросить</string>
-    <string name="apply">Применить</string>
+    <string name="error_empty_vacancy_list">Cписок пуст</string>
+    <string name="vacancy_not_found">Вакансия не найдена или удалена </string>
+    <string name="salary_not_specified">Зарплата не указана </string>
+    <string name="check_internet_connection">Проверьте подключение к интернету</string>
+    <string name="error_occurred">Произошла ошибка</string>
 </resources>

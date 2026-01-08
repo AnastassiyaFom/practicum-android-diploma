@@ -23,4 +23,8 @@ class FavoritesVacanciesInteractorImpl(
     override fun getAllVacanciesFromFavorites(): Flow<List<Vacancy?>> {
         return favoritesVacanciesRepository.getAllVacanciesFromFavorites()
     }
+
+    override suspend fun getFavoriteVacanciesId(): List<String> {
+        return favoritesVacanciesRepository.getFavoriteVacanciesId()
+    }
 }

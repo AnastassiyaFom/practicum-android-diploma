@@ -30,7 +30,7 @@ data class VacancyEntity(
     // Контакты
     val contactName: String?,
     val email: String?,
-    val phone: String?,
+    val phones: String?,
     // Работодатель
     val employerName: String,
     val logoUrl: String?,

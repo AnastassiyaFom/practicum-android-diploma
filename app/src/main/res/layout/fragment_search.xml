@@ -91,21 +91,31 @@
         app:layout_constraintTop_toBottomOf="@+id/search_input" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBarPagination"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginBottom="16dp"
         android:indeterminateTint="@color/blue"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_results" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_results"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="198dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarPagination"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vacancyCounter" />
+
+    <ProgressBar
+        android:id="@+id/progressBarCenter"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:indeterminateTint="@color/blue"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

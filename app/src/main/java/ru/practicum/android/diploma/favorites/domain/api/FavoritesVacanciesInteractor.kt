@@ -13,4 +13,5 @@ interface FavoritesVacanciesInteractor {
 
     fun getAllVacanciesFromFavorites(): Flow<List<Vacancy?>>
 
+    suspend fun getFavoriteVacanciesId(): List<String>
 }

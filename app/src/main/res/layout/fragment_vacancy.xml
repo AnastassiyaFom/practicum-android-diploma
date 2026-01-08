@@ -237,6 +237,7 @@
                 android:id="@+id/tvDescriptionValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingStart="11dp"
                 android:layout_marginTop="@dimen/padding_16"
                 android:layout_marginStart="@dimen/padding_16"
                 android:layout_marginEnd="@dimen/padding_16"
@@ -266,9 +267,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_16"
+                android:paddingStart="11dp"
                 android:layout_marginStart="@dimen/padding_16"
                 android:layout_marginEnd="@dimen/padding_16"
-                android:text="• Kotlin\n• Android SDK\n• Coroutines"
+                android:text="•   Kotlin\n•  Android SDK\n•  Coroutines"
                 app:layout_constraintTop_toBottomOf="@id/tvSkillsTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -288,17 +290,28 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/tvPhone"
+                android:id="@+id/tvContactName"
                 style="@style/VacancyText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_8"
                 android:layout_marginStart="@dimen/padding_16"
+                android:layout_marginTop="@dimen/padding_8"
                 android:layout_marginEnd="@dimen/padding_16"
-                android:text="8 800 555 35 35"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintTop_toBottomOf="@id/tvContactsTitle"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvContactsTitle" />
+
+            <LinearLayout
+                android:id="@+id/phonesContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_16"
+                android:layout_marginTop="@dimen/padding_8"
+                android:layout_marginEnd="@dimen/padding_16"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tvContactName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -314,7 +327,7 @@
                 android:text="proverka@.mail.ru"
                 android:clickable="true"
                 android:focusable="true"
-                app:layout_constraintTop_toBottomOf="@id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@id/phonesContainer"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -322,4 +335,58 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/progressBarVacancy"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/blue"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/placeholderVacancy"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelinePlaceholderTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="186dp"/>
+
+        <ImageView
+            android:id="@+id/ivPlaceholderVacancy"
+            android:layout_width="328dp"
+            android:layout_height="223dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="@id/guidelinePlaceholderTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:id="@+id/tvPlaceholderVacancy"
+            style="@style/Tittle"
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/ivPlaceholderVacancy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

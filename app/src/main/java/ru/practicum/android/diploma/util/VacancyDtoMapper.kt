@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.util
 
+import ru.practicum.android.diploma.search.data.dto.Phones
 import ru.practicum.android.diploma.search.data.dto.Salary
 import ru.practicum.android.diploma.search.data.dto.VacancyDto
 import ru.practicum.android.diploma.search.domain.models.Vacancy
@@ -29,7 +30,7 @@ object VacancyDtoMapper {
             fullAddress = dto.address?.fullAddress,
             contactName = dto.contacts?.name,
             email = dto.contacts?.email,
-            phone = dto.contacts?.phone,
+            phones = formatPhones(dto.contacts?.phones),
             employerName = dto.employer?.name ?: "",
             logoUrl = dto.employer?.logo
         )
@@ -82,6 +83,23 @@ object VacancyDtoMapper {
             "Зарплата не указана"
         }
     }
+
+    private fun formatPhones(phoneDtos: List<Phones>?): List<String> {
+        return phoneDtos
+            ?.mapNotNull { phoneDto ->
+                if (phoneDto.formatted.isNotBlank()) {
+                    if (phoneDto.comment.isNullOrBlank()) {
+                        phoneDto.formatted
+                    } else {
+                        "${phoneDto.formatted}|${phoneDto.comment}"
+                    }
+                } else {
+                    null
+                }
+            }
+            ?: emptyList()
+    }
+
     private fun formatNumber(number: Int): String {
         return String.format(Locale.getDefault(), "%,d", number)
             .replace(',', ' ')
