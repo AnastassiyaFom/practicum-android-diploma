@@ -24,4 +24,9 @@ class FilterFragment : Fragment() {
             findNavController().popBackStack()
         }
     }
+
+    companion object{
+        const val PLACE_OF_WORK = "placeOfWork"
+        const val INDUSTRY = "industry"
+    }
 }
