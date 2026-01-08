@@ -7,10 +7,6 @@ class FiltersInteractorImpl(private val repository: FiltersRepository) : Filters
         repository.addFilter(filter)
     }
 
-    override fun removeFilter(filter: FilterParameters) {
-        repository.removeFilter(filter)
-    }
-
     override fun getFilters(): FilterParameters? {
         return repository.getFilters()
     }
