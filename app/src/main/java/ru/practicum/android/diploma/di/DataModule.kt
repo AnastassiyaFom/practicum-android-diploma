@@ -11,9 +11,14 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.common.NetworkClient
 import ru.practicum.android.diploma.common.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.common.network.VacancyApi
-import ru.practicum.android.diploma.data.AppDatabase
-import ru.practicum.android.diploma.data.dao.FavoriteVacancyDao
-import ru.practicum.android.diploma.data.dao.VacancyDao
+import ru.practicum.android.diploma.favorites.data.db.AppDatabase
+import ru.practicum.android.diploma.favorites.data.db.VacancyDao
+import ru.practicum.android.diploma.search.data.SearchVacanciesRepositoryImpl
+import ru.practicum.android.diploma.search.domain.SearchVacanciesRepository
+import ru.practicum.android.diploma.vacancy.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.vacancy.data.VacancyDetailsRepositoryImpl
+import ru.practicum.android.diploma.vacancy.domain.ExternalNavigator
+import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsRepository
 import java.util.concurrent.TimeUnit
 
 private const val CONNECT_TIMEOUT_SECONDS = 30L
@@ -55,7 +60,20 @@ val dataModule = module {
         RetrofitNetworkClient(get(), get())
     }
 
+    single<SearchVacanciesRepository> {
+        SearchVacanciesRepositoryImpl(get())
+    }
+
+    single<VacancyDetailsRepository> {
+        VacancyDetailsRepositoryImpl(get(), get())
+    }
+
     factory { Gson() }
-    single<FavoriteVacancyDao> { get<AppDatabase>().favoriteVacancyDao() }
+
     single<VacancyDao> { get<AppDatabase>().vacancyDao() }
+
+    factory<ExternalNavigator> {
+        ExternalNavigatorImpl(get())
+    }
+
 }

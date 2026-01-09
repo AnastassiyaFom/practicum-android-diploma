@@ -1,0 +1,65 @@
+package ru.practicum.android.diploma.search.domain.models
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Vacancy(
+    val id: String,
+    val name: String,
+    val vacancyTitle: String,
+    val description: String,
+    val experience: String?,
+    val schedule: String?,
+    val employment: String?,
+    val areaName: String?,
+    val industryName: String?,
+    val skills: List<String>?,
+    val url: String?,
+    // Поля зарплаты
+    val salaryFrom: Int?,
+    val salaryTo: Int?,
+    val currency: String?,
+    val salaryTitle: String,
+    // Поля адреса
+    val city: String?,
+    val street: String?,
+    val building: String?,
+    val fullAddress: String?,
+    // Контакты
+    val contactName: String?,
+    val email: String?,
+    val phones: List<String>?,
+    // Работодатель
+    val employerName: String,
+    val logoUrl: String?
+) : Parcelable {
+
+    // Для создания пустого объекта
+    constructor() : this(
+        id = "",
+        name = "",
+        vacancyTitle = "",
+        description = "",
+        experience = "",
+        schedule = "",
+        employment = "",
+        areaName = "",
+        industryName = "",
+        skills = emptyList(),
+        url = "",
+        salaryFrom = 0,
+        salaryTo = 0,
+        currency = "",
+        salaryTitle = "",
+        city = "",
+        street = "",
+        building = "",
+        fullAddress = "",
+        contactName = "",
+        email = "",
+        phones = emptyList(),
+        employerName = "",
+        logoUrl = "",
+    )
+}

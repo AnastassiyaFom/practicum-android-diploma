@@ -1,0 +1,7 @@
+package ru.practicum.android.diploma.vacancy.domain
+
+interface ExternalNavigator {
+    fun share(vacancyUrl: String)
+    fun sendEmail(email: String)
+    fun makeCall(phoneNumber: String)
+}

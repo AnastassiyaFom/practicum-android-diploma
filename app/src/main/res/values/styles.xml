@@ -53,4 +53,29 @@
         <item name="android:background">@drawable/edit_text_field</item>
     </style>
 
+    <style name="TextAppearance.Bold32" parent="@android:style/TextAppearance">
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">@font/ys_display_bold</item>
+    </style>
+
+    <style name="SectionTitle">
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.Bold32</item>
+    </style>
+
+    <style name="TeamMember">
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium16</item>
+    </style>
+
+    <style name="VacancySectionSubtitle">
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium16</item>
+    </style>
+
+    <style name="VacancyText">
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.Regular16</item>
+    </style>
+
 </resources>

@@ -1,0 +1,57 @@
+package ru.practicum.android.diploma.favorites.data
+
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+import ru.practicum.android.diploma.favorites.data.db.VacancyDao
+import ru.practicum.android.diploma.favorites.data.db.VacancyDbConverter
+import ru.practicum.android.diploma.favorites.data.db.VacancyEntity
+import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacanciesRepository
+import ru.practicum.android.diploma.search.domain.models.Vacancy
+
+class FavoritesVacanciesRepositoryImpl(
+    private val favoritesVacanciesTable: VacancyDao
+) : FavoritesVacanciesRepository {
+    override fun addVacancyToFavorites(vacancy: Vacancy) {
+        runBlocking {
+            favoritesVacanciesTable.insertVacancy(convertFromVacancyToEntity(vacancy))
+        }
+    }
+
+    override fun deleteVacancyFromFavorites(vacancyId: String) {
+        runBlocking {
+            favoritesVacanciesTable.deleteVacancyById(vacancyId)
+        }
+    }
+
+    override fun getVacancyById(vacancyId: String): Vacancy? {
+        var vacancy: VacancyEntity? = null
+        runBlocking {
+            vacancy = favoritesVacanciesTable.getVacancyById(vacancyId)
+        }
+        if (vacancy == null) return null
+        return convertFromEntityToVacancy(vacancy!!)
+    }
+
+    override fun getAllVacanciesFromFavorites(): Flow<List<Vacancy>> {
+        return favoritesVacanciesTable.getAllVacancies()
+            .map { vacancyEntity -> convertFromEntityToVacancy(vacancyEntity) }
+    }
+
+    override suspend fun getFavoriteVacanciesId(): List<String> {
+        return favoritesVacanciesTable.getFavoriteVacanciesId()
+    }
+
+    private fun convertFromEntityToVacancy(vacancy: VacancyEntity): Vacancy {
+        return VacancyDbConverter.map(vacancy)
+    }
+
+    private fun convertFromEntityToVacancy(vacancy: List<VacancyEntity?>): List<Vacancy> {
+        return vacancy.map { vacancyItem -> VacancyDbConverter.map(vacancyItem) }
+    }
+
+    private fun convertFromVacancyToEntity(vacancy: Vacancy): VacancyEntity {
+        return VacancyDbConverter.map(vacancy)
+    }
+
+}
