@@ -4,14 +4,14 @@ import ru.practicum.android.diploma.filters.domain.FiltersRepository
 
 class FiltersRepositoryImpl(private val storage: StorageClient<FilterParameters>) : FiltersRepository {
     override fun addFilter(filter: FilterParameters) {
-        return Unit
+        storage.addFilter(filter)
     }
 
     override fun getFilters(): FilterParameters? {
-        return null
+        return storage.getFilters()
     }
 
     override fun resetAllFilters() {
-        return Unit
+        storage.resetAllFilters()
     }
 }
