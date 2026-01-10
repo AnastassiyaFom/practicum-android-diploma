@@ -63,18 +63,18 @@ class FilterFragment : Fragment() {
         binding.btnSelectIndustry.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_industryFragment)
         }
-        binding.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
             // КОСТЫЛЬ!!!
             viewModel.setInputSalaryState(false, binding.salaryEditText.text.isNullOrEmpty())
             viewModel.setOnlyWithSalaryFlag(isChecked)
         }
         binding.btnReset.setOnClickListener {
-            viewModel.resetFilters()
-            clearSalary()
+            binding.salaryEditText.setText("")
             setPlaceOfWorkField("")
             setIndustryField("")
             binding.checkBox.setChecked(false)
             viewModel.setInputSalaryState(false, true)
+            viewModel.resetFilters()
         }
         binding.btnApply.setOnClickListener {
             viewModel.saveFilterParameters()
@@ -85,8 +85,9 @@ class FilterFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 val test = true
             }
+
             override fun afterTextChanged(s: Editable?) {
-                viewModel.saveSalary()
+                viewModel.setSalary()
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -98,7 +99,7 @@ class FilterFragment : Fragment() {
                     // Если число больше, чем может храниться в Int
                     if (salary.toLong() <= Int.MAX_VALUE) {
                         binding.salaryEditText.setTextColor(getBlackColor())
-                        viewModel.setSalary(salary.toInt())
+                        viewModel.setCurrentSalary(salary.toInt())
                     } else {
                         binding.salaryEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                     }
@@ -109,18 +110,14 @@ class FilterFragment : Fragment() {
             }
         }
         binding.salaryEditText.addTextChangedListener(textWatcher)
-        binding.salaryEditText.setOnFocusChangeListener { view, hasFocus ->
+        binding.salaryEditText.setOnFocusChangeListener { _, hasFocus ->
             viewModel.setInputSalaryState(hasFocus, binding.salaryEditText.text.isNullOrEmpty())
         }
         binding.btnClearSalary.setOnClickListener {
-            clearSalary()
+            binding.salaryEditText.setText("")
+            viewModel.setSalary(null)
+            viewModel.setInputSalaryState(true, true)
         }
-    }
-
-    private fun clearSalary() {
-        binding.salaryEditText.setText("")
-        viewModel.setSalary(null)
-        viewModel.setInputSalaryState(true, true)
     }
 
     @SuppressLint("ResourceAsColor", "ResourceType")
@@ -207,7 +204,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun getBlackColor(): Int {
-        var typedArray =
+        val typedArray =
             requireActivity()
                 .theme.obtainStyledAttributes(
                     intArrayOf(com.google.android.material.R.attr.colorPrimaryVariant)
@@ -218,7 +215,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun getBlueColor(): Int {
-        var typedArray = requireActivity()
+        val typedArray = requireActivity()
             .theme.obtainStyledAttributes(intArrayOf(R.attr.BottomNavEnabled))
         val color = typedArray.getColor(0, Color.BLUE)
         typedArray.recycle()
@@ -226,7 +223,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun getHintColor(): Int {
-        var typedArray = requireActivity()
+        val typedArray = requireActivity()
             .theme.obtainStyledAttributes(intArrayOf(R.attr.customEditTextHintColor))
         val color = typedArray.getColor(0, Color.GRAY)
         typedArray.recycle()

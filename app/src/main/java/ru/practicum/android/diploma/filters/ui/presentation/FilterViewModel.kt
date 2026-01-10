@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.filters.ui.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 
@@ -18,9 +17,11 @@ class FilterViewModel(
     fun observeFilterState(): LiveData<FilterState> = filterStateLiveData
 
     private var filter: FilterParameters
+    private var currentSalary: Int? = null
 
     init {
         filter = filtersInteractor.getFilters() ?: setEmptyFilter()
+        currentSalary = filter.salary
         renderFilterState(filter)
         when (isFilterEmpty(filter)) {
             true -> setInputSalaryState(hasFocus = false, isSalaryFieldEmpty = true)
@@ -40,12 +41,17 @@ class FilterViewModel(
         return filter.salary
     }
 
-    fun setSalary(salary: Int?) {
-        filter.salary = salary
-
+    fun setCurrentSalary(salary: Int?) {
+        currentSalary = salary
     }
 
-    fun saveSalary() {
+    fun setSalary() {
+        filter = filter.copy(salary = currentSalary)
+        filtersInteractor.addFilter(filter)
+    }
+
+    fun setSalary(salary: Int?) {
+        filter = filter.copy(salary = salary)
         filtersInteractor.addFilter(filter)
     }
 
@@ -54,7 +60,7 @@ class FilterViewModel(
     }
 
     fun setOnlyWithSalaryFlag(isChecked: Boolean) {
-        filter.onlyWithSalary = isChecked
+        filter = filter.copy(onlyWithSalary = isChecked)
         renderFilterState(filter)
         saveFilterParameters()
     }
@@ -64,10 +70,10 @@ class FilterViewModel(
     }
 
     fun resetFilters() {
-        filtersInteractor.resetAllFilters()
         filter = setEmptyFilter()
         filterStateLiveData.postValue(FilterState.Empty)
         inputSalaryStateLiveData.postValue(InputSalaryBoxState.EmptyNotFocused)
+        filtersInteractor.resetAllFilters()
     }
 
     fun setInputSalaryState(hasFocus: Boolean, isSalaryFieldEmpty: Boolean) {
@@ -87,34 +93,29 @@ class FilterViewModel(
         return when {
             filter.areaName.isNullOrEmpty() && filter.industryName.isNullOrEmpty() &&
                 filter.area == null && filter.industry == null &&
-                filter.salary == null && !filter.onlyWithSalary -> true
+                filter.salary == null && filter.onlyWithSalary == false -> true
 
             else -> false
         }
     }
 
     private fun renderFilterState(filter: FilterParameters) {
-        if (isFilterEmpty(filter)){
+        if (isFilterEmpty(filter)) {
             filterStateLiveData.postValue(FilterState.Empty)
-        }
-        else {
-            filterStateLiveData.postValue(FilterState.Content(filter))
+        } else {
+            filterStateLiveData.postValue(FilterState.NotEmpty)
         }
     }
 
     fun resetPlaceOfWork() {
-        filter.area = null
-        filter.areaName = null
-        if (isFilterEmpty(filter)) renderFilterState(filter)
+        filter = filter.copy(area = null, areaName = null)
+        renderFilterState(filter)
         saveFilterParameters()
     }
 
     fun resetIndustry() {
-        filter.industry = null
-        filter.industryName = null
-        if (isFilterEmpty(filter)){
-            renderFilterState(filter)
-        }
+        filter = filter.copy(industry = null, industryName = null)
+        renderFilterState(filter)
         saveFilterParameters()
     }
 }
