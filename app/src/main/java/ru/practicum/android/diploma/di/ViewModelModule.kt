@@ -18,4 +18,5 @@ val viewModelModule = module {
     viewModel {
         FilterViewModel(get())
     }
+
 }
