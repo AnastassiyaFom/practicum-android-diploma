@@ -25,6 +25,8 @@ import ru.practicum.android.diploma.vacancy.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.vacancy.data.VacancyDetailsRepositoryImpl
 import ru.practicum.android.diploma.vacancy.domain.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsRepository
+import ru.practicum.android.diploma.filters.data.CountriesRepositoryImpl
+import ru.practicum.android.diploma.filters.domain.CountriesRepository
 import java.util.concurrent.TimeUnit
 
 private const val CONNECT_TIMEOUT_SECONDS = 30L
@@ -84,6 +86,10 @@ val dataModule = module {
 
     factory<ExternalNavigator> {
         ExternalNavigatorImpl(get())
+    }
+
+    single<CountriesRepository> {
+        CountriesRepositoryImpl(get())
     }
 
     single<StorageClient<FilterParameters>> {

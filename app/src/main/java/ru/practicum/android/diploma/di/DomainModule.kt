@@ -11,6 +11,8 @@ import ru.practicum.android.diploma.search.domain.SearchVacanciesInteractor
 import ru.practicum.android.diploma.search.domain.SearchVacanciesInteractorImpl
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsInteractor
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsInteractorImpl
+import ru.practicum.android.diploma.filters.domain.CountriesInteractor
+import ru.practicum.android.diploma.filters.domain.CountriesInteractorImpl
 
 val domainModule = module {
 
@@ -31,5 +33,9 @@ val domainModule = module {
 
     factory<FiltersInteractor> {
         FiltersInteractorImpl(get())
+    }
+
+    factory<CountriesInteractor> {
+        CountriesInteractorImpl(get())
     }
 }
