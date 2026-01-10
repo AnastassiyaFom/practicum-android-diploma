@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.filters.domain
 
-import ru.practicum.android.diploma.filters.data.FilterParameters
+import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 
 class FiltersInteractorImpl(private val repository: FiltersRepository) : FiltersInteractor {
     override fun addFilter(filter: FilterParameters) {

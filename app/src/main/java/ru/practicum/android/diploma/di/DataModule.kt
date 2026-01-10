@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.common.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.common.network.VacancyApi
 import ru.practicum.android.diploma.favorites.data.db.AppDatabase
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
-import ru.practicum.android.diploma.filters.data.FilterParameters
+import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 import ru.practicum.android.diploma.filters.data.FiltersRepositoryImpl
 import ru.practicum.android.diploma.filters.data.StorageClient
 import ru.practicum.android.diploma.filters.data.StorageFiltersClient

@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.filters.data.FilterParameters
+
 import ru.practicum.android.diploma.filters.domain.CountriesInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.models.Country
+import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 
 class CountryViewModel(
     private val countriesInteractor: CountriesInteractor,

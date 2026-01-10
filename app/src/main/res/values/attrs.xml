@@ -6,4 +6,5 @@
     <attr name="BottomNavEnabled" format="color|reference"/>
     <attr name="ToastBackgroundColor" format="color|reference"/>
     <attr name="toastAndButtonTextColor" format="color|reference"/>
+
 </resources>
