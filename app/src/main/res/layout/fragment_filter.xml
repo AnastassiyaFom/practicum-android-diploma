@@ -37,12 +37,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="80dp" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/second_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="140dp" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/third_guideline"
         android:layout_width="wrap_content"
@@ -54,15 +56,17 @@
         android:id="@+id/place_of_work_selected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/second_guideline"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/place_of_work_middle_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
+
         <TextView
             android:id="@+id/place_of_work_hint"
             style="@style/TextAppearance.Regular12"
@@ -70,9 +74,8 @@
             android:layout_height="wrap_content"
             android:text="@string/place_of_work"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/place_of_work_middle_guideline"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/place_of_work_item"
@@ -80,9 +83,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?attr/colorPrimary"
-            tools:text="Россия, Москва"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/place_of_work_middle_guideline"/>
+            app:layout_constraintTop_toBottomOf="@+id/place_of_work_middle_guideline"
+            tools:text="Россия, Москва" />
 
         <ImageButton
             android:id="@+id/btn_clear_place_of_work"
@@ -95,12 +98,13 @@
             app:tint="?attr/colorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/place_of_work_unselected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/second_guideline">
+        app:layout_constraintBottom_toBottomOf="@id/second_guideline"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/place_of_work_hint_unselected"
@@ -125,19 +129,22 @@
             app:tint="?attr/colorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/industry_selected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/third_guideline"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/industry_middle_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
+
         <TextView
             android:id="@+id/industry_of_work_hint"
             style="@style/TextAppearance.Regular12"
@@ -145,9 +152,8 @@
             android:layout_height="wrap_content"
             android:text="@string/industry"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/industry_middle_guideline"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/industry_item"
@@ -155,9 +161,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?attr/colorPrimary"
-            tools:text="Вышивание"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/industry_middle_guideline"/>
+            app:layout_constraintTop_toBottomOf="@+id/industry_middle_guideline"
+            tools:text="Вышивание" />
 
         <ImageButton
             android:id="@+id/btn_clear_industry"
@@ -170,13 +176,14 @@
             app:tint="?attr/colorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/industry_unselected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/third_guideline"
-        android:visibility="visible">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/industry_hint_unselected"
@@ -200,6 +207,7 @@
             app:tint="?attr/colorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/input_salary"
         android:layout_width="match_parent"
@@ -228,15 +236,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_16"
             android:backgroundTint="?attr/customEditTextBackground"
-            android:hint="@string/enter_amount"
-            android:textColorHint="?attr/customEditTextHintColor"
             android:digits="0123456789"
+            android:hint="@string/enter_amount"
             android:inputType="number|numberSigned"
-            android:maxLines="1"
             android:paddingBottom="@dimen/padding_8"
-            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Regular16"
             android:textColor="?attr/colorPrimaryVariant"
+            android:textColorHint="?attr/customEditTextHintColor"
             android:textCursorDrawable="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/salary_expected" />

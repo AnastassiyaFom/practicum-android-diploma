@@ -4,5 +4,6 @@ import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 
 sealed interface FilterState {
     object Empty : FilterState
-    class Content (var filter: FilterParameters) : FilterState
+    object NotEmpty : FilterState
+    class Content(var filter: FilterParameters) : FilterState
 }
