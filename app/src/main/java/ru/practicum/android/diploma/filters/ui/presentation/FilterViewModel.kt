@@ -24,7 +24,7 @@ class FilterViewModel(
         renderFilterState(filter)
         when (isFilterEmpty(filter)) {
             true -> setInputSalaryState(hasFocus = false, isSalaryFieldEmpty = true)
-            else -> setInputSalaryState(hasFocus = false, isSalaryFieldEmpty = (filter.salary == null))
+            else -> setInputSalaryState(hasFocus = false, isSalaryFieldEmpty = filter.salary == null)
         }
     }
 
@@ -94,8 +94,12 @@ class FilterViewModel(
     }
 
     private fun renderFilterState(filter: FilterParameters) {
-        if (isFilterEmpty(filter)) filterStateLiveData.postValue(FilterState.Empty)
-        else filterStateLiveData.postValue(FilterState.Content(filter))
+        if (isFilterEmpty(filter)){
+            filterStateLiveData.postValue(FilterState.Empty)
+        }
+        else {
+            filterStateLiveData.postValue(FilterState.Content(filter))
+        }
     }
 
     fun resetPlaceOfWork() {
@@ -108,7 +112,9 @@ class FilterViewModel(
     fun resetIndustry() {
         filter.industry = null
         filter.industryName = null
-        if (isFilterEmpty(filter)) renderFilterState(filter)
+        if (isFilterEmpty(filter)){
+            renderFilterState(filter)
+        }
         saveFilterParameters()
     }
 }

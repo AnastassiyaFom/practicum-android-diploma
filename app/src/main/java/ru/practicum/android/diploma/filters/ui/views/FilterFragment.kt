@@ -24,7 +24,6 @@ class FilterFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: FilterViewModel by inject()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -166,8 +165,12 @@ class FilterFragment : Fragment() {
 
     private fun setSalary(item: Int?) {
         var text = ""
-        if (item == null) text = ""
-        else if (item >= 0) text = item.toString()
+        if (item == null){
+            text = ""
+        }
+        else if (item >= 0) {
+            text = item.toString()
+        }
         binding.salaryEditText.setText(text)
     }
 
@@ -203,26 +206,21 @@ class FilterFragment : Fragment() {
     }
 
     private fun getBlackColor(): Int {
-        var typedArray =
-            requireActivity().theme.obtainStyledAttributes(intArrayOf(com.google.android.material.R.attr.colorPrimaryVariant))
-        val color =
-            requireActivity().theme.obtainStyledAttributes(intArrayOf(com.google.android.material.R.attr.colorPrimaryVariant))
-                .getColor(0, Color.BLACK)
+        var typedArray = requireActivity().theme.obtainStyledAttributes(intArrayOf(com.google.android.material.R.attr.colorPrimaryVariant))
+        val color = typedArray.getColor(0, Color.BLACK)
         typedArray.recycle()
         return color
     }
 
     private fun getBlueColor(): Int {
-        var typedArray =
-            requireActivity().theme.obtainStyledAttributes(intArrayOf(R.attr.BottomNavEnabled))
+        var typedArray = requireActivity().theme.obtainStyledAttributes(intArrayOf(R.attr.BottomNavEnabled))
         val color = typedArray.getColor(0, Color.BLUE)
         typedArray.recycle()
         return color
     }
 
     private fun getHintColor(): Int {
-        var typedArray =
-            requireActivity().theme.obtainStyledAttributes(intArrayOf(R.attr.customEditTextHintColor))
+        var typedArray = requireActivity().theme.obtainStyledAttributes(intArrayOf(R.attr.customEditTextHintColor))
         val color = typedArray.getColor(0, Color.GRAY)
         typedArray.recycle()
         return color
