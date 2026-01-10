@@ -82,7 +82,9 @@ class FilterFragment : Fragment() {
             findNavController().navigate(R.id.action_filterFragment_to_searchFragment)
         }
         val textWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                val test = true
+            }
             override fun afterTextChanged(s: Editable?) {
                 viewModel.saveSalary()
             }
@@ -165,10 +167,9 @@ class FilterFragment : Fragment() {
 
     private fun setSalary(item: Int?) {
         var text = ""
-        if (item == null){
+        if (item == null) {
             text = ""
-        }
-        else if (item >= 0) {
+        } else if (item >= 0) {
             text = item.toString()
         }
         binding.salaryEditText.setText(text)
@@ -206,21 +207,27 @@ class FilterFragment : Fragment() {
     }
 
     private fun getBlackColor(): Int {
-        var typedArray = requireActivity().theme.obtainStyledAttributes(intArrayOf(com.google.android.material.R.attr.colorPrimaryVariant))
+        var typedArray =
+            requireActivity()
+                .theme.obtainStyledAttributes(
+                    intArrayOf(com.google.android.material.R.attr.colorPrimaryVariant)
+                )
         val color = typedArray.getColor(0, Color.BLACK)
         typedArray.recycle()
         return color
     }
 
     private fun getBlueColor(): Int {
-        var typedArray = requireActivity().theme.obtainStyledAttributes(intArrayOf(R.attr.BottomNavEnabled))
+        var typedArray = requireActivity()
+            .theme.obtainStyledAttributes(intArrayOf(R.attr.BottomNavEnabled))
         val color = typedArray.getColor(0, Color.BLUE)
         typedArray.recycle()
         return color
     }
 
     private fun getHintColor(): Int {
-        var typedArray = requireActivity().theme.obtainStyledAttributes(intArrayOf(R.attr.customEditTextHintColor))
+        var typedArray = requireActivity()
+            .theme.obtainStyledAttributes(intArrayOf(R.attr.customEditTextHintColor))
         val color = typedArray.getColor(0, Color.GRAY)
         typedArray.recycle()
         return color
