@@ -64,10 +64,8 @@ class PlaceOfWorkFragment : Fragment() {
     }
 
     private fun render(state: PlaceOfWorkState) {
-
         binding.tvCountryValue.isVisible = state.isCountrySelected
         binding.tvCountryValue.text = state.countryName
-
         binding.btnClearCountry.isVisible = state.isCountrySelected
         binding.ivCountryArrow.isVisible = !state.isCountrySelected
 

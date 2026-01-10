@@ -21,7 +21,10 @@ class CountryFragment : Fragment() {
 
     private val viewModel: CountryViewModel by viewModel()
 
-    private lateinit var adapter: CountriesAdapter
+    private val adapter = CountriesAdapter { country ->
+        viewModel.saveSelectedCountry(country)
+        findNavController().popBackStack()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentCountryBinding.inflate(inflater, container, false)
@@ -35,10 +38,7 @@ class CountryFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        adapter = CountriesAdapter { country ->
-            viewModel.saveSelectedCountry(country)
-            findNavController().popBackStack()
-        }
+        binding.rvCountries.adapter = adapter
 
         binding.rvCountries.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCountries.adapter = adapter

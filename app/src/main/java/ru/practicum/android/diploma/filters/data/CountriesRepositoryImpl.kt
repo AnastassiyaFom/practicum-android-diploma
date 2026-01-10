@@ -15,7 +15,7 @@ class CountriesRepositoryImpl(
 ) : CountriesRepository {
 
     override suspend fun getCountries(): Pair<List<Country>?, Int?> = withContext(Dispatchers.IO) {
-        val response: Response = networkClient.doRequest(AreasRequest())
+        val response: Response = networkClient.doRequest(AreasRequest)
 
         when (response.resultCode) {
             NetworkCodes.SUCCESS_CODE -> {

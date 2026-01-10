@@ -1,4 +1,3 @@
 package ru.practicum.android.diploma.filters.data.dto
 
-class AreasRequest {
-}
+object AreasRequest

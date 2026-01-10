@@ -13,7 +13,6 @@ import ru.practicum.android.diploma.util.isNetworkAvailable
 import ru.practicum.android.diploma.vacancy.data.dto.VacancyDetailsRequest
 import ru.practicum.android.diploma.vacancy.data.dto.VacancyDetailsResponse
 
-
 class RetrofitNetworkClient(private val context: Context, private val vacancyApiService: VacancyApi) : NetworkClient {
     override suspend fun doRequest(dto: Any): Response {
         if (!isNetworkAvailable(context)) {
