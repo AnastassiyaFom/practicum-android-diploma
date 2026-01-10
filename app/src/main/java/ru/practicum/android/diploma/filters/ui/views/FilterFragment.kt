@@ -23,5 +23,9 @@ class FilterFragment : Fragment() {
         view.findViewById<View>(R.id.btn_back).setOnClickListener {
             findNavController().popBackStack()
         }
+
+        view.findViewById<View>(R.id.btnPlaceOfWorkStub).setOnClickListener {
+            findNavController().navigate(R.id.action_filterFragment_to_placeOfWorkFragment)
+        }
     }
 }

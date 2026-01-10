@@ -29,4 +29,17 @@
         app:layout_constraintBottom_toBottomOf="@id/btn_back"
         android:layout_marginStart="16dp"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlaceOfWorkStub"
+        style="@style/CustomBottonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_16"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:layout_marginTop="@dimen/padding_16"
+        android:text="@string/title_place_of_work"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_back" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
