@@ -22,6 +22,8 @@ class FilterViewModel(
 
     init {
         filter = filtersInteractor.getFilters() ?: setEmptyFilter()
+        filter.areaName="asdad"
+        filter.industryName="1234567"
         renderFilterState(filter)
         when (isFilterEmpty(filter)){
             true -> setInputSalaryState(hasFocus=false, isSalaryFieldEmpty=true)
@@ -44,7 +46,6 @@ class FilterViewModel(
     fun setSalary(salary: Int?) {
         filter.salary = salary
         renderFilterState(filter)
-        saveFilterParameters()
     }
 
     // TODO("Дальше идет заглушка, нужно доработать")
@@ -55,7 +56,6 @@ class FilterViewModel(
     fun setOnlyWithSalaryFlag(isChecked: Boolean) {
         filter.onlyWithSalary = isChecked
         renderFilterState(filter)
-        saveFilterParameters()
     }
 
     fun getFiltersParameters(): FilterParameters {
@@ -99,6 +99,19 @@ class FilterViewModel(
     private fun renderFilterState(filter: FilterParameters) {
         if (isFilterEmpty(filter)) filterStateLiveData.postValue(FilterState.Empty)
         else filterStateLiveData.postValue(FilterState.Content(filter))
+        saveFilterParameters()
+    }
+
+    fun resetPlaceOfWork() {
+        filter.area=null
+        filter.areaName=null
+        renderFilterState(filter)
+    }
+
+    fun resetIndustry() {
+        filter.industry=null
+        filter.industryName=null
+        renderFilterState(filter)
     }
 
 }

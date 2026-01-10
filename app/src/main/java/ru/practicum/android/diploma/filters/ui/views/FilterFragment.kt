@@ -8,7 +8,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.inject
@@ -50,19 +49,30 @@ class FilterFragment : Fragment() {
         binding.btnSelectPlaceOfWork.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_placeOfWorkFragment)
         }
+
+        binding.btnClearPlaceOfWork.setOnClickListener {
+            viewModel.resetPlaceOfWork()
+            setPlaceOfWorkField("")
+        }
+        binding.btnClearIndustry.setOnClickListener {
+            viewModel.resetIndustry()
+            setIndustryField("")
+        }
         binding.btnSelectIndustry.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_industryFragment)
         }
 
         binding.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (!binding.salaryEditText.text.isNullOrEmpty()) viewModel.setSalary(binding.salaryEditText.text.toString().toInt())
             viewModel.setOnlyWithSalaryFlag(isChecked)
         }
 
         binding.btnReset.setOnClickListener {
             viewModel.resetFilters()
             clearSalary()
-
-
+            setPlaceOfWorkField("")
+            setIndustryField("")
+            binding.checkBox.setChecked(false)
         }
 
         binding.btnApply.setOnClickListener {
@@ -73,7 +83,9 @@ class FilterFragment : Fragment() {
 
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+
+            }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
                     binding.btnClearSalary.visibility = View.GONE
@@ -84,8 +96,9 @@ class FilterFragment : Fragment() {
         }
         binding.salaryEditText.addTextChangedListener(textWatcher)
 
-        binding.salaryEditText.setOnFocusChangeListener { v, hasFocus ->
+        binding.salaryEditText.setOnFocusChangeListener { view, hasFocus ->
             viewModel.setInputSalaryState(hasFocus, binding.salaryEditText.text.isNullOrEmpty())
+            if (!binding.salaryEditText.text.isNullOrEmpty()) viewModel.setSalary(binding.salaryEditText.text.toString().toInt())
         }
 
         binding.btnClearSalary.setOnClickListener {
@@ -113,16 +126,13 @@ class FilterFragment : Fragment() {
             is InputSalaryBoxState.EmptyNotFocused -> {
                 binding.salaryExpected.setTextColor(customEditTextHintColor)
             }
-
             is InputSalaryBoxState.NotEmptyNotFocused -> {
                 binding.salaryExpected.setTextColor(colorPrimaryVariant)
                 viewModel.setSalary(binding.salaryEditText.text.toString().toInt())
             }
-
             is InputSalaryBoxState.EmptyFocused -> {
                 binding.salaryExpected.setTextColor(bottomNavEnabled)
             }
-
             is InputSalaryBoxState.NotEmptyFocused -> {
                 binding.salaryExpected.setTextColor(bottomNavEnabled)
                 viewModel.setSalary(binding.salaryEditText.text.toString().toInt())
@@ -136,7 +146,6 @@ class FilterFragment : Fragment() {
                 binding.btnApply.visibility = View.GONE
                 binding.btnReset.visibility = View.GONE
             }
-
             else -> {
                 binding.btnApply.visibility = View.VISIBLE
                 binding.btnReset.visibility = View.VISIBLE
@@ -144,7 +153,6 @@ class FilterFragment : Fragment() {
                 setIndustryField(viewModel.getIndustry())
                 setSalary(viewModel.getSalary())
                 binding.checkBox.setChecked(viewModel.getOnlyWithSalaryFlag())
-
             }
         }
     }
@@ -164,6 +172,7 @@ class FilterFragment : Fragment() {
             else -> {
                 binding.placeOfWorkUnselected.visibility = View.GONE
                 binding.placeOfWorkSelected.visibility = View.VISIBLE
+                binding.placeOfWorkItem.text=item
             }
         }
     }
@@ -178,6 +187,7 @@ class FilterFragment : Fragment() {
             else -> {
                 binding.industryUnselected.visibility = View.GONE
                 binding.industrySelected.visibility = View.VISIBLE
+                binding.industryItem.text=item
             }
 
         }
