@@ -5,14 +5,14 @@ import ru.practicum.android.diploma.favorites.data.FavoritesVacanciesRepositoryI
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacanciesInteractor
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacanciesRepository
 import ru.practicum.android.diploma.favorites.domain.impl.FavoritesVacanciesInteractorImpl
+import ru.practicum.android.diploma.filters.domain.CountriesInteractor
+import ru.practicum.android.diploma.filters.domain.CountriesInteractorImpl
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersInteractorImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesInteractor
 import ru.practicum.android.diploma.search.domain.SearchVacanciesInteractorImpl
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsInteractor
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsInteractorImpl
-import ru.practicum.android.diploma.filters.domain.CountriesInteractor
-import ru.practicum.android.diploma.filters.domain.CountriesInteractorImpl
 
 val domainModule = module {
 

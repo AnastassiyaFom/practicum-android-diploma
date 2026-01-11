@@ -17,7 +17,6 @@ import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 import ru.practicum.android.diploma.filters.ui.presentation.FilterState
 import ru.practicum.android.diploma.filters.ui.presentation.FilterViewModel
 import ru.practicum.android.diploma.filters.ui.presentation.InputSalaryBoxState
-import kotlin.getValue
 
 class FilterFragment : Fragment() {
     private var _binding: FragmentFilterBinding? = null
@@ -35,12 +34,24 @@ class FilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.refreshFilters()
+        setupSalaryInput()
+        setupClickListeners()
+        setupNavigate()
         viewModel.observeInputState().observe(viewLifecycleOwner) {
             renderInputSalaryBoxStyle(it)
         }
         viewModel.observeFilterState().observe(viewLifecycleOwner) {
             renderFilterState(it)
         }
+        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            // КОСТЫЛЬ!!!
+            viewModel.setInputSalaryState(false, binding.salaryEditText.text.isNullOrEmpty())
+            viewModel.setOnlyWithSalaryFlag(isChecked)
+        }
+    }
+
+    private fun setupNavigate() {
         binding.btnBack.setOnClickListener {
             viewModel.saveFilterParameters()
             findNavController().popBackStack()
@@ -48,6 +59,20 @@ class FilterFragment : Fragment() {
         binding.btnSelectPlaceOfWork.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_placeOfWorkFragment)
         }
+        binding.btnSelectIndustry.setOnClickListener {
+            findNavController().navigate(R.id.action_filterFragment_to_industryFragment)
+        }
+        binding.btnApply.setOnClickListener {
+            viewModel.saveFilterParameters()
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                "filters_changed",
+                true
+            )
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun setupClickListeners() {
         binding.btnClearPlaceOfWork.setOnClickListener {
             // КОСТЫЛЬ!!!
             viewModel.setInputSalaryState(hasFocus = false, binding.salaryEditText.text.isNullOrEmpty())
@@ -60,14 +85,7 @@ class FilterFragment : Fragment() {
             viewModel.resetIndustry()
             setIndustryField("")
         }
-        binding.btnSelectIndustry.setOnClickListener {
-            findNavController().navigate(R.id.action_filterFragment_to_industryFragment)
-        }
-        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            // КОСТЫЛЬ!!!
-            viewModel.setInputSalaryState(false, binding.salaryEditText.text.isNullOrEmpty())
-            viewModel.setOnlyWithSalaryFlag(isChecked)
-        }
+
         binding.btnReset.setOnClickListener {
             binding.salaryEditText.setText("")
             setPlaceOfWorkField("")
@@ -76,11 +94,15 @@ class FilterFragment : Fragment() {
             viewModel.setInputSalaryState(false, true)
             viewModel.resetFilters()
         }
-        binding.btnApply.setOnClickListener {
-            viewModel.saveFilterParameters()
-            findNavController().popBackStack(R.id.filterFragment, false)
-            findNavController().navigate(R.id.action_filterFragment_to_searchFragment)
+
+        binding.btnClearSalary.setOnClickListener {
+            binding.salaryEditText.setText("")
+            viewModel.setSalary(null)
+            viewModel.setInputSalaryState(true, true)
         }
+    }
+
+    private fun setupSalaryInput() {
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 val test = true
@@ -113,11 +135,7 @@ class FilterFragment : Fragment() {
         binding.salaryEditText.setOnFocusChangeListener { _, hasFocus ->
             viewModel.setInputSalaryState(hasFocus, binding.salaryEditText.text.isNullOrEmpty())
         }
-        binding.btnClearSalary.setOnClickListener {
-            binding.salaryEditText.setText("")
-            viewModel.setSalary(null)
-            viewModel.setInputSalaryState(true, true)
-        }
+
     }
 
     @SuppressLint("ResourceAsColor", "ResourceType")
@@ -234,5 +252,10 @@ class FilterFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         viewModel.saveFilterParameters()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshFilters()
     }
 }

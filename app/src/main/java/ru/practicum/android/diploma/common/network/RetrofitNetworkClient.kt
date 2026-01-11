@@ -6,6 +6,8 @@ import retrofit2.HttpException
 import ru.practicum.android.diploma.common.NetworkClient
 import ru.practicum.android.diploma.filters.data.dto.AreasRequest
 import ru.practicum.android.diploma.filters.data.dto.AreasResponse
+import ru.practicum.android.diploma.filters.data.dto.IndustryRequest
+import ru.practicum.android.diploma.filters.data.dto.IndustryResponse
 import ru.practicum.android.diploma.search.data.dto.Response
 import ru.practicum.android.diploma.search.data.dto.VacancyRequest
 import ru.practicum.android.diploma.util.NetworkCodes
@@ -21,14 +23,27 @@ class RetrofitNetworkClient(private val context: Context, private val vacancyApi
         return when (dto) {
             is VacancyRequest -> handleVacancyRequest(dto)
             is VacancyDetailsRequest -> handleVacancyDetailsRequest(dto)
+            is IndustryRequest -> handleIndustryRequest()
             is AreasRequest -> handleAreasRequest()
             else -> handleUnknownRequest(dto)
         }
     }
 
+    private suspend fun handleIndustryRequest(): Response {
+        return try {
+            val industriesList = vacancyApiService.getIndustries()
+            IndustryResponse(industriesList).apply {
+                resultCode = NetworkCodes.SUCCESS_CODE
+            }
+        } catch (e: HttpException) {
+            logHttpError(e)
+            createErrorResponse(e.code())
+        }
+    }
+
     private suspend fun handleVacancyRequest(request: VacancyRequest): Response {
         return try {
-            val response = vacancyApiService.searchVacancies(request.expression, request.page)
+            val response = vacancyApiService.searchVacancies(request.expression, request.page, request.filters)
             response.resultCode = NetworkCodes.SUCCESS_CODE
             response
         } catch (e: HttpException) {

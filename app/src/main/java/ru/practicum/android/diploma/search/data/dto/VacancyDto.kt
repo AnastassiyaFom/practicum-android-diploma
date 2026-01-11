@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.search.data.dto
 
 import ru.practicum.android.diploma.common.model.FilterArea
-import ru.practicum.android.diploma.common.model.FilterIndustry
+import ru.practicum.android.diploma.filters.domain.models.Industry
 
 data class VacancyDto(
     val id: String,
@@ -17,7 +17,7 @@ data class VacancyDto(
     val area: FilterArea,
     val skills: List<String>?,
     val url: String,
-    val industry: FilterIndustry
+    val industry: Industry
 )
 
 data class Salary(val from: Int?, val to: Int?, val currency: String?)
