@@ -31,28 +31,36 @@ class PlaceOfWorkViewModel(
 
     fun clearCountry() {
         val current = filtersInteractor.getFilters() ?: FilterParameters(
-            countryId = null, countryName = null,
-            regionId = null, regionName = null,
-            industry = null, industryName = null,
-            salary = null, onlyWithSalary = false
+            countryId = null,
+            countryName = null,
+            regionId = null,
+            regionName = null,
+            industry = null,
+            industryName = null,
+            salary = null,
+            onlyWithSalary = false
         )
         filtersInteractor.addFilter(current.copy(
-            countryId = null, countryName = null,
-            regionId = null, regionName = null
+            countryId = null,
+            countryName = null,
+            regionId = null,
+            regionName = null
         ))
         load()
     }
 
     fun clearRegion() {
         val current = filtersInteractor.getFilters() ?: FilterParameters(
-            countryId = null, countryName = null,
-            regionId = null, regionName = null,
-            industry = null, industryName = null,
-            salary = null, onlyWithSalary = false
+            countryId = null,
+            countryName = null,
+            regionId = null,
+            regionName = null,
+            industry = null,
+            industryName = null,
+            salary = null,
+            onlyWithSalary = false
         )
-        filtersInteractor.addFilter(current.copy(
-            regionId = null, regionName = null
-        ))
+        filtersInteractor.addFilter(current.copy(regionId = null, regionName = null))
         load()
     }
 }

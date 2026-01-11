@@ -62,7 +62,12 @@ class PlaceOfWorkFragment : Fragment() {
 
             if (state.isCountrySelected) {
                 tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular12)
-                tvCountryLabel.setTextColor(MaterialColors.getColor(tvCountryLabel, com.google.android.material.R.attr.colorPrimary))
+                tvCountryLabel.setTextColor(
+                    MaterialColors.getColor(
+                        tvCountryLabel,
+                        com.google.android.material.R.attr.colorPrimary
+                    )
+                )
             } else {
                 tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular16)
                 tvCountryLabel.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
@@ -75,7 +80,12 @@ class PlaceOfWorkFragment : Fragment() {
 
             if (state.isRegionSelected) {
                 tvRegionLabel.setTextAppearance(R.style.TextAppearance_Regular12)
-                tvRegionLabel.setTextColor(MaterialColors.getColor(tvRegionLabel, com.google.android.material.R.attr.colorPrimary))
+                tvRegionLabel.setTextColor(
+                    MaterialColors.getColor(
+                        tvRegionLabel,
+                        com.google.android.material.R.attr.colorPrimary
+                    )
+                )
             } else {
                 tvRegionLabel.setTextAppearance(R.style.TextAppearance_Regular16)
                 tvRegionLabel.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
