@@ -1,9 +1,5 @@
-package ru.practicum.android.diploma.filters.data
+package ru.practicum.android.diploma.filters.domain.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
 data class FilterParameters(
     val area: Int?,
     val areaName: String?,
@@ -11,4 +7,4 @@ data class FilterParameters(
     val industryName: String?,
     val salary: Int?,
     val onlyWithSalary: Boolean
-) : Parcelable
+)

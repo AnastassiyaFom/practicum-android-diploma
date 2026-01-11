@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.filters.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.practicum.android.diploma.filters.data.FilterParameters
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
+import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 
 class PlaceOfWorkViewModel(
     private val filtersInteractor: FiltersInteractor
