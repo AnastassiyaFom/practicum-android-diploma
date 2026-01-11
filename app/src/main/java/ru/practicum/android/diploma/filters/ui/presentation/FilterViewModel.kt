@@ -94,7 +94,16 @@ class FilterViewModel(
     }
 
     private fun setEmptyFilter(): FilterParameters {
-        return FilterParameters(null, null, null, null, null, false)
+        return FilterParameters(
+            countryId = null,
+            countryName = null,
+            regionId = null,
+            regionName = null,
+            industry = null,
+            industryName = null,
+            salary = null,
+            onlyWithSalary = false,
+        )
     }
 
     private fun isFilterEmpty(filter: FilterParameters): Boolean {
@@ -116,7 +125,11 @@ class FilterViewModel(
     }
 
     fun resetPlaceOfWork() {
-        filter = filter.copy(area = null, areaName = null)
+        filter = filter.copy(
+            countryId = null,
+            countryName = null,
+            regionId = null,
+            regionName = null)
         renderFilterState(filter)
         saveFilterParameters()
     }

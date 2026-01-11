@@ -68,7 +68,14 @@ class IndustryViewModel(private val filtersInteractor: FiltersInteractor) : View
 
     fun saveFilterParameters() {
         val currentParameters = filtersInteractor.getFilters() ?: FilterParameters(
-            null, null, null, null, null, false
+            countryId = null,
+            countryName = null,
+            regionId = null,
+            regionName = null,
+            industry = null,
+            industryName = null,
+            salary = null,
+            onlyWithSalary = false,
         )
 
         val industryToSave = selectedIndustryId?.let { id ->

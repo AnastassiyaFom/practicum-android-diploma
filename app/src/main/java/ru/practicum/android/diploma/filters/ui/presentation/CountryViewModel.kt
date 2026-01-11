@@ -34,14 +34,23 @@ class CountryViewModel(
     fun saveSelectedCountry(country: Country) {
         val current = filtersInteractor.getFilters()
             ?: FilterParameters(
-                area = null,
-                areaName = null,
+                countryId = null,
+                countryName = null,
+                regionId = null,
+                regionName = null,
                 industry = null,
                 industryName = null,
                 salary = null,
                 onlyWithSalary = false
             )
 
-        filtersInteractor.addFilter(current.copy(area = country.id, areaName = country.name))
+        filtersInteractor.addFilter(
+            current.copy(
+                countryId = country.id,
+                countryName = country.name,
+                regionId = null,
+                regionName = null
+            )
+        )
     }
 }
