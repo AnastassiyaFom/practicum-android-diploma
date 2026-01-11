@@ -14,19 +14,19 @@ import ru.practicum.android.diploma.common.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.common.network.VacancyApi
 import ru.practicum.android.diploma.favorites.data.db.AppDatabase
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
-import ru.practicum.android.diploma.filters.domain.models.FilterParameters
+import ru.practicum.android.diploma.filters.data.CountriesRepositoryImpl
 import ru.practicum.android.diploma.filters.data.FiltersRepositoryImpl
 import ru.practicum.android.diploma.filters.data.StorageClient
 import ru.practicum.android.diploma.filters.data.StorageFiltersClient
+import ru.practicum.android.diploma.filters.domain.CountriesRepository
 import ru.practicum.android.diploma.filters.domain.FiltersRepository
+import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 import ru.practicum.android.diploma.search.data.SearchVacanciesRepositoryImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesRepository
 import ru.practicum.android.diploma.vacancy.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.vacancy.data.VacancyDetailsRepositoryImpl
 import ru.practicum.android.diploma.vacancy.domain.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsRepository
-import ru.practicum.android.diploma.filters.data.CountriesRepositoryImpl
-import ru.practicum.android.diploma.filters.domain.CountriesRepository
 import java.util.concurrent.TimeUnit
 
 private const val CONNECT_TIMEOUT_SECONDS = 30L
@@ -77,7 +77,7 @@ val dataModule = module {
     }
 
     single<FiltersRepository> {
-        FiltersRepositoryImpl(get())
+        FiltersRepositoryImpl(get(), get())
     }
 
     factory { Gson() }

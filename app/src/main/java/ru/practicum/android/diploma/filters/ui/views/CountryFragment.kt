@@ -10,9 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentCountryBinding
-import ru.practicum.android.diploma.filters.ui.CountryState
-import ru.practicum.android.diploma.filters.ui.CountryViewModel
 import ru.practicum.android.diploma.filters.ui.adapter.CountriesAdapter
+import ru.practicum.android.diploma.filters.ui.presentation.CountryState
+import ru.practicum.android.diploma.filters.ui.presentation.CountryViewModel
 
 class CountryFragment : Fragment() {
 

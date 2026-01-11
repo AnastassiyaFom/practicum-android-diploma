@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.ui
+package ru.practicum.android.diploma.filters.ui.presentation
 
 import ru.practicum.android.diploma.filters.domain.models.Country
 

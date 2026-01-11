@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.ui
+package ru.practicum.android.diploma.filters.ui.presentation
 
 data class PlaceOfWorkState(
     val countryName: String?,

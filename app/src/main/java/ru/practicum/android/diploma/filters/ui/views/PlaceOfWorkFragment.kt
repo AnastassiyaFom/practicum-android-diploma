@@ -12,8 +12,8 @@ import com.google.android.material.color.MaterialColors
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentPlaceOfWorkBinding
-import ru.practicum.android.diploma.filters.ui.PlaceOfWorkState
-import ru.practicum.android.diploma.filters.ui.PlaceOfWorkViewModel
+import ru.practicum.android.diploma.filters.ui.presentation.PlaceOfWorkState
+import ru.practicum.android.diploma.filters.ui.presentation.PlaceOfWorkViewModel
 
 class PlaceOfWorkFragment : Fragment() {
 

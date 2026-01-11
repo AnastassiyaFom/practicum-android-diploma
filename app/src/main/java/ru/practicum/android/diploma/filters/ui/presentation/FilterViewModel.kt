@@ -85,6 +85,14 @@ class FilterViewModel(
         }
     }
 
+    fun refreshFilters() {
+        val updatedFilter = filtersInteractor.getFilters()
+        if (updatedFilter != null) {
+            filter = updatedFilter
+            renderFilterState(filter)
+        }
+    }
+
     private fun setEmptyFilter(): FilterParameters {
         return FilterParameters(null, null, null, null, null, false)
     }

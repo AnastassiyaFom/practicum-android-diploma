@@ -9,9 +9,10 @@ class SearchVacanciesInteractorImpl(private val vacanciesRepository: SearchVacan
     SearchVacanciesInteractor {
     override fun searchVacancies(
         expression: String,
-        page: Int
+        page: Int,
+        filters: Map<String, String>
     ): Flow<VacancySearchResult> {
-        return vacanciesRepository.searchVacancies(expression, page).map { resource ->
+        return vacanciesRepository.searchVacancies(expression, page, filters).map { resource ->
             when (resource) {
                 is Resource.Success -> {
                     VacancySearchResult(

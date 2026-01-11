@@ -238,6 +238,7 @@
             android:backgroundTint="?attr/customEditTextBackground"
             android:digits="0123456789"
             android:hint="@string/enter_amount"
+            android:imeOptions="actionDone"
             android:inputType="number|numberSigned"
             android:paddingBottom="@dimen/padding_8"
             android:textAppearance="@style/TextAppearance.Regular16"

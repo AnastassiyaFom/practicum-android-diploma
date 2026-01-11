@@ -8,12 +8,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.filters.domain.FiltersInteractor
+import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 import ru.practicum.android.diploma.search.domain.SearchVacanciesInteractor
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.util.NetworkCodes
 
 class SearchViewModel(
-    private val interactor: SearchVacanciesInteractor
+    private val searchInteractor: SearchVacanciesInteractor,
+    private val filtersInteractor: FiltersInteractor
 ) : ViewModel() {
 
     companion object {
@@ -27,6 +30,9 @@ class SearchViewModel(
 
     private val _events = MutableLiveData<SearchEvent?>()
     val events: LiveData<SearchEvent?> = _events
+
+    private val _hasFilters = MutableLiveData<Boolean>(false)
+    val hasFilters: LiveData<Boolean> = _hasFilters
 
     fun consumeEvent() {
         _events.value = null
@@ -45,6 +51,10 @@ class SearchViewModel(
     private var vacanciesList = ArrayList<Vacancy>()
     private var isNextPageLoading = false
     private var isLastPage = false
+
+    init {
+        updateFiltersState()
+    }
 
     fun onQueryChanged(text: String) {
         _query.value = text
@@ -79,8 +89,28 @@ class SearchViewModel(
             delay(CLICK_DEBOUNCE_DELAY)
         }
     }
+    fun updateFiltersState() {
+        _hasFilters.value = hasActiveFilters()
+    }
+
+    fun hasActiveFilters(): Boolean {
+        val filters = filtersInteractor.getFilters()
+        return filters != null && !isFilterEmpty(filters)
+    }
+
+    private fun isFilterEmpty(filter: FilterParameters): Boolean {
+        return filter.area == null &&
+            filter.industry == null &&
+            filter.salary == null &&
+            !filter.onlyWithSalary
+    }
 
     fun onFiltersChanged() {
+        currentPage = DEFAULT_PAGE
+        maxPages = 0
+        vacanciesList.clear()
+        isNextPageLoading = false
+        isLastPage = false
         performSearch()
     }
 
@@ -93,6 +123,7 @@ class SearchViewModel(
     }
 
     fun performSearch() {
+        val queryOptions = getQueryOptions()
         if (lastQuery.isEmpty()) {
             _state.value = SearchState.Idle
             return
@@ -112,7 +143,7 @@ class SearchViewModel(
 
         searchRequestJob?.cancel()
         searchRequestJob = viewModelScope.launch {
-            interactor.searchVacancies(lastQuery, currentPage).collect { result ->
+            searchInteractor.searchVacancies(lastQuery, currentPage, queryOptions).collect { result ->
                 processResult(
                     vacancies = result.vacancies,
                     totalFound = result.totalFound,
@@ -120,6 +151,16 @@ class SearchViewModel(
                     errorCode = if (result.errorCode == 200) null else result.errorCode
                 )
             }
+        }
+    }
+
+    private fun getQueryOptions(): Map<String, String> {
+        val filters = filtersInteractor.getFilters() ?: return emptyMap()
+        return buildMap {
+            filters.area?.let { put("area", it.toString()) }
+            filters.industry?.let { put("industry", it.toString()) }
+            filters.salary?.let { put("salary", it.toString()) }
+            if (filters.onlyWithSalary) put("only_with_salary", "true")
         }
     }
 
