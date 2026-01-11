@@ -15,34 +15,44 @@ class PlaceOfWorkViewModel(
 
     fun load() {
         val filters = filtersInteractor.getFilters()
-        val countryName = filters?.areaName
-        val selected = !countryName.isNullOrEmpty()
+        val countryName = filters?.countryName
+        val regionName = filters?.regionName
+        val isCountry = !countryName.isNullOrEmpty()
+        val isRegion = !regionName.isNullOrEmpty()
 
         _state.value = PlaceOfWorkState(
             countryName = countryName,
-            isCountrySelected = selected,
-            isSelectButtonVisible = selected
+            regionName = regionName,
+            isCountrySelected = isCountry,
+            isRegionSelected = isRegion,
+            isSelectButtonVisible = isCountry || isRegion
         )
     }
 
     fun clearCountry() {
-        val current = filtersInteractor.getFilters()
-            ?: FilterParameters(
-                countryId = null,
-                countryName = null,
-                regionId = null,
-                regionName = null,
-                industry = null,
-                industryName = null,
-                salary = null,
-                onlyWithSalary = false,
-            )
-
+        val current = filtersInteractor.getFilters() ?: FilterParameters(
+            countryId = null, countryName = null,
+            regionId = null, regionName = null,
+            industry = null, industryName = null,
+            salary = null, onlyWithSalary = false
+        )
         filtersInteractor.addFilter(current.copy(
-            countryId = null,
-            countryName = null,
-            regionId = null,
-            regionName = null))
+            countryId = null, countryName = null,
+            regionId = null, regionName = null
+        ))
+        load()
+    }
+
+    fun clearRegion() {
+        val current = filtersInteractor.getFilters() ?: FilterParameters(
+            countryId = null, countryName = null,
+            regionId = null, regionName = null,
+            industry = null, industryName = null,
+            salary = null, onlyWithSalary = false
+        )
+        filtersInteractor.addFilter(current.copy(
+            regionId = null, regionName = null
+        ))
         load()
     }
 }

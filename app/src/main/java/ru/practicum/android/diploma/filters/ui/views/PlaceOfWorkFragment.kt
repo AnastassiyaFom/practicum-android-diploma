@@ -22,11 +22,7 @@ class PlaceOfWorkFragment : Fragment() {
 
     private val viewModel: PlaceOfWorkViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPlaceOfWorkBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,18 +40,12 @@ class PlaceOfWorkFragment : Fragment() {
             findNavController().navigate(R.id.action_placeOfWorkFragment_to_regionFragment)
         }
 
-        binding.btnClearCountry.setOnClickListener {
-            viewModel.clearCountry()
-        }
+        binding.btnClearCountry.setOnClickListener { viewModel.clearCountry() }
+        binding.btnClearRegion.setOnClickListener { viewModel.clearRegion() }
 
-        binding.btnSelect.setOnClickListener {
-            findNavController().popBackStack()
+        binding.btnSelect.setOnClickListener { findNavController().popBackStack() }
 
-        }
-
-        viewModel.state.observe(viewLifecycleOwner) { state ->
-            render(state)
-        }
+        viewModel.state.observe(viewLifecycleOwner) { render(it) }
     }
 
     override fun onResume() {
@@ -64,25 +54,35 @@ class PlaceOfWorkFragment : Fragment() {
     }
 
     private fun render(state: PlaceOfWorkState) {
-        binding.tvCountryValue.isVisible = state.isCountrySelected
-        binding.tvCountryValue.text = state.countryName
-        binding.btnClearCountry.isVisible = state.isCountrySelected
-        binding.ivCountryArrow.isVisible = !state.isCountrySelected
+        with(binding) {
+            tvCountryValue.isVisible = state.isCountrySelected
+            tvCountryValue.text = state.countryName
+            btnClearCountry.isVisible = state.isCountrySelected
+            ivCountryArrow.isVisible = !state.isCountrySelected
 
-        if (state.isCountrySelected) {
-            binding.tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular12)
+            if (state.isCountrySelected) {
+                tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular12)
+                tvCountryLabel.setTextColor(MaterialColors.getColor(tvCountryLabel, com.google.android.material.R.attr.colorPrimary))
+            } else {
+                tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular16)
+                tvCountryLabel.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            }
 
-            val primary = MaterialColors.getColor(
-                binding.tvCountryLabel,
-                com.google.android.material.R.attr.colorPrimary
-            )
-            binding.tvCountryLabel.setTextColor(primary)
-        } else {
-            binding.tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular16)
-            binding.tvCountryLabel.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            tvRegionValue.isVisible = state.isRegionSelected
+            tvRegionValue.text = state.regionName
+            btnClearRegion.isVisible = state.isRegionSelected
+            ivRegionArrow.isVisible = !state.isRegionSelected
+
+            if (state.isRegionSelected) {
+                tvRegionLabel.setTextAppearance(R.style.TextAppearance_Regular12)
+                tvRegionLabel.setTextColor(MaterialColors.getColor(tvRegionLabel, com.google.android.material.R.attr.colorPrimary))
+            } else {
+                tvRegionLabel.setTextAppearance(R.style.TextAppearance_Regular16)
+                tvRegionLabel.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            }
+
+            btnSelect.isVisible = state.isSelectButtonVisible
         }
-
-        binding.btnSelect.isVisible = state.isSelectButtonVisible
     }
 
     override fun onDestroyView() {
