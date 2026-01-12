@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.color.MaterialColors
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentPlaceOfWorkBinding
@@ -54,7 +52,6 @@ class PlaceOfWorkFragment : Fragment() {
     }
 
     private fun render(state: PlaceOfWorkState) = with(binding) {
-
         tvCountryValue.isVisible = state.isCountrySelected
         tvCountryValue.text = state.countryName
         btnClearCountry.isVisible = state.isCountrySelected
@@ -69,7 +66,6 @@ class PlaceOfWorkFragment : Fragment() {
 
         btnSelect.isVisible = state.isSelectButtonVisible
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
