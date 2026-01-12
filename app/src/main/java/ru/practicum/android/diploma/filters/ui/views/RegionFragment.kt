@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +16,6 @@ import ru.practicum.android.diploma.databinding.FragmentRegionBinding
 import ru.practicum.android.diploma.filters.ui.adapter.RegionsAdapter
 import ru.practicum.android.diploma.filters.ui.presentation.RegionState
 import ru.practicum.android.diploma.filters.ui.presentation.RegionViewModel
-import android.view.inputmethod.InputMethodManager
-import androidx.core.widget.doOnTextChanged
 
 class RegionFragment : Fragment() {
 
