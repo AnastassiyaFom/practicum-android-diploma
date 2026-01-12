@@ -53,47 +53,23 @@ class PlaceOfWorkFragment : Fragment() {
         viewModel.load()
     }
 
-    private fun render(state: PlaceOfWorkState) {
-        with(binding) {
-            tvCountryValue.isVisible = state.isCountrySelected
-            tvCountryValue.text = state.countryName
-            btnClearCountry.isVisible = state.isCountrySelected
-            ivCountryArrow.isVisible = !state.isCountrySelected
+    private fun render(state: PlaceOfWorkState) = with(binding) {
 
-            if (state.isCountrySelected) {
-                tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular12)
-                tvCountryLabel.setTextColor(
-                    MaterialColors.getColor(
-                        tvCountryLabel,
-                        com.google.android.material.R.attr.colorPrimary
-                    )
-                )
-            } else {
-                tvCountryLabel.setTextAppearance(R.style.TextAppearance_Regular16)
-                tvCountryLabel.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
-            }
+        tvCountryValue.isVisible = state.isCountrySelected
+        tvCountryValue.text = state.countryName
+        btnClearCountry.isVisible = state.isCountrySelected
+        ivCountryArrow.isVisible = !state.isCountrySelected
+        tvCountryLabel.isSelected = state.isCountrySelected
 
-            tvRegionValue.isVisible = state.isRegionSelected
-            tvRegionValue.text = state.regionName
-            btnClearRegion.isVisible = state.isRegionSelected
-            ivRegionArrow.isVisible = !state.isRegionSelected
+        tvRegionValue.isVisible = state.isRegionSelected
+        tvRegionValue.text = state.regionName
+        btnClearRegion.isVisible = state.isRegionSelected
+        ivRegionArrow.isVisible = !state.isRegionSelected
+        tvRegionLabel.isSelected = state.isRegionSelected
 
-            if (state.isRegionSelected) {
-                tvRegionLabel.setTextAppearance(R.style.TextAppearance_Regular12)
-                tvRegionLabel.setTextColor(
-                    MaterialColors.getColor(
-                        tvRegionLabel,
-                        com.google.android.material.R.attr.colorPrimary
-                    )
-                )
-            } else {
-                tvRegionLabel.setTextAppearance(R.style.TextAppearance_Regular16)
-                tvRegionLabel.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
-            }
-
-            btnSelect.isVisible = state.isSelectButtonVisible
-        }
+        btnSelect.isVisible = state.isSelectButtonVisible
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
