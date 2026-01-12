@@ -16,10 +16,12 @@ import ru.practicum.android.diploma.favorites.data.db.AppDatabase
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
 import ru.practicum.android.diploma.filters.data.CountriesRepositoryImpl
 import ru.practicum.android.diploma.filters.data.FiltersRepositoryImpl
+import ru.practicum.android.diploma.filters.data.RegionsRepositoryImpl
 import ru.practicum.android.diploma.filters.data.StorageClient
 import ru.practicum.android.diploma.filters.data.StorageFiltersClient
 import ru.practicum.android.diploma.filters.domain.CountriesRepository
 import ru.practicum.android.diploma.filters.domain.FiltersRepository
+import ru.practicum.android.diploma.filters.domain.RegionsRepository
 import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 import ru.practicum.android.diploma.search.data.SearchVacanciesRepositoryImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesRepository
@@ -78,6 +80,10 @@ val dataModule = module {
 
     single<FiltersRepository> {
         FiltersRepositoryImpl(get(), get())
+    }
+
+    single<RegionsRepository> {
+        RegionsRepositoryImpl(get())
     }
 
     factory { Gson() }

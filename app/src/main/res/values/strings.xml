@@ -47,4 +47,7 @@
     <string name="region">Pегион</string>
     <string name="select">Выбрать</string>
     <string name="countries_list_error">Не удалось получить список</string>
+    <string name="enter_region">Введите регион</string>
+    <string name="regions_load_error">Не удалось получить список</string>
+    <string name="no_regions">Такого региона нет</string>
 </resources>
