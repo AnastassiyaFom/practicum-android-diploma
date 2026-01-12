@@ -65,7 +65,7 @@ class RegionFragment : Fragment() {
         binding.groupRegionsPlaceholder.isVisible = state is RegionState.Empty || state is RegionState.Error
 
         when (state) {
-            is RegionState.Content -> adapter.submitList(state.regions)
+            is RegionState.Content -> adapter.submitList(state.regions.toList())
             is RegionState.Empty -> {
                 binding.tvRegionsPlaceholder.text = getString(R.string.no_regions)
                 binding.ivRegionsPlaceholder.setImageResource(R.drawable.ill_list_load_error)
@@ -76,11 +76,6 @@ class RegionFragment : Fragment() {
             }
             else -> { }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadRegions()
     }
 
     override fun onDestroyView() {
