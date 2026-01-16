@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="@dimen/padding_16"
+    android:paddingBottom="@dimen/padding_8">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -14,20 +16,105 @@
         android:padding="8dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="12dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="@string/title_region"
         android:textSize="22sp"
-        app:layout_constraintStart_toEndOf="@id/btn_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_back"
         app:layout_constraintBottom_toBottomOf="@id/btn_back"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="@id/btn_back" />
 
+    <EditText
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="27dp"
+        android:background="@drawable/edit_text_field"
+        android:backgroundTint="@null"
+        android:hint="@string/enter_region"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:lines="1"
+        android:paddingStart="@dimen/padding_16"
+        android:paddingEnd="50dp"
+        android:textColor="@color/black"
+        android:textColorHint="?attr/customEditTextHintColor"
+        android:textCursorDrawable="@drawable/cursor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <ImageView
+        android:id="@+id/drawable_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@+id/search_input"
+        app:layout_constraintEnd_toEndOf="@+id/search_input"
+        app:layout_constraintTop_toTopOf="@+id/search_input" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_regions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_input"
+        tools:listitem="@layout/item_region" />
+
+    <ProgressBar
+        android:id="@+id/progress_regions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_regions_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_16"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tv_regions_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_regions_placeholder"
+        style="@style/Tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/regions_load_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_input" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_regions_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="tv_regions_placeholder,iv_regions_placeholder" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-

@@ -7,5 +7,11 @@
     <dimen name="padding_9">9dp</dimen>
     <dimen name="padding_12">12dp</dimen>
     <dimen name="padding_19">19dp</dimen>
+    <dimen name="padding_14">14dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+    <dimen name="item_height">60dp</dimen>
+
+    <dimen name="label_text_normal">16sp</dimen>
+    <dimen name="label_text_selected">12sp</dimen>
 
 </resources>

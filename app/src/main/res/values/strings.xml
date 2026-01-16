@@ -32,4 +32,22 @@
     <string name="salary_not_specified">Зарплата не указана </string>
     <string name="check_internet_connection">Проверьте подключение к интернету</string>
     <string name="error_occurred">Произошла ошибка</string>
+    <string name="enter_Industry">Введите отрасль</string>
+    <string name="no_industries_available">Нет доступных отраслей</string>
+    <string name="industries_load_error">Ошибка загрузки отраслей</string>
+    <string name="enter_amount">Введите сумму</string>
+    <string name="do_not_show_without_salary">Не показывать без зарплаты</string>
+    <string name="reset">Сбросить</string>
+    <string name="apply">Применить</string>
+    <string name="no_industries">Такой отрасли нет</string>
+    <string name="place_of_work">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="salary_expected">Ожидаемая зарплата</string>
+    <string name="country">Страна</string>
+    <string name="region">Pегион</string>
+    <string name="select">Выбрать</string>
+    <string name="countries_list_error">Не удалось получить список</string>
+    <string name="enter_region">Введите регион</string>
+    <string name="regions_load_error">Не удалось получить список</string>
+    <string name="no_regions">Такого региона нет</string>
 </resources>

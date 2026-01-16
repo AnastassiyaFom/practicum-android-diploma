@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.di
 
 import androidx.room.Room
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -13,6 +14,15 @@ import ru.practicum.android.diploma.common.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.common.network.VacancyApi
 import ru.practicum.android.diploma.favorites.data.db.AppDatabase
 import ru.practicum.android.diploma.favorites.data.db.VacancyDao
+import ru.practicum.android.diploma.filters.data.CountriesRepositoryImpl
+import ru.practicum.android.diploma.filters.data.FiltersRepositoryImpl
+import ru.practicum.android.diploma.filters.data.RegionsRepositoryImpl
+import ru.practicum.android.diploma.filters.data.StorageClient
+import ru.practicum.android.diploma.filters.data.StorageFiltersClient
+import ru.practicum.android.diploma.filters.domain.CountriesRepository
+import ru.practicum.android.diploma.filters.domain.FiltersRepository
+import ru.practicum.android.diploma.filters.domain.RegionsRepository
+import ru.practicum.android.diploma.filters.domain.models.FilterParameters
 import ru.practicum.android.diploma.search.data.SearchVacanciesRepositoryImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesRepository
 import ru.practicum.android.diploma.vacancy.data.ExternalNavigatorImpl
@@ -68,6 +78,14 @@ val dataModule = module {
         VacancyDetailsRepositoryImpl(get(), get())
     }
 
+    single<FiltersRepository> {
+        FiltersRepositoryImpl(get(), get())
+    }
+
+    single<RegionsRepository> {
+        RegionsRepositoryImpl(get())
+    }
+
     factory { Gson() }
 
     single<VacancyDao> { get<AppDatabase>().vacancyDao() }
@@ -76,4 +94,14 @@ val dataModule = module {
         ExternalNavigatorImpl(get())
     }
 
+    single<CountriesRepository> {
+        CountriesRepositoryImpl(get())
+    }
+
+    single<StorageClient<FilterParameters>> {
+        StorageFiltersClient(
+            androidContext(),
+            object : TypeToken<FilterParameters>() {}.type
+        )
+    }
 }

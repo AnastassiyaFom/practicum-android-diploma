@@ -5,6 +5,12 @@ import ru.practicum.android.diploma.favorites.data.FavoritesVacanciesRepositoryI
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacanciesInteractor
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacanciesRepository
 import ru.practicum.android.diploma.favorites.domain.impl.FavoritesVacanciesInteractorImpl
+import ru.practicum.android.diploma.filters.domain.CountriesInteractor
+import ru.practicum.android.diploma.filters.domain.CountriesInteractorImpl
+import ru.practicum.android.diploma.filters.domain.FiltersInteractor
+import ru.practicum.android.diploma.filters.domain.FiltersInteractorImpl
+import ru.practicum.android.diploma.filters.domain.RegionsInteractor
+import ru.practicum.android.diploma.filters.domain.RegionsInteractorImpl
 import ru.practicum.android.diploma.search.domain.SearchVacanciesInteractor
 import ru.practicum.android.diploma.search.domain.SearchVacanciesInteractorImpl
 import ru.practicum.android.diploma.vacancy.domain.VacancyDetailsInteractor
@@ -27,4 +33,15 @@ val domainModule = module {
         VacancyDetailsInteractorImpl(get())
     }
 
+    factory<FiltersInteractor> {
+        FiltersInteractorImpl(get())
+    }
+
+    factory<CountriesInteractor> {
+        CountriesInteractorImpl(get())
+    }
+
+    factory<RegionsInteractor> {
+        RegionsInteractorImpl(get())
+    }
 }

@@ -5,14 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
@@ -22,19 +17,10 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: SearchViewModel by viewModel()
 
-    private val onItemClickListener = object : OnItemClickListener {
-        override fun onItemClick(position: Int) {
-            val vacancy = adapter.vacancies[position]
-            viewModel.onVacancyClicked(vacancy)
-        }
-    }
-
-    private val adapter: VacanciesAdapter by lazy {
-        VacanciesAdapter(emptyList(), onItemClickListener)
-    }
+    private var uiSetup: SearchUiSetup? = null
+    private var stateRenderer: SearchStateRenderer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,63 +34,44 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecycler()
-        setupSearchInput()
-        setupFilterButton()
+        uiSetup = SearchUiSetup(this, binding, viewModel)
+        stateRenderer = SearchStateRenderer(binding, uiSetup?.adapter ?: return)
+
+        uiSetup?.setupRecycler()
+        uiSetup?.setupSearchInput()
+        uiSetup?.setupFilterButton()
+
         observeViewModel()
-    }
-
-    private fun setupRecycler() {
-        binding.searchResults.layoutManager = LinearLayoutManager(requireContext())
-        binding.searchResults.adapter = adapter
-        binding.searchResults.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (dy > 0) {
-                    val pos = (binding.searchResults.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                    val itemsCount = adapter.itemCount
-                    if (pos >= itemsCount - 1) {
-                        viewModel.performSearch()
-                    }
-                }
-            }
-        })
-    }
-
-    private fun setupSearchInput() {
-        binding.searchInput.addTextChangedListener {
-            viewModel.onQueryChanged(it.toString())
-        }
-
-        binding.drawableEnd.setOnClickListener {
-            viewModel.clearQuery()
-        }
-    }
-
-    private fun setupFilterButton() {
-        binding.btnFilter.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_searchFragment_to_filterFragment
-            )
-        }
+        setupFiltersChangeListener()
     }
 
     private fun observeViewModel() {
         observeState()
         observeEvents()
         observeQuery()
+        observeFilters()
+    }
+
+    private fun observeFilters() {
+        viewModel.hasFilters.observe(viewLifecycleOwner) { hasFilters ->
+            val iconRes = if (hasFilters) {
+                R.drawable.ic_filter_on
+            } else {
+                R.drawable.ic_filter
+            }
+            binding.btnFilter.setImageResource(iconRes)
+        }
     }
 
     private fun observeState() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
-                SearchState.Idle -> renderIdle()
-                SearchState.Loading -> renderLoading()
-                SearchState.LoadingNextPage -> renderLoadingNextPage()
-                is SearchState.Content -> renderContent(state)
-                SearchState.Empty -> renderEmpty()
-                is SearchState.Error -> renderError(state)
+                SearchState.Idle -> stateRenderer?.renderIdle()
+                SearchState.Loading -> stateRenderer?.renderLoading()
+                SearchState.LoadingNextPage -> stateRenderer?.renderLoadingNextPage()
+                is SearchState.Content -> stateRenderer?.renderContent(state)
+                SearchState.Empty -> stateRenderer?.renderEmpty()
+                is SearchState.Error -> stateRenderer?.renderError(state)
             }
         }
     }
@@ -144,97 +111,28 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun renderIdle() {
-        binding.progressBarPagination.visibility = View.GONE
-        binding.progressBarCenter.visibility = View.GONE
-        binding.searchResults.visibility = View.GONE
-        binding.vacancyCounter.visibility = View.GONE
-        showPlaceholder(
-            R.drawable.ill_search_results_are_empty,
-            ""
-        )
-    }
-
-    private fun renderLoading() {
-        binding.progressBarPagination.visibility = View.GONE
-        binding.searchResults.visibility = View.GONE
-        binding.progressBarCenter.visibility = View.VISIBLE
-        hidePlaceholder()
-    }
-
-    private fun renderContent(state: SearchState.Content) {
-        binding.progressBarCenter.isVisible = false
-        binding.progressBarPagination.isVisible = false
-        val count = state.totalFound
-
-        binding.placeholder.visibility = View.GONE
-        binding.searchResults.visibility = View.VISIBLE
-
-        binding.vacancyCounter.text = resources.getQuantityString(
-            R.plurals.vacancies_found,
-            count,
-            count
-        )
-        binding.vacancyCounter.visibility = View.VISIBLE
-
-        adapter.vacancies = state.vacancies
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun renderEmpty() {
-        binding.progressBarCenter.isVisible = false
-        binding.progressBarPagination.isVisible = false
-        binding.searchResults.visibility = View.GONE
-        binding.vacancyCounter.text = getString(R.string.no_vacancy)
-        binding.vacancyCounter.visibility = View.VISIBLE
-
-        showPlaceholder(
-            R.drawable.ill_unable_to_get_list,
-            getString(R.string.load_list_error)
-        )
-    }
-
-    private fun renderError(state: SearchState.Error) {
-        binding.progressBarCenter.isVisible = false
-        binding.progressBarPagination.isVisible = false
-        binding.searchResults.visibility = View.GONE
-        binding.vacancyCounter.visibility = View.GONE
-
-        val (image, text) = when (state.error) {
-            SearchError.NO_INTERNET ->
-                R.drawable.ill_no_internet to getString(R.string.no_internet)
-            SearchError.SERVER_ERROR ->
-                R.drawable.ill_server_error to getString(R.string.server_error)
-            SearchError.LOAD_ERROR ->
-                R.drawable.ill_list_load_error to getString(R.string.load_list_error)
-        }
-
-        showPlaceholder(image, text)
-    }
-
-    private fun showPlaceholder(drawable: Int, text: String) {
-        binding.placeholder.visibility = View.VISIBLE
-        binding.placeholder.setCompoundDrawablesWithIntrinsicBounds(
-            null,
-            ContextCompat.getDrawable(requireContext(), drawable),
-            null,
-            null
-        )
-        binding.placeholder.text = text
-    }
-
-    private fun hidePlaceholder() {
-        binding.placeholder.visibility = View.GONE
-        binding.vacancyCounter.visibility = View.GONE
-    }
-
-    private fun renderLoadingNextPage() {
-        binding.progressBarCenter.isVisible = false
-        binding.progressBarPagination.isVisible = true
+    private fun setupFiltersChangeListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle
+            ?.getLiveData<Boolean>("filters_changed")
+            ?.observe(viewLifecycleOwner) { filtersChanged ->
+                if (filtersChanged == true) {
+                    val currentQuery = binding.searchInput.text.toString()
+                    if (currentQuery.isNotEmpty()) {
+                        viewModel.onFiltersChanged()
+                    }
+                    findNavController().currentBackStackEntry?.savedStateHandle
+                        ?.remove<Boolean>("filters_changed")
+                }
+            }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateFiltersState()
     }
 }

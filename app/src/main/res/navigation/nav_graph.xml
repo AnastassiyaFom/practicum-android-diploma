@@ -27,13 +27,14 @@
         tools:layout="@layout/fragment_filter">
 
         <action
-            android:id="@+id/action_filterFragment_to_placeOfWorkFragment"
-            app:destination="@id/placeOfWorkFragment" />
-
-        <action
             android:id="@+id/action_filterFragment_to_industryFragment"
             app:destination="@id/industryFragment" />
-
+        <action
+            android:id="@+id/action_filterFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_filterFragment_to_placeOfWorkFragment"
+            app:destination="@id/placeOfWorkFragment" />
     </fragment>
 
 
