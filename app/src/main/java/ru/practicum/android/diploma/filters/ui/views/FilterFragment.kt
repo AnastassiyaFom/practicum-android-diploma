@@ -111,7 +111,9 @@ class FilterFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isNotEmpty()) {
                     viewModel.setSalary(s.toString().toInt())
-                } else viewModel.setSalary(null)
+                } else {
+                    viewModel.setSalary(null)
+                }
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
