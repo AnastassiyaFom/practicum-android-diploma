@@ -17,11 +17,9 @@ class FilterViewModel(
     fun observeFilterState(): LiveData<FilterState> = filterStateLiveData
 
     private var filter: FilterParameters
-    private var currentSalary: Int? = null
 
     init {
         filter = filtersInteractor.getFilters() ?: setEmptyFilter()
-        currentSalary = filter.salary
         renderFilterState(filter)
         when (isFilterEmpty(filter)) {
             true -> setInputSalaryState(hasFocus = false, isSalaryFieldEmpty = true)
@@ -39,15 +37,6 @@ class FilterViewModel(
 
     fun getSalary(): Int? {
         return filter.salary
-    }
-
-    fun setCurrentSalary(salary: Int?) {
-        currentSalary = salary
-    }
-
-    fun setSalary() {
-        filter = filter.copy(salary = currentSalary)
-        filtersInteractor.addFilter(filter)
     }
 
     fun setSalary(salary: Int?) {
