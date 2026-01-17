@@ -109,7 +109,9 @@ class FilterFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                viewModel.setSalary()
+                if (s.toString().isNotEmpty()) {
+                    viewModel.setSalary(s.toString().toInt())
+                } else viewModel.setSalary(null)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -121,7 +123,6 @@ class FilterFragment : Fragment() {
                     // Если число больше, чем может храниться в Int
                     if (salary.toLong() <= Int.MAX_VALUE) {
                         binding.salaryEditText.setTextColor(getBlackColor())
-                        viewModel.setCurrentSalary(salary.toInt())
                     } else {
                         binding.salaryEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                     }
