@@ -16,6 +16,7 @@ class IndustryViewModel(private val filtersInteractor: FiltersInteractor) : View
     val filteredIndustries = mutableListOf<Industry>()
     private var selectedIndustryId: String? = null
     private var savedIndustryId: String? = null
+    private var selectedIndustryForSave: Industry? = null
 
     private val stateLiveData = MutableLiveData<IndustryState>(IndustryState.Loading)
     fun observeState(): LiveData<IndustryState> = stateLiveData
@@ -38,9 +39,9 @@ class IndustryViewModel(private val filtersInteractor: FiltersInteractor) : View
         }
     }
 
-    fun onIndustrySelected(industry: Industry) {
+    fun selectIndustry(industry: Industry) {
+        selectedIndustryForSave = industry
         selectedIndustryId = industry.id
-        filterList(industry.name)
         updateButtonVisibility()
     }
 
@@ -78,17 +79,13 @@ class IndustryViewModel(private val filtersInteractor: FiltersInteractor) : View
             onlyWithSalary = false,
         )
 
-        val industryToSave = selectedIndustryId?.let { id ->
-            industries.find { it.id == id }
-        }
-
         filtersInteractor.addFilter(
             currentParameters.copy(
-                industry = industryToSave?.id?.toInt(),
-                industryName = industryToSave?.name
+                industry = selectedIndustryForSave?.id?.toInt(),
+                industryName = selectedIndustryForSave?.name
             )
         )
-        savedIndustryId = selectedIndustryId
+        savedIndustryId = selectedIndustryForSave?.id
         updateButtonVisibility()
     }
 
@@ -98,9 +95,11 @@ class IndustryViewModel(private val filtersInteractor: FiltersInteractor) : View
         val isSelectedInCurrentList = selectedIndustryId?.let { selectedId ->
             filteredIndustries.any { it.id == selectedId }
         } ?: false
-        val shouldShow = selectedIndustryId != null &&
-            selectedIndustryId != savedIndustryId &&
-            isSelectedInCurrentList
+        if (selectedIndustryId == null || !isSelectedInCurrentList) {
+            isButtonVisibleLiveData.postValue(false)
+            return
+        }
+        val shouldShow = savedIndustryId == null || selectedIndustryId != savedIndustryId
         isButtonVisibleLiveData.postValue(shouldShow)
     }
 
@@ -112,6 +111,7 @@ class IndustryViewModel(private val filtersInteractor: FiltersInteractor) : View
                 it.name.lowercase(Locale.getDefault())
             }
             industries.addAll(sortedIndustries)
+            filteredIndustries.addAll(sortedIndustries)
         }
         when {
             errorCode != null -> {
@@ -126,6 +126,7 @@ class IndustryViewModel(private val filtersInteractor: FiltersInteractor) : View
                 renderState(IndustryState.Content(industries))
             }
         }
+        updateButtonVisibility()
     }
 
     private fun renderState(state: IndustryState) {
