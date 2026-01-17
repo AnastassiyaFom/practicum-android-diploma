@@ -70,8 +70,7 @@ class IndustryFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
         industryAdapter?.onIndustriesClickListener = { industry ->
-            viewModel.onIndustrySelected(industry)
-            binding.searchInput.setText(industry.name)
+            viewModel.selectIndustry(industry)
         }
     }
 
