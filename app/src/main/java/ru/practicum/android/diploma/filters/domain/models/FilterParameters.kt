@@ -11,5 +11,10 @@ data class FilterParameters(
     val onlyWithSalary: Boolean
 ) {
     val area: Int? get() = regionId ?: countryId
-    val areaName: String? get() = if (regionName != null) "$countryName, $regionName" else countryName
+    val areaName: String? = when {
+        regionName != null && countryName != null -> "$countryName, $regionName"
+        regionName != null -> regionName
+        countryName != null -> countryName
+        else -> null
+    }
 }
