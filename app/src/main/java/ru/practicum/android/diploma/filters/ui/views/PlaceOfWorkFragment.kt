@@ -56,13 +56,15 @@ class PlaceOfWorkFragment : Fragment() {
         tvCountryValue.text = state.countryName
         btnClearCountry.isVisible = state.isCountrySelected
         ivCountryArrow.isVisible = !state.isCountrySelected
-        tvCountryLabel.isSelected = state.isCountrySelected
+        tvCountryLabelUnselected.isVisible = !state.isCountrySelected
+        tvCountryLabelSelected.isVisible = state.isCountrySelected
 
         tvRegionValue.isVisible = state.isRegionSelected
         tvRegionValue.text = state.regionName
         btnClearRegion.isVisible = state.isRegionSelected
         ivRegionArrow.isVisible = !state.isRegionSelected
-        tvRegionLabel.isSelected = state.isRegionSelected
+        tvRegionLabelUnselected.isVisible = !state.isRegionSelected
+        tvRegionLabelSelected.isVisible = state.isRegionSelected
 
         btnSelect.isVisible = state.isSelectButtonVisible
     }
