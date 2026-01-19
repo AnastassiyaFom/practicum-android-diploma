@@ -44,7 +44,6 @@
         app:layout_constraintTop_toBottomOf="@id/btnBack">
 
         <LinearLayout
-            android:id="@+id/countryTextBlock"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -55,13 +54,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvCountryLabel"
+                android:id="@+id/tvCountryLabelUnselected"
                 style="@style/PlaceOfWorkLabel"
-                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/country" />
+
+            <TextView
+                android:id="@+id/tvCountryLabelSelected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/country"
-                android:textColor="@color/gray" />
+                android:textColor="?attr/colorPrimary"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvCountryValue"
@@ -113,7 +119,6 @@
         app:layout_constraintTop_toBottomOf="@id/itemCountry">
 
         <LinearLayout
-            android:id="@+id/regionTextBlock"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -124,13 +129,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvRegionLabel"
+                android:id="@+id/tvRegionLabelUnselected"
                 style="@style/PlaceOfWorkLabel"
-                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/region" />
+
+            <TextView
+                android:id="@+id/tvRegionLabelSelected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/region"
-                android:textColor="@color/gray" />
+                android:textColor="?attr/colorPrimary"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvRegionValue"
@@ -173,12 +185,8 @@
         android:id="@+id/btnSelect"
         android:layout_width="0dp"
         android:layout_height="59dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="@dimen/padding_24"
-        android:backgroundTint="@color/blue"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:layout_margin="17dp"
+        android:backgroundTint="?attr/BottomNavEnabled"
         android:text="@string/select"
         android:textAppearance="@style/TextAppearance.Medium16"
         android:textColor="?attr/toastAndButtonTextColor"
