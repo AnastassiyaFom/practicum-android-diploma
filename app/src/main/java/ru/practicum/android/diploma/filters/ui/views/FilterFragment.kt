@@ -102,7 +102,6 @@ class FilterFragment : Fragment() {
     }
 
     private fun setupSalaryInput() {
-
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 val test = true
