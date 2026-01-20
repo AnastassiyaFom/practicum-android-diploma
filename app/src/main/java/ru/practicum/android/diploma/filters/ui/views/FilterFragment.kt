@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -22,7 +23,7 @@ class FilterFragment : Fragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FilterViewModel by inject()
-
+    private val salaryArray = arrayOf("10", "100", "1000000", "100203", "444444")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,6 +50,7 @@ class FilterFragment : Fragment() {
             viewModel.setInputSalaryState(false, binding.salaryEditText.text.isNullOrEmpty())
             viewModel.setOnlyWithSalaryFlag(isChecked)
         }
+        setListViewHint("")
     }
 
     private fun setupNavigate() {
@@ -103,13 +105,14 @@ class FilterFragment : Fragment() {
     }
 
     private fun setupSalaryInput() {
+
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 val test = true
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s.toString().isNotEmpty()) {
+                if (s.toString().isNotEmpty()&&s.toString().toLong() <= Int.MAX_VALUE) {
                     viewModel.setSalary(s.toString().toInt())
                 } else {
                     viewModel.setSalary(null)
@@ -117,6 +120,7 @@ class FilterFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setListViewHint(s.toString())
                 val salary = s?.toString() ?: ""
                 if (salary.isEmpty()) {
                     binding.btnClearSalary.visibility = View.GONE
@@ -139,6 +143,22 @@ class FilterFragment : Fragment() {
             viewModel.setInputSalaryState(hasFocus, binding.salaryEditText.text.isNullOrEmpty())
         }
 
+        binding.salaryEditText.setOnClickListener {
+            viewModel.setInputSalaryState(hasFocus = true, binding.salaryEditText.text.isNullOrEmpty())
+        }
+    }
+
+    fun setListViewHint(str: String){
+        val salary = salaryArray.filter { it.startsWith(str) }.toTypedArray()
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.list_item,
+            salary)
+        binding.listView.adapter = adapter
+        binding.listView.setOnItemClickListener { parent, v, position, id ->
+            binding.salaryEditText.setText(salary[position])
+            binding.listView.visibility = View.GONE
+        }
     }
 
     @SuppressLint("ResourceAsColor", "ResourceType")
@@ -149,18 +169,22 @@ class FilterFragment : Fragment() {
         when (state) {
             is InputSalaryBoxState.EmptyNotFocused -> {
                 binding.salaryExpected.setTextColor(customEditTextHintColor)
+                binding.listView.visibility=View.GONE
             }
 
             is InputSalaryBoxState.NotEmptyNotFocused -> {
                 binding.salaryExpected.setTextColor(colorPrimaryVariant)
+                binding.listView.visibility=View.GONE
             }
 
             is InputSalaryBoxState.EmptyFocused -> {
                 binding.salaryExpected.setTextColor(bottomNavEnabled)
+                binding.listView.visibility=View.VISIBLE
             }
 
             is InputSalaryBoxState.NotEmptyFocused -> {
                 binding.salaryExpected.setTextColor(bottomNavEnabled)
+                binding.listView.visibility=View.VISIBLE
             }
         }
     }
