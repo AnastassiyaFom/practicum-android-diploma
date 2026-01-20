@@ -15,7 +15,6 @@ class RegionsRepositoryImpl(
 ) : RegionsRepository {
     override suspend fun getRegions(countryId: Int?): Pair<List<Region>?, Int?> =
         withContext(Dispatchers.IO) {
-
             val response = networkClient.doRequest(AreasRequest)
 
             when (response.resultCode) {
@@ -31,7 +30,9 @@ class RegionsRepositoryImpl(
                     }.let {
                         if (countryId != null) {
                             it.filter { region -> region.countryId == countryId }
-                        } else it
+                        } else {
+                            it
+                        }
                     }
 
                     Pair(regions, null)
