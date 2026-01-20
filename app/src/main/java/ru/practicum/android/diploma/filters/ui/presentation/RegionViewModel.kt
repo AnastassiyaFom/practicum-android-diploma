@@ -69,6 +69,8 @@ class RegionViewModel(
 
         filtersInteractor.addFilter(
             current.copy(
+                countryId = current.countryId ?: region.countryId,
+                countryName = current.countryName ?: region.countryName,
                 regionId = region.id,
                 regionName = region.name
             )
