@@ -110,7 +110,8 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/companyCard"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:minHeight="80dp"
         android:layout_marginStart="@dimen/padding_16"
         android:layout_marginTop="@dimen/padding_16"
         android:layout_marginEnd="@dimen/padding_16"
@@ -123,25 +124,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_16"
-            android:paddingEnd="@dimen/padding_16">
+            android:paddingEnd="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_16"
+            android:paddingBottom="@dimen/padding_16">
 
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guidelineTop16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="@dimen/padding_16"/>
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guidelineBottom19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_end="19dp"/>
 
             <ImageView
                 android:id="@+id/ivCompanyLogo"
@@ -161,8 +149,11 @@
                 android:text="Еда"
                 android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintStart_toEndOf="@id/ivCompanyLogo"
-                app:layout_constraintTop_toTopOf="@id/guidelineTop16"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/ivCompanyLogo"
+                app:layout_constraintBottom_toTopOf="@id/tvCompanyCity"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/tvCompanyCity"
@@ -172,9 +163,13 @@
                 android:layout_marginStart="0dp"
                 android:text="Москва"
                 android:textColor="?attr/colorPrimaryVariant"
+                app:layout_constraintStart_toEndOf="@id/ivCompanyLogo"
                 app:layout_constraintStart_toStartOf="@id/tvCompanyName"
-                app:layout_constraintBottom_toBottomOf="@id/guidelineBottom19"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/tvCompanyName"
+                app:layout_constraintTop_toBottomOf="@id/tvCompanyName"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:maxLines="2"
+                android:ellipsize="end"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

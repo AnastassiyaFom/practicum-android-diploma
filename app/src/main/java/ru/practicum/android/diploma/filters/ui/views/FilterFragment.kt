@@ -22,7 +22,6 @@ class FilterFragment : Fragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FilterViewModel by inject()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -109,7 +108,11 @@ class FilterFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                viewModel.setSalary()
+                if (s.toString().isNotEmpty() && s.toString().toLong() <= Int.MAX_VALUE) {
+                    viewModel.setSalary(s.toString().toInt())
+                } else {
+                    viewModel.setSalary(null)
+                }
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -121,7 +124,6 @@ class FilterFragment : Fragment() {
                     // Если число больше, чем может храниться в Int
                     if (salary.toLong() <= Int.MAX_VALUE) {
                         binding.salaryEditText.setTextColor(getBlackColor())
-                        viewModel.setCurrentSalary(salary.toInt())
                     } else {
                         binding.salaryEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                     }
@@ -136,6 +138,9 @@ class FilterFragment : Fragment() {
             viewModel.setInputSalaryState(hasFocus, binding.salaryEditText.text.isNullOrEmpty())
         }
 
+        binding.salaryEditText.setOnClickListener {
+            viewModel.setInputSalaryState(hasFocus = true, binding.salaryEditText.text.isNullOrEmpty())
+        }
     }
 
     @SuppressLint("ResourceAsColor", "ResourceType")
